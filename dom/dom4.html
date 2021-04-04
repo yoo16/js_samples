@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM 3 Lesson</title>
+</head>
+
+<body>
+  <h2>1) createElement() と after()</h2>
+  <button type="button" onclick="addMessage()">追加</button>
+  <h3 id="message_top">Message</h3>
+
+  <h2>2) appendChild() と removeChild()</h2>
+  <button type="button" onclick="addCity()">追加</button>
+  <button type="button" onclick="removeCity()">削除</button>
+
+  <div id="city_area"></div>
+
+  <h2>3) appendChild() と removeChild() の応用</h2>
+  <input id="item_name" type="text" name="item_name">
+  <button type="button" onclick="addItem()">追加</button>
+  <button type="button" onclick="removeItems()">削除</button>
+
+  <ul id="item_list"></ul>
+
+  <h2>4) after() の応用</h2>
+  <button type="button" onclick="addNumber()">追加</button>
+  <div id="start">Start</div>
+
+  <script src="js/dom4.js"></script>
+</body>
+
+</html>

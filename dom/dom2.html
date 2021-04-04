@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>Shop</title>
+</head>
+
+<body>
+  <div class="container">
+    <dl>
+      <dt>アイテム</dt>
+      <dd><p id="item_name">銅のつるぎ</p></dd>
+      <dt>価格</dt>
+      <dd><p id="price">150</p></dd>
+      <dt>個数</dt>
+      <dd><input id="amount" class="form-control col-2" type="number" min="0" max="5"></dd>
+    </dl>
+
+    <button id="buyBtn" class="btn btn-danger">購入</button>
+    <p id="message" class="p-3 m-4 rounded border border-info"></p>
+  </div>
+
+  <script src="js/dom2.js"></script>
+</body>
+
+</html>
