@@ -1,13 +1,14 @@
 
-var height = 160;
+var hp = 10
+var attack = 10;
 var message = '';
-if (height >= 150) {
-    message = '乗車できます';
+hp -= attack;
+if (hp > 0) {
+    message = 'モンスターの攻撃';
 } else {
-    message = '乗車できません';
+    message = 'モンスターを倒した';
 }
 console.log(message);
-
 
 var distance = 3;
 var action = '';
@@ -37,23 +38,24 @@ console.log(weekday);
 console.log(type);
 
 
-var os = 'Ubuntu';
-var barnd = '';
-switch (os) {
-    case 'CentOS':
-    case 'Debian':
-    case 'Ubuntu':
-        brand = 'Linux';
+var magic_name = 'ファイヤー';
+var element = '';
+switch (magic_name) {
+    case "ファイヤー":
+    case "メガファイヤー":
+    case "テラファイヤー":
+        element = "火属性";
         break;
-    case 'Catalina':
-    case 'Mojave':
-        brand = 'MacOS';
+    case "アイス":
+    case "メガアイス":
+        element = "水属性";
         break;
-    case 'Windows7':
-    case 'Windows10':
-        brand = 'Windows';
+    case "サンダー":
+    case "メガサンダー":
+        element = "雷属性";
         break;
     default:
-        brand = 'Not found';
+        element = "物理属性";
         break;
 }
+console.log(element)
