@@ -1,44 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <title>Document</title>
+  <title>Shop</title>
 </head>
 
 <body>
-
   <div class="container">
     <h2 class="h2">キャラクター名</h2>
-    <input id="character_name" class="form-control" type="text" onchange="inputCharacterName()" value="横浜ヒーロー">
-    <h3 class="h3">所持金</h3>
-    <input id="character_moeny" class="form-control" type="number" value="0" onchange="inputCharacterMoeny()">
+    <input id="character_name" class="form-control" type="text" onchange="inputCharacterName()">
 
     <p id="message" class="p-3 mt-4 rounded border border-info"></p>
 
     <h2 class="h2">武器屋</h2>
     <dl>
       <dt class="bg-info text-white p-2">アイテム</dt>
-      <dd class="p-2">
-        <p id="item_name">銅のつるぎ</p>
-      </dd>
+      <dd class="p-2"><p id="item_name">銅のつるぎ</p></dd>
       <dt class="bg-info text-white p-2">価格</dt>
-      <dd class="p-2">
-        <p id="item_price">150</p>
-      </dd>
-      <dt class="bg-info text-white p-2" onchange="inputAmount()">個数</dt>
+      <dd class="p-2"><p id="item_price">150</p></dd>
+      <dt class="bg-info text-white p-2">個数</dt>
       <dd class="p-2"><input id="amount" class="form-control col-2" type="number" min="0" max="5"></dd>
     </dl>
 
     <button class="btn btn-danger" onclick="buy()">買う</button>
-
-    <script src="js/condition.js"></script>
   </div>
 
-
+  <script src="js/event2.js"></script>
 </body>
 
 </html>

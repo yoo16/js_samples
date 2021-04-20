@@ -12,3 +12,21 @@ var price = priceElement.textContent;
 
 messageElement.textContent = 'いらっしゃい';
 //console.log(itemElement)
+
+
+/**
+ * ランダムな整数をブラウザ表示
+ */
+ function randomNumber(min, max)
+ {
+     //(0 - 1 のランダム) * (最大値 - 最小値) + 最小値
+     var number = Math.floor( Math.random() * (max + 1 - min) ) + min;
+     return number;
+ }
+ 
+ var titleElement = document.getElementById("title")
+ titleElement.innerHTML = 'DICE'
+
+ var number = randomNumber(1, 6)
+ var resultElement = document.getElementById("result")
+ resultElement.innerHTML = number;

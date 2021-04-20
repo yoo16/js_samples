@@ -71,3 +71,6 @@
   */
  var index = monsters.indexOf('ノーム');
  console.log(index);
+
+
+monsters = ['']

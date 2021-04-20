@@ -1,41 +1,73 @@
 function calculate(x) {
-    y = x + 5;
-    return y;
+    var y = x + 5
+    return y
 }
-var answer = calculate(3)
+
+var answer = calculate(8)
 console.log(answer)
 
-answer = calculate(8)
+answer = calculate(71)
 console.log(answer)
 
-//合計金額計算
+/**
+ * 合計金額の計算 
+ */
 function totalPrice(price, amount) {
-    const tax = 1.1;
-	var total_price = price * amount * tax;
-    return total_price;
+    var tax_rate = 0.1
+    var total_price = price * amount * (1 + tax_rate);
+    // return total_price;
+    // return total_price.toFixed();
+    // return Math.floor(total_price);
+    return Math.round(total_price);
 }
-var total_price = totalPrice(200, 5);
-console.log(total_price);
+
+var result = totalPrice(300, 27)
+console.log(result)
+
+result = totalPrice(381, 29)
+console.log(result)
+
+
+function showMessage(total_price)
+{
+    var message = '合計金額は' + total_price + '円です';
+    console.log(message)
+}
+
+showMessage(result)
+
 
 //無名関数
-const hello = function (name) {
-    return name + 'さん、いらっしゃい！';
+var hello = function(name) {
+    var message = name + 'さん、いらっしゃい'
+    return message
 }
-var message = hello('ヒーロー');
-console.log(message);
+console.log(hello('ヒーロー'))
+
 
 //アロー関数
-const hello2 = (name) => {
-    return name + 'さん、いらっしゃい！';
+var hello2 = (name) => {
+    var message = name + 'さん、いらっしゃい'
+    return message
 }
-message = hello2('ヒーロー');
-console.log(message);
+console.log(hello2('ヒーロー'))
 
+//HTML の読み込み完了したら実行
+window.onload = function() {
+    console.log('東京');
+}
 
-//ランダム
-function randomNumber(min, max) {
+console.log('横浜')
+
+/**
+ * 1 から 6 までの整数をランダムでだす
+ */
+function randomNumber(min, max)
+{
     //(0 - 1 のランダム) * (最大値 - 最小値) + 最小値
-    var number = Math.floor(Math.random() * (max - min)) + min
+    var number = Math.floor( Math.random() * (max + 1 - min) ) + min;
     return number;
 }
-console.log(randomNumber(1, 6))
+
+var number = randomNumber(1, 6)
+console.log(number);

@@ -1,30 +1,32 @@
 /**
  * array object
  */
-var user = {
+var character = {
     id: 1,
-    name: 'User1',
-    email: 'user1@example.com',
-    tel: '03-1111-2222',
+    name: 'ヒーロー',
+    job: 'brave',
+    level: 1,
+    hp: 15,
+    hp: 0,
+    exp: 0,
 }
-console.log(user);
+console.log(character);
 
-console.log('id', user.id);
-console.log('name', user.name);
-console.log('email', user.email);
-console.log('tel', user.tel);
-
-/**
- * update email
- */
-user.email = 'user1@yokohama.com';
-console.log(user.email);
+console.log('id', character.id);
+console.log('name', character.level);
+console.log('exp', character.exp);
 
 /**
- * add birthday
+ * update exp
  */
-user.birthday = '1991/11/20';
-console.log(user.birthday);
+character.exp = 5;
+console.log(character.exp);
+
+/**
+ * add weapon
+ */
+character.weapon = '銅のつるぎ';
+console.log(character.weapon);
 
 /**
  * array - array
@@ -65,11 +67,11 @@ data = rows[0][1]
 console.log(data);
 
 /**
- * users
+ * characters
  */
-var users = [
-    { id: 1, name: 'User1', email: 'user1@example.com', tel: '03-1111-2222' },
-    { id: 2, name: 'User2', email: 'user2@example.com', tel: '090-3333-5555' },
-    { id: 3, name: 'User3', email: 'user3@example.com', tel: '050-1234-5678' },
+var characters = [
+    { id: 1, name: 'character1', email: 'character1@example.com', tel: '03-1111-2222' },
+    { id: 2, name: 'character2', email: 'character2@example.com', tel: '090-3333-5555' },
+    { id: 3, name: 'character3', email: 'character3@example.com', tel: '050-1234-5678' },
 ];
-console.log(users);
+console.log(characters);
