@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>Shop</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2 class="h2 bg-info p-3 text-white">High & Low Game</h2>
+    <div>
+      Score: <span id="score_display"></span>
+    </div>
+    <p id="question"></p>
+    <button id="retry_btn" class="btn btn-outline-primary" onclick="initGame()">もう一度</button>
+
+    <p id="message">High か Low か?</p>
+    <p id="result"></p>
+
+    <div id="button_area">
+      <button class="btn btn-info" id="low_btn" onclick="choiceLow()">Low</button>
+      <button class="btn btn-success" id="draw_btn" onclick="choiceDraw()">Draw</button>
+      <button class="btn btn-danger" id="high_btn" onclick="choiceHigh()">High</button>
+    </div>
+  </div>
+
+  <script src="js/high_low.js"></script>
+</body>
+
+</html>
