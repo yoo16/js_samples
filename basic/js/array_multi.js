@@ -63,7 +63,7 @@ console.log(data);
 /**
  * data from rows
  */
-data = rows[0][1]
+data = rows[1][2]
 console.log(data);
 
 /**
@@ -75,3 +75,30 @@ var characters = [
     { id: 3, name: 'character3', email: 'character3@example.com', tel: '050-1234-5678' },
 ];
 console.log(characters);
+
+
+/**
+ * 5 x 5
+ */
+ var drinks = [
+    ['アイスコーヒー', 'ミネラルウォーター', 'ほうじ茶',],
+    ['紅茶', '牛乳', 'アイスコーヒー',],
+    ['烏龍茶', 'コーラ', 'オレンジジュース',],
+    ['ミネラルウォーター', 'コーラ', 'ほうじ茶',],
+]
+console.log(drinks[0][0]);
+console.log(drinks[1][2]);
+
+var items = [
+    { id: 1, name: 'ミネラルウォーター', price: 80, is_sale: true },
+    { id: 2, name: 'ほうじ茶', price: 120, is_sale: false },
+    { id: 3, name: 'コーヒー', price: 150, is_sale: true },
+    { id: 4, name: '紅茶', price: 130, is_sale: false },
+    { id: 5, name: '炭酸水', price: 90, is_sale: true },
+]
+console.log(items);
+
+
+var new_item = { id: 6, name: 'オレンジジュース', price: 120, is_sale: false};
+items.push(new_item);
+console.log(items);

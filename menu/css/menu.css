@@ -1,0 +1,15 @@
+nav ul {
+    margin: 0 auto;
+    padding: 10px;
+    background: cadetblue;
+}
+
+nav ul li {
+    display: inline-block;
+    padding-right: 15px;
+    margin-right: 10px;
+}
+
+nav li a {
+    color: white;
+}
