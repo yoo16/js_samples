@@ -56,14 +56,12 @@ console.log(hello2('ヒーロー'))
 window.onload = function() {
     console.log('東京');
 }
-
 console.log('横浜')
 
 /**
  * 1 から 6 までの整数をランダムでだす
  */
-function randomNumber(min, max)
-{
+randomNumber = (min, max) => {
     //(0 - 1 のランダム) * (最大値 - 最小値) + 最小値
     var number = Math.floor( Math.random() * (max + 1 - min) ) + min;
     return number;
