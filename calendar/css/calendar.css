@@ -1,0 +1,21 @@
+:root {
+    --theme-color: #86abcd;
+    --link-color: #606060;
+    --fc-border-color: var(--theme-color);
+    --fc-daygrid-event-dot-width: 5px;
+
+    --fc-button-text-color: var(--theme-color);
+    --fc-button-bg-color: white;
+    --fc-button-border-color: var(--theme-color);
+}
+
+.fc .fc-col-header-cell-cushion {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+#calendar a {
+    color: var(--link-color);
+    text-decoration: none;
+}

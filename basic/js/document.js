@@ -15,9 +15,9 @@ document.body.style.color = "#808080"
 document.body.style.background = "#fffaf0"
 
 
-var outputImg = function (image_file) {
+var outputImg = function (image_file, size) {
     var path = "./images/" + image_file
-    var img = `<img src="${path}" width="500">`
+    var img = `<img src="${path}" width="${size}">`
     document.write(img)
 }
 outputImg("tokyo_station.jpg")

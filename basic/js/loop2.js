@@ -66,21 +66,25 @@ function randomNumber(min, max) {
     return number;
 }
 
-var min = 0;
-var max = 100;
-var number = randomNumber(min, max);
-var rarity;
-for (var index in rarities) {
-    rarity = rarities[index];
-    max = min + rarity.probability;
-    // console.log(min, max, number);
-    if (number >= min && number <= max) {
-        break;
-    }
-    min = max;
-}
-console.log(rarity);
 
+const play = () => {
+    var min = 0;
+    var max = 100;
+    var number = randomNumber(min, max);
+    var rarity;
+    for (var index in rarities) {
+        rarity = rarities[index];
+        max = min + rarity.probability;
+        // console.log(min, max, number);
+        if (number >= min && number <= max) {
+            break;
+        }
+        min = max;
+    }
+    console.log(rarity);
+    document.getElementById('name').innerHTML = rarity.name
+    document.getElementById('type').innerHTML = rarity.type
+}
 
 /**
  * 9 x 9

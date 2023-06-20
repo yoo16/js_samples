@@ -1,7 +1,3 @@
-/**
- * update clock
- */
-var clockElement = document.getElementById('clock');
 var time = setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();
@@ -11,8 +7,6 @@ var time = setInterval(function () {
     var minute = date.getMinutes();
     var second = date.getSeconds();
 
-    var dateString = year + '年' + month + '月' + day + '日';
-    var timeString = hour + ':' + minute + ':' + second;
-    var clockString = dateString + ' ' + timeString
-    clockElement.textContent = clockString;
+    var datetime = `${year}/${month}/${day} ${hour}:${minute}:${second}`
+    document.getElementById('datetime').innerHTML = datetime;
 }, 1000)
