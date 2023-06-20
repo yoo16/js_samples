@@ -1,12 +1,12 @@
 var calendar;
 
-async function fetchEvents() {
+const fetchEvents = async () => {
     const response = await fetch('./data/events.json');
     const json = await response.json();
     return json;
 }
 
-async function loadEvents() {
+const loadEvents = async () => {
     var events = await fetchEvents();
     calendar.setOption('events', events);
 }
@@ -15,7 +15,8 @@ async function loadEvents() {
     var calendarEl = document.getElementById('calendar');
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        locale: 'ja',
+        themeSystem: 'bootstrap5',
+        // locale: 'ja',
         headerToolbar: {
             left: 'prev,next,today',
             center: 'title',
@@ -25,6 +26,8 @@ async function loadEvents() {
         businessHours: true,
     });
     calendar.render();
+
+    calendar.setOption('height', 650);
 
     loadEvents();
 })();
