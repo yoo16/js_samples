@@ -1,8 +1,9 @@
 var userNameElement = document.getElementById('user_name');
 var itemElement = document.getElementById('item_name');
+var messageElement = document.getElementById('message');
+
 var priceElement = document.getElementById('price');
 var quantityElement = document.getElementById('quantity');
-var messageElement = document.getElementById('message');
 
 function inputUserName() {
     console.log('change!!')
@@ -16,6 +17,7 @@ function order() {
     var price = priceElement.innerHTML
     var quantity = quantityElement.value
     var totalPrice = price * quantity
-    var message = itemName + "が " + quantity + "つで " + totalPrice + "円です"
+    var message = itemName + "が " + quantity + "つでよいですか？"
+    message += totalPrice + "円です。"
     messageElement.innerHTML = message
 }

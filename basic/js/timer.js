@@ -1,17 +1,29 @@
-
 var counterElement = document.getElementById('counter');
-var time = 1000;
+var interval = 1000;
 var timer;
+var count;
+
+
+//カウンター初期化
+reset()
+
+function reset() {
+    count = 0
+    counterElement.innerHTML = count
+}
+
 function start() {
-    var count = 0;
+    //タイマー削除
     clearInterval(timer)
-    timer = setInterval(function () {
+    //タイマー開始
+    timer = setInterval(() => {
+        //1増加
         count++;
+        //HTML更新
         counterElement.innerHTML = count;
-    }, time)
+    }, interval)
 }
 
 function stop() {
     clearInterval(timer)
-    counterElement.innerHTML = 0;
 }

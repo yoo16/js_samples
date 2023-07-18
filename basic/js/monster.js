@@ -1,6 +1,7 @@
 'use strict';
 
 var stage = document.getElementById('stage')
+var monsterList = document.getElementById('monster-list')
 
 //追加
 var monsterElement1 = document.createElement('p')
@@ -25,13 +26,14 @@ function createMonsterElement(name, imageName) {
     var div = document.createElement('div')
     var p = document.createElement('p')
     var img = document.createElement('img')
+    div.className = "col-4"
 
     p.textContent = name
-    img.src = '../images/' + imageName
+    img.src = 'images/' + imageName
     div.appendChild(p)
     div.appendChild(img)
 
-    stage.appendChild(div)
+    monsterList.appendChild(div)
 }
 
 createMonsterElement('モンスター1', 'monster_006.png')

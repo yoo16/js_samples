@@ -3,11 +3,11 @@
  */
 var character = {
     id: 1,
-    name: 'ヒーロー',
-    job: 'brave',
+    name: 'アリス',
+    job: 'wizard',
     level: 1,
     hp: 15,
-    hp: 0,
+    mp: 10,
     exp: 0,
 }
 console.log(character);
@@ -19,7 +19,7 @@ console.log('exp', character.exp);
 /**
  * update exp
  */
-character.exp = 5;
+// character.exp = 5;
 console.log(character.exp);
 
 /**
@@ -27,6 +27,10 @@ console.log(character.exp);
  */
 character.weapon = '銅のつるぎ';
 console.log(character.weapon);
+
+/**
+ * characters
+ */
 
 /**
  * array - array
@@ -76,11 +80,10 @@ var characters = [
 ];
 console.log(characters);
 
-
 /**
  * 5 x 5
  */
- var drinks = [
+var drinks = [
     ['アイスコーヒー', 'ミネラルウォーター', 'ほうじ茶',],
     ['紅茶', '牛乳', 'アイスコーヒー',],
     ['烏龍茶', 'コーラ', 'オレンジジュース',],
@@ -99,6 +102,56 @@ var items = [
 console.log(items);
 
 
-var new_item = { id: 6, name: 'オレンジジュース', price: 120, is_sale: false};
+var new_item = { id: 6, name: 'オレンジジュース', price: 120, is_sale: false };
 items.push(new_item);
 console.log(items);
+
+function loadStatus() {
+    document.getElementById('character_name').innerHTML = character.name
+    document.getElementById('job').innerHTML = character.job
+    document.getElementById('level').innerHTML = character.level
+    document.getElementById('hp').innerHTML = character.hp
+    document.getElementById('mp').innerHTML = character.mp
+    document.getElementById('exp').innerHTML = character.exp
+    console.log(user)
+}
+loadStatus()
+
+var user = { name: "", email: "", password: "" }
+function regist() {
+    user.name = document.getElementById('user_name').value
+    user.email = document.getElementById('email').value
+    user.password = document.getElementById('password').value
+
+    console.log(user)
+}
+
+
+var levels = [
+    { value: 5, exp: 100 },
+    { value: 4, exp: 50 },
+    { value: 3, exp: 20 },
+    { value: 2, exp: 10 },
+    { value: 1, exp: 0 },
+];
+
+randomNumber = (min, max) => {
+    var number = Math.floor(Math.random() * (max + 1 - min)) + min;
+    return number;
+}
+
+function attack() {
+    var exp = randomNumber(1, 5)
+    character.exp += exp
+    checkLevelUp()
+    loadStatus()
+}
+
+function checkLevelUp() {
+    for (const level of levels) {
+        if (character.exp >= level.exp) {
+            character.level = level.value
+            return
+        }
+    }
+}
