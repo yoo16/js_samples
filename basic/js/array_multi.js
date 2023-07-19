@@ -117,7 +117,11 @@ function loadStatus() {
 }
 loadStatus()
 
-var user = { name: "", email: "", password: "" }
+var user = {
+    name: "",
+    email: "",
+    password: ""
+}
 function regist() {
     user.name = document.getElementById('user_name').value
     user.email = document.getElementById('email').value
