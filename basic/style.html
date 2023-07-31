@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,11 +8,8 @@
   <title>Document</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">About</a>
-  </nav>
   <p id="message" class="message">
     Hello, Yokohama!
   </p>
@@ -20,16 +18,11 @@
   <button onclick="toggle()">Toggle</button>
   <button onclick="replace()">Replace</button>
 
-  <div class="menu">
-    <a href="#" onmouseover="over(this)" onmouseout="out(this)">Home</a>
-    <a href="#" onmouseover="over(this)" onmouseout="out(this)">About</a>
-    <a href="#" onmouseover="over(this)" onmouseout="out(this)">Contact</a>
+  <div>
+    <button onclick="check(this)" id="check-button">check</button>
   </div>
 
-  <div id="display">
-    <p id="alert">注目！</p>
-  </div>
-  
   <script src="js/style.js"></script>
 </body>
+
 </html>

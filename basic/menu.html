@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <nav class="menu">
+    <a href="#" onmouseover="over(this)">Home</a>
+    <a href="#" onmouseover="over(this)">About</a>
+    <a href="#" onmouseover="over(this)" data-menu="products-menu">Products</a>
+    <a href="#" onmouseover="over(this)" data-menu="staff-menu">Staffs</a>
+    <a href="#" onmouseover="over(this)">Contact</a>
+
+    <div>
+      <ul id="products-menu" class="submenu">
+        <li><a href="">Product1</a></li>
+        <li><a href="">Product2</a></li>
+        <li><a href="">Product3</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <ul id="staff-menu" class="submenu">
+        <li><a href="">Staff1</a></li>
+        <li><a href="">Staff2</a></li>
+        <li><a href="">Staff3</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div>
+    <button onclick="sayFunction(this)" name="Chris">sayFunction</button>
+    <button onclick="sayAnonymous(this)" name="Chris">sayAnonymous</button>
+    <button onclick="sayArrow(this)" name="Chris">sayArrow</button>
+    <button onclick="sayPerson(this)" name="Chris">sayPerson</button>
+  </div>
+  <p id="message"></p>
+
+  <script src="js/menu.js"></script>
+</body>
+
+</html>
