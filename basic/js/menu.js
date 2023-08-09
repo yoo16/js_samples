@@ -37,8 +37,8 @@ function over(element) {
     for (submenu of submenus) {
         submenu.classList.remove("show", "fadein")
     }
-    var id
-    if (id = element.dataset.menu) {
+    var id = element.dataset.menu
+    if (id) {
         document.getElementById(id).classList.add("show", "fadein")
     }
 }

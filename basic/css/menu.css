@@ -1,0 +1,58 @@
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li a {
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.menu {
+    padding: 20px 10px;
+    background: rgb(5, 139, 139);
+}
+
+.menu ul {
+    padding: 10px;
+    display: flex;
+}
+
+.submenu {
+    display: none;
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    background: rgb(5, 139, 139);
+}
+
+.submenu li {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.submenu li:hover {
+    background: rgba(139, 5, 5, 0.8);
+}
+
+.show {
+    display: block;
+    position: absolute;
+}
+
+.fadein {
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-name: fadein;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.9;
+    }
+}
