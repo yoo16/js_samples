@@ -78,9 +78,9 @@ let prefectures = [
  * foreach
  */
 prefectures.forEach(function (prefecture, index) {
-    // console.log(prefecture.code);
-    // console.log(prefecture.label);
-    // console.log(index);
+    console.log(prefecture.code);
+    console.log(prefecture.label);
+    console.log(index);
 });
 
 /**
