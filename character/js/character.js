@@ -33,7 +33,7 @@ const keyActions = {
 }
 
 /**
- * 移動座標処理
+ * 座標計算
  */
 const updatePlots = {
     left: () => { character.x -= character.speed },
