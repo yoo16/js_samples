@@ -1,0 +1,8 @@
+.area {
+    width: 500px;
+    height: 100px;
+    margin: 10px;
+    padding: 20px;
+    background-color: rgb(23, 150, 167);
+    color: #ffffff;
+}

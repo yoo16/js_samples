@@ -1,18 +1,40 @@
-// 関数を引数
-function processArray(arr, callback) {
-    for (var i = 0; i < arr.length; i++) {
+// callback
+// 第2引数が関数（function型）
+function processArray(values, callback) {
+    for (var value of values) {
         // コールバック関数を実行
-        callback(arr[i]);
+        callback(value);
     }
 }
 
 var numbers = [1, 2, 3, 4, 5];
+function calculate(value) {
+    // 計算
+    const answer = value * 2;
+    console.log(answer);
+}
+
+// processArray() に関数を渡して実行
+console.log("--- function --")
+processArray(numbers, calculate);
+
 // processArray() に無名関数を渡して実行
-processArray(numbers, function(item) {
-    // 各要素を2倍
-    console.log(item * 2);
+console.log("--- anonymous function --")
+processArray(numbers, function(value) {
+    // 計算
+    const answer = value * 3;
+    console.log(answer);
 })
 
+// processArray() にアロー関数を渡して実行
+console.log("--- arrow function --")
+processArray(numbers,(value) => {
+    // 計算
+    const answer = (value - 3) * 2;
+    console.log(answer);
+})
+
+//forEach
 var drinks = ['コーヒー', '紅茶', 'ほうじ茶'];
 drinks.forEach(function(drink) {
     console.log(drink);
