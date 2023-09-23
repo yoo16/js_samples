@@ -1,68 +1,57 @@
 const PREFECTURE_FILE_PATH = "./data/prefectures.json";
 const SEARCH_URI = "https://zipcloud.ibsnet.co.jp/api/search";
 
-const requestAPI = async (zipcode) => {
+const searchAPI = async (zipcode) => {
     if (!zipcode) return;
     const query_param = new URLSearchParams({ zipcode: zipcode, })
     const uri = SEARCH_URI + "?" + query_param;
+    console.log(uri)
     const response = await fetch(uri);
     const data = await response.json();
     return data;
 }
 
-const loadPrefectures = () => {
-    // const response = await fetch(PREFECTURE_FILE_PATH);
-    // const prefectures = await response.json();
-    // console.log(prefectures)
-    // prefectures.map((prefecture) => {
-    //     var option = document.createElement('option')
-    //     option.value = prefecture.code;
-    //     option.innerHTML = prefecture.name;
-    //     document.getElementById('prefecture').appendChild(option)
-    // })
+const createPrefectures = (prefectures) => {
+    prefectures.forEach((prefecture) => {
+        var option = document.createElement('option')
+        option.value = prefecture.code;
+        option.innerHTML = prefecture.name;
+        document.getElementById('prefecture').appendChild(option)
+    })
+}
 
+const loadPrefectures = async () => {
+    const response = await fetch(PREFECTURE_FILE_PATH);
+    const text = await response.text()
+    const prefectures = JSON.parse(text)
+    // const prefectures = await response.json();
+    console.log(prefectures);
+    createPrefectures(prefectures);
+}
+
+const loadPrefecturesForThen = () => {
     fetch(PREFECTURE_FILE_PATH)
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network error');
+            }
+            console.log(response.json());
+            return response.json();
+        })
         .then((prefectures) => {
-            prefectures.map((prefecture) => {
-                var option = document.createElement('option')
-                option.value = prefecture.code;
-                option.innerHTML = prefecture.name;
-                document.getElementById('prefecture').appendChild(option)
-            })
+            createPrefectures(prefectures);
+        })
+        .catch(error => {
+            console.log(error);
         });
 }
 
-const loadPrefectures2 = async () => {
-    // const response = await fetch(PREFECTURE_FILE_PATH);
-    // const prefectures = await response.json();
-    // console.log(prefectures)
-    // prefectures.map((prefecture) => {
-    //     var option = document.createElement('option')
-    //     option.value = prefecture.code;
-    //     option.innerHTML = prefecture.name;
-    //     document.getElementById('prefecture').appendChild(option)
-    // })
-
-    fetch(PREFECTURE_FILE_PATH)
-        .then((response) => response.json())
-        .then((prefectures) => {
-            prefectures.map((prefecture) => {
-                var option = document.createElement('option')
-                option.value = prefecture.code;
-                option.innerHTML = prefecture.name;
-                document.getElementById('prefecture').appendChild(option)
-            })
-        });
-}
-
-
-const searchAdddress = async () => {
+const searchHandler = async () => {
     const zipcode = document.getElementById('zipcode').value;
     if (!zipcode) {
         alert('郵便番号を入力してください')
     }
-    var data = await requestAPI(zipcode);
+    var data = await searchAPI(zipcode);
     if (!data) return;
     if (!data.results) return;
     var results = data.results[0]
@@ -73,4 +62,5 @@ const searchAdddress = async () => {
 
 (() => {
     loadPrefectures();
+    // loadPrefecturesForThen();
 })();
