@@ -1,4 +1,11 @@
-const PREFECTURE_FILE_PATH = "./data/prefectures.json";
+function getApiURL() {
+    const currentURL = location.href
+    const fileName = currentURL.substring(currentURL.lastIndexOf('/') + 1);
+    const baseURL = currentURL.replace(fileName, '');
+    return baseURL + 'data/prefectures.json';
+}
+
+const PREFECTURE_FILE_PATH = getApiURL();
 const SEARCH_URI = "https://zipcloud.ibsnet.co.jp/api/search";
 
 const searchAPI = async (zipcode) => {
