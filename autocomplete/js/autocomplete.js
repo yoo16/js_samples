@@ -7,7 +7,7 @@ window.onload = function () {
     ];
 
     cities.forEach(function(city) {
-        let option = document.createElement('option');
+        var option = document.createElement('option');
         option.value = city.value;
         document.getElementById('cityList').appendChild(option);
     })

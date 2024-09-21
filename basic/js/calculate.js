@@ -1,51 +1,90 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const calculateBtn = document.getElementById('calculate-btn');
-    calculateBtn.addEventListener('click', function (event) {
-        const price = document.getElementById('price').value;
-        const quantity = document.getElementById('quantity').value;
+//変数の宣言
+var price = 500;
+price = price + 200;
+console.log(price);
 
-        const result = document.getElementById('result');
-        var message = "入力が間違っています";
-        if (!isNaN(price) && !isNaN(quantity)) {
-            const totalPrice = price * quantity;
-            message = "合計金額は" + totalPrice + "円です。";
-        }
-        result.innerHTML = message;
-        event.preventDefault();
-    }, false);
+price = 500;
+price = price - 200;
+console.log(price);
 
-    //counter
-    var count = 0;
-    const countBtn = document.getElementById('count-btn');
-    const removeBtn = document.getElementById('remove-btn');
-    const countHandler = function () {
-        document.getElementById('count').innerHTML = count++
-    }
-    countBtn.addEventListener('click', countHandler);
+price = 500;
+price = price * 2;
+console.log(price);
 
-    removeBtn.addEventListener('click', function () {
-        countBtn.removeEventListener('click', countHandler)
-        document.getElementById('count').innerHTML = "イベントを停止しました"
-    });
+price = 500;
+price = price / 2;
+console.log(price);
 
-    const mouseArea = document.getElementById('mouse-area')
-    mouseArea.addEventListener('mouseover', function (event) {
-        this.innerHTML = 'マウスオーバー'
-    })
-    mouseArea.addEventListener('mouseout', function (event) {
-        this.innerHTML = 'マウスアウト'
-    })
+price = 500;
+price = price % 3;
+console.log(price);
 
-    const mouseMoveArea = document.getElementById('mouse-move-area')
-    mouseMoveArea.addEventListener('mousemove', function (event) {
-        var message = `(x, y) = (${event.pageX} ${event.pageY})`
-        this.innerHTML = message
-    })
+/**
+ * 単項演算
+ */
+var amount = 1;
+amount++;
+console.log(amount);
 
-    keydownEvent = (event) => {
-        console.log(event.keyCode)
-        document.getElementById('keycode-area').innerHTML = event.keyCode;
-    }
-    document.addEventListener('keydown', keydownEvent);
-});
+amount--;
+console.log(amount);
 
+/**
+ * 複合演算
+ */
+var price = 500;
+price += 50;
+console.log(price);
+
+price -= 50;
+console.log(price);
+
+price *= 2;
+console.log(price);
+
+price /= 2;
+console.log(price);
+
+/**
+ * テキスト連結
+ */
+var drink = "コーヒー";
+var message = drink + "の価格：" + price + "円";
+console.log(message);
+
+message += "\n";
+message += "支払い方法を選択してください。";
+
+console.log(message);
+
+/**
+ * テンプレートリテラル
+ */
+const POINT_RATE = 0.01;
+var point = price * POINT_RATE;
+var message = `ポイント： ${point}pt`;
+
+console.log(message);
+
+// 変数 price に 数値 300 を代入
+var price = 300;
+var amount = 5;
+var discount = -50;
+var tax = 0.1;
+
+var total_price = price * amount;
+console.log(total_price);
+
+/**
+ * 計算
+ */
+var total_price = 0;  //合計金額
+var price = 300;    //値段
+var amount = 5;     //個数
+var discount = 100;  //値引き
+var tax = 0.1;      //税率
+
+total_price = price * amount;
+total_price -= discount;
+total_price *= (1 + tax);
+console.log(total_price.toFixed());

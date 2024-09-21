@@ -1,28 +1,50 @@
+// 論理演算
+var result;
+var price = 500;
+result = (price == 500);
+console.log(result);
 
-var hp = 10
-var attack = 10;
-var message = '';
-hp -= attack;
-if (hp > 0) {
-    message = 'モンスターの攻撃';
+result = (price < 0);
+console.log(result);
+
+result = (price > 500);
+console.log(result);
+
+result = (price >= 500);
+console.log(result);
+
+result = (price <= 500);
+console.log(result);
+
+/**
+ * if statement
+ */
+var message = "";
+var price = 500;  //値を変えてみる
+var money = 1000;  //値を変えてみる
+
+if (price <= 0) {
+    message = "価格エラー";
+} else if (money >= price) {
+    message = "購入完了";
 } else {
-    message = 'モンスターを倒した';
+    message = "残高不足";
 }
 console.log(message);
 
-var distance = 3;
-var action = '';
-if (distance < 1) {
-    action = '徒歩';
-} else if (distance >= 1 && distance < 5) {
-    action = '自転車';
-} else {
-    action = '電車';
-}
-console.log(action);
-
+/**
+ * 三項演算
+ */
+var price = 500;  //値を変えてみる
+var money = 1000;  //値を変えてみる
+var result = (price <= money) ? '購入完了' : '決済エラー';
+console.log(result);
 var weekday = '水';
 var type = '';
+
+/**
+ * switch
+ */
 switch (weekday) {
     case '月':
         type = '燃えるゴミ';
@@ -38,73 +60,68 @@ console.log(weekday);
 console.log(type);
 
 
-var item_name = '鉄のかぶと';
-var type = '';
-switch (item_name) {
-    case "銅のつるぎ":
-    case "鉄のやり":
-    case "こんぼう":
-        type = "武器";
+/**
+ * スコア評定
+ */
+var score = 85;
+var rank = "";
+
+// スコアに基づく評価
+if (score >= 90) {
+    rank = "A";
+} else if (score >= 80) {
+    rank = "B";
+} else if (score >= 70) {
+    rank = "C";
+} else if (score >= 60) {
+    rank = "D";
+} else {
+    rank = "F";
+}
+
+var message = `評定: ${rank}`;
+console.log(message);
+
+/**
+ * 会員割引
+ */
+var price = 12000;
+// 会員ステータス (true: 会員, false: 非会員)
+var isMember = true;
+var MEMBER_RATE = 0.95;
+var SPECIAL_RATE = 0.95;
+
+// 割引の計算
+if (isMember) {
+    console.log("- 会員")
+    price *= MEMBER_RATE;
+}
+if (price >= 10000) {
+    console.log("- 10000円以上お買い上げ")
+    price *= SPECIAL_RATE;
+}
+
+var message = `金額: ${price}円`;
+console.log(message);
+
+/**
+ * ゴミ分別
+ */
+var today = new Date();
+// 0:日曜日, 1:月曜日, ..., 6:土曜日
+var dayOfWeek = today.getDay();
+var message = "";
+
+// 曜日に応じたゴミの日を判別
+switch (dayOfWeek) {
+    case 1: // 月曜日
+    case 5: // 金曜日
+        message = "今日は燃えるゴミの日です。";
         break;
-    case "皮のたて":
-    case "鉄のかぶと":
-    case "銀のよろい":
-        type = "防具";
-        break;
-    case "やくそう":
-    case "どくけしそう":
-        type = "道具";
+    case 3: // 水曜日
+        message = "今日は燃えないゴミの日です。";
         break;
     default:
-        type = "その他";
-        break;
+        message = "今日はゴミの日ではありません。";
 }
-console.log(type)
-
-
-var messageElement = document.getElementById('message');
-var characterElement = document.getElementById('character_name');
-var moneyElement = document.getElementById('character_moeny');
-
-var itemElement = document.getElementById('item_name');
-var priceElement = document.getElementById('item_price');
-var amountElement = document.getElementById('amount');
-
-var character_name = characterElement.value;
-var character_money = 0;
-
-function inputCharacterName() {
-    character_name = characterElement.value;
-    var message = character_name + 'さん、いらっしゃい';
-    messageElement.innerHTML = message;
-}
-
-function inputCharacterMoeny() {
-    character_money = moneyElement.value;
-}
-
-function inputAmount() {
-    var amount = amountElement.value;
-    if (amount < 0) amountElement.value = 0;
-}
-
-function buy() {
-    var itemName = itemElement.textContent;
-    var price = priceElement.textContent;
-    var amount = amountElement.value;
-    var totalPrice = price * amount;
-
-    console.log(character_money);
-
-    var message = '';
-    if (amount <= 0) {
-        message = character_name + 'さん、いくつ買うんだい？';
-    } else if (totalPrice > character_money) {
-        message = character_name + 'さん、お金がたりないようだね。';
-    } else {
-        message = itemName + 'を' + amount + '個でよいかい？' + totalPrice + 'G だよ';
-    }
-    messageElement.textContent = message;
-}
-
-inputCharacterName();
+console.log(message);

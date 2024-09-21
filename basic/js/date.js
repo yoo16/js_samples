@@ -1,3 +1,6 @@
+var date = new Date();
+console.log(date);
+
 var time = setInterval(function () {
     var date = new Date();
     var year = date.getFullYear();

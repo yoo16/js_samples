@@ -1,22 +1,22 @@
-var itemElement = document.getElementById('item_name');
-var priceElement = document.getElementById('price');
-var messageElement = document.getElementById('message');
-var price = priceElement.textContent;
+document.write('<h1>プロフィール</h1>')
+document.write('<h2>名前</h2>')
+document.write('<p>東京　太郎</p>')
 
-messageElement.innerHTML = '<span>いらっしゃい</span>';
-
-/**
- * ランダムな整数をブラウザ表示
- */
-function randomNumber(min, max) {
-    //(0 - 1 のランダム) * (max + 1 - min) + min
-    var number = Math.floor(Math.random() * (max + 1 - min)) + min;
-    return number;
+var outputP = function (message) {
+    var tag = "<p>" + message + "</p>"
+    document.write(tag)
 }
 
-var titleElement = document.getElementById("title")
-titleElement.innerHTML = 'DICE'
+outputP('旅行')
+outputP('ゲーム')
+outputP('スポーツ観戦')
 
-var number = randomNumber(1, 6)
-var resultElement = document.getElementById("result")
-resultElement.innerHTML = number;
+document.body.style.color = "#808080"
+document.body.style.background = "#fffaf0"
+
+var outputImg = function (image_file, width) {
+    var path = "./images/" + image_file
+    var img = `<img src="${path}" width="${width}">`
+    document.write(img)
+}
+outputImg("tokyo_station.jpg", 500)

@@ -1,9 +1,8 @@
-
-//コメント
-
 /**
- * はじめての
- * JavaScript
+ * はじめてのJavaScript
+ * 複数のコメント
  */
-
-alert('文字列')
+// コンソール表示
+console.log("Hello!")
+console.warn("Warning!")
+console.error("Error!")
