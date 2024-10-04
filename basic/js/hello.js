@@ -6,4 +6,4 @@
  * JavaScript
  */
 
-alert('文字列')
+alert('Hello!')

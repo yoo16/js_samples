@@ -6,15 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <title>Shop</title>
-  <link rel="stylesheet" href="css/timer.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-  <div class="container">
-    <div id="counter"></div>
-    <button class="btn btn-info" onclick="start()">Start</button>
-    <button class="btn btn-info" onclick="stop()">Stop</button>
-    <button class="btn btn-info" onclick="reset()">Reset</button>
+  <div class="container m-auto">
+    <div id="counter" class="p-8 m-8 w-24 h-24 text-center text-5xl"></div>
+    <div>
+      <button class="btn btn-info" onclick="start()">Start</button>
+      <button class="btn btn-info" onclick="stop()">Stop</button>
+      <button class="btn btn-info" onclick="reset()">Reset</button>
+    </div>
   </div>
 
   <script src="js/timer.js"></script>
