@@ -37,9 +37,9 @@ result = (totalPrice <= 500);
 message = (totalPrice <= money) ? '支払い完了' : '残高不足';
 
 
-**
- * switch
- */
+/**
+* switch
+*/
 var weekday = '水';
 var type = '';
 
