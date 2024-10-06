@@ -1,127 +1,95 @@
-// 論理演算
-var result;
+// 変数・定数定義
+const TAX_RATE = 0.1;
+var name = "コーヒー";
 var price = 500;
-result = (price == 500);
-console.log(result);
-
-result = (price < 0);
-console.log(result);
-
-result = (price > 500);
-console.log(result);
-
-result = (price >= 500);
-console.log(result);
-
-result = (price <= 500);
-console.log(result);
-
-/**
- * if statement
- */
-var message = "";
-var price = 500;  //値を変えてみる
-var money = 1000;  //値を変えてみる
-
-if (price <= 0) {
-    message = "価格エラー";
-} else if (money >= price) {
-    message = "購入完了";
-} else {
-    message = "残高不足";
-}
-console.log(message);
-
-/**
- * 三項演算
- */
-var price = 500;  //値を変えてみる
-var money = 1000;  //値を変えてみる
-var result = (price <= money) ? '購入完了' : '決済エラー';
-console.log(result);
-var weekday = '水';
-var type = '';
-
-/**
- * switch
- */
-switch (weekday) {
-    case '月':
-        type = '燃えるゴミ';
-        break;
-    case '水':
-        type = '燃えないゴミ';
-        break;
-    default:
-        type = '回収なし';
-        break;
-}
-console.log(weekday);
-console.log(type);
-
-
-/**
- * スコア評定
- */
-var score = 85;
-var rank = "";
-
-// スコアに基づく評価
-if (score >= 90) {
-    rank = "A";
-} else if (score >= 80) {
-    rank = "B";
-} else if (score >= 70) {
-    rank = "C";
-} else if (score >= 60) {
-    rank = "D";
-} else {
-    rank = "F";
-}
-
-var message = `評定: ${rank}`;
-console.log(message);
-
-/**
- * 会員割引
- */
-var price = 12000;
-// 会員ステータス (true: 会員, false: 非会員)
+var quantity = 2;
 var isMember = true;
-var MEMBER_RATE = 0.95;
-var SPECIAL_RATE = 0.95;
-
-// 割引の計算
-if (isMember) {
-    console.log("- 会員")
-    price *= MEMBER_RATE;
-}
-if (price >= 10000) {
-    console.log("- 10000円以上お買い上げ")
-    price *= SPECIAL_RATE;
-}
-
-var message = `金額: ${price}円`;
-console.log(message);
-
-/**
- * ゴミ分別
- */
-var today = new Date();
-// 0:日曜日, 1:月曜日, ..., 6:土曜日
-var dayOfWeek = today.getDay();
+var discount = (isMember) ? 100 : 0;
+var totalPrice = 0;
+var money = 1000;  //値を変えてみる
 var message = "";
 
-// 曜日に応じたゴミの日を判別
-switch (dayOfWeek) {
-    case 1: // 月曜日
-    case 5: // 金曜日
-        message = "今日は燃えるゴミの日です。";
-        break;
-    case 3: // 水曜日
-        message = "今日は燃えないゴミの日です。";
-        break;
-    default:
-        message = "今日はゴミの日ではありません。";
+/**
+ * オーダー表示
+ */
+function order(name, price, quantity) {
+    document.getElementById('name').innerHTML = name;
+    document.getElementById('price').innerHTML = price;
+    document.getElementById('quantity').innerHTML = quantity;
 }
-console.log(message);
+
+/**
+ * 合計金額（税込）の計算 
+ */
+function calculateTotalPrice(price, quantity, discount) {
+    var totalPrice = (price * quantity - discount) * (1 + TAX_RATE);
+    return totalPrice.toFixed();
+}
+
+/**
+ * オーダーコード
+ */
+function createOrderCode(tableNo, orderNo) {
+    var orderCode = tableNo + "-" + orderNo;
+    return orderCode;
+}
+
+/**
+ * ランダムな整数
+ */
+const randomNumber = (min, max) => {
+    //(0 - 1 のランダム) * (最大値 - 最小値) + 最小値
+    var number = Math.floor(Math.random() * (max + 1 - min)) + min;
+    return number;
+}
+
+/**
+ * 会員ステータス
+ */
+function memberStatus() {
+    if (isMember) {
+        document.getElementById('member-status').innerHTML = "会員";
+    }
+}
+
+/**
+ * 支払い処理
+ */
+function pay() {
+    var message = "決済中...";
+    if (price <= 0) {
+        message = "金額エラー";
+    } else if (money >= totalPrice) {
+        message = "支払い完了";
+    } else {
+        message = "残高不足";
+    }
+    document.getElementById('status').innerHTML = message;
+}
+
+// オーダー完了処理
+document.getElementById('status').innerHTML = "Loading..."
+setTimeout(() => {
+    document.getElementById('status').innerHTML = "オーダーが完了しました"
+
+    var tableNo = randomNumber(1, 10);
+    var orderNo = randomNumber(1000, 10000);
+    var orderCode = createOrderCode(tableNo, orderNo);
+    document.getElementById('order-code').innerHTML = orderCode;
+
+    // 支払い
+    pay();
+}, 2000);
+
+
+// メンバーステータス
+memberStatus();
+
+// オーダー
+order(name, price, quantity);
+
+// 合計金額
+totalPrice = calculateTotalPrice(price, quantity, discount);
+
+document.getElementById('discount').innerHTML = -discount;
+document.getElementById('totalPrice').innerHTML = totalPrice;

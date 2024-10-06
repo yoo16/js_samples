@@ -2,14 +2,67 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <title>Condition</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オーダー</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg max-w-md">
+        <h1 class="text-2xl font-bold mb-6 text-center">
+            オーダー
+        </h1>
+
+        <div class="mb-4 text-right">
+            <label id="member-status" class="mt-1 p-2 text-sm bg-green-400 text-white"></label>
+        </div>
+
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">
+                商品名
+            </label>
+            <div id="name" class="mt-1 text-lg font-semibold text-gray-900 border-b border-gray-300 pb-1"></div>
+        </div>
+
+        <div class="mb-4">
+            <label for="price" class="block text-sm font-medium text-gray-700">
+                価格
+            </label>
+            <div id="price" class="mt-1 text-lg font-semibold text-gray-900 border-b border-gray-300 pb-1"></div>
+        </div>
+
+        <div class="mb-4">
+            <label for="quantity" class="block text-sm font-medium text-gray-700">
+                個数
+            </label>
+            <div id="quantity" class="mt-1 text-lg font-semibold text-gray-900 border-b border-gray-300 pb-1"></div>
+        </div>
+
+        <div class="mb-4">
+            <label for="discount" class="block text-sm font-medium text-gray-700">
+                割引
+            </label>
+            <div id="discount" class="mt-1 text-lg font-semibold text-gray-900 border-b border-gray-300 pb-1"></div>
+        </div>
+
+        <div class="mb-4">
+            <label for="totalPrice" class="block text-sm font-medium text-gray-700">
+                合計金額
+            </label>
+            <div id="totalPrice" class="mt-1 text-lg font-semibold text-gray-900 border-b border-gray-300 pb-1"></div>
+        </div>
+
+        <div class="mb-4">
+            <label for="order-code" class="block text-sm font-medium text-gray-700">
+                order code
+            </label>
+            <div id="order-code" class="mt-1 text-sm font-semibold text-gray-900 border-b border-gray-300 pb-1"></div>
+        </div>
+    </div>
+    <div id="status" class="text-center my-3 py-3 text-md text-gray-700"></div>
+
     <script src="js/condition.js"></script>
 </body>
 

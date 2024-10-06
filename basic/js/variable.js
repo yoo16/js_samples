@@ -1,4 +1,3 @@
-
 // ダブルクオーテーション​
 var name = "コーヒー";
 console.log(name);
@@ -13,12 +12,12 @@ document.getElementById('name').innerHTML = name;
 var price = 500;
 var quantity = 2;
 var discount = 100;
+
 console.log(quantity, price, discount);
 
 document.getElementById('price').innerHTML = price;
 document.getElementById('quantity').innerHTML = quantity;
 document.getElementById('discount').innerHTML = -discount;
-
 
 var average = 0.333
 var speed = 45.5
