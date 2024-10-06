@@ -1,3 +1,6 @@
+// ウィンドウのタイトル
+document.title = "はじめてのJavaScript"
+
 /**
  * はじめてのJavaScript
  * 複数のコメント

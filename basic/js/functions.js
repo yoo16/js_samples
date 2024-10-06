@@ -1,9 +1,14 @@
+
+
 /**
  * ビルトイン関数
  */
-// parseInt() を使用して文字列を整数に変換する
+// parseInt() : 文字列を整数に変換
 var numberString = "2024";
 var number = parseInt(numberString);
+// Number() : 文字列を数値に変換
+// var number = Number(numberString);
+
 console.log(number);
 
 // Math.max() を使用して最大値を取得
@@ -29,24 +34,6 @@ console.log(answer)
 answer = calculate(71)
 console.log(answer)
 
-/**
- * 合計金額（税込）の計算 
- */
-const TAX_RATE = 0.1;
-function calculateTotalPrice(price, quantity) {
-    var totalPrice = price * quantity * (1 + TAX_RATE);
-    // return totalPrice;
-    // return totalPrice.toFixed();
-    // return Math.floor(totalPrice);
-    return Math.round(totalPrice);
-}
-
-var totalPrice = calculateTotalPrice(300, 2)
-console.log(totalPrice)
-
-var totalPrice = calculateTotalPrice(285, 7)
-console.log(totalPrice)
-
 
 //無名関数
 var hello1 = function (name) {
@@ -55,7 +42,6 @@ var hello1 = function (name) {
 }
 var message = hello1('東京　太郎');
 console.log(message)
-
 
 //アロー関数
 var hello2 = (name) => {
@@ -71,14 +57,73 @@ window.onload = function () {
 }
 console.log("横浜")
 
+// オーダーアプリ
+const TAX_RATE = 0.1;
+var name = "コーヒー";
+var price = 500;
+var quantity = 2;
+var discount = 100;
+var totalPrice = 0;
+
 /**
- * 1 から 6 までの整数をランダムでだす
+ * オーダー表示
  */
-randomNumber = (min, max) => {
+function order(name, price, quantity) {
+    document.getElementById('name').innerHTML = name;
+    document.getElementById('price').innerHTML = price;
+    document.getElementById('quantity').innerHTML = quantity;
+}
+
+/**
+ * 合計金額（税込）の計算 
+ */
+function calculateTotalPrice(price, quantity, discount) {
+    var totalPrice = (price * quantity - discount) * (1 + TAX_RATE);
+    return totalPrice.toFixed();
+}
+
+/**
+ * オーダーコード
+ */
+function createOrderCode(tableNo, orderNo) {
+    var orderCode = tableNo + "-" + orderNo;
+    return orderCode;
+}
+
+/**
+ * ランダムな整数
+ */
+const randomNumber = (min, max) => {
     //(0 - 1 のランダム) * (最大値 - 最小値) + 最小値
     var number = Math.floor(Math.random() * (max + 1 - min)) + min;
     return number;
 }
 
-var number = randomNumber(1, 6);
-console.log(number);
+// オーダー
+order(name, price, quantity);
+
+// 合計金額
+totalPrice = calculateTotalPrice(price, quantity, discount);
+
+document.getElementById('discount').innerHTML = -discount;
+document.getElementById('totalPrice').innerHTML = totalPrice;
+
+// // オーダー完了処理
+document.getElementById('status').innerHTML = "loading..."
+setTimeout(() => {
+    document.getElementById('status').innerHTML = "オーダーが完了しました"
+
+    var tableNo = randomNumber(1, 10);
+    var orderNo = randomNumber(1000, 10000);
+    var orderCode = createOrderCode(tableNo, orderNo);
+    document.getElementById('order-code').innerHTML = orderCode;
+}, 2000);
+
+
+// 年月日
+const formatDate = function(year, month, day) {
+    return `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
+};
+
+var date = formatDate(2024, 10, 6);
+document.getElementById('orderAt').innerHTML = date;
