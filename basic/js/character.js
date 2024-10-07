@@ -1,4 +1,6 @@
 var character = document.getElementById('character');
+var messageElement = document.getElementById('message');
+
 character.style.position = 'absolute';
 
 var timer;
@@ -9,7 +11,7 @@ function start() {
     var x = 0;
     var count = 0;
     clearInterval(timer)
-    timer = setInterval(function () {
+    timer = setInterval(() => {
         count++
         x = step * count
         character.style.left = x + 'px'
@@ -20,12 +22,12 @@ function stop() {
     clearInterval(timer)
 }
 
-var messageElement = document.getElementById('message')
 function showPlot() {
     var rect = character.getBoundingClientRect();
     var message = `(top, left) = (${rect.top}, ${rect.left})`;
     messageElement.innerText = message;
 }
+
 function hidePlot() {
     messageElement.innerText = 'キャラクターをマウスオーバーしてください';
 }
