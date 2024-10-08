@@ -1,17 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
+
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>繰り返し</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  
-  <h2>商品一覧</h2>
-  <div id="item_list">
-    
+
+<body class="bg-gray-100">
+
+  <div class="container mx-auto">
+    <h1 class="text-3xl font-bold mb-5">繰り返し</h1>
+    <div class="my-5 bg-white p-6">
+      <h2 class="text-xl font-bold mb-5">年齢選択プルダウン</h2>
+
+      <!-- 年齢選択プルダウンを挿入する部分 -->
+      <label for="age-select" class="block mb-2">年齢を選択してください:</label>
+      <select id="age-select" class="p-2 border border-gray-300 rounded-md w-full"></select>
+    </div>
+
+    <div class="my-5 bg-white p-6">
+      <h2 class="text-xl font-bold mb-5">貯金シュミレーター</h2>
+      <div class="mb-4">
+        <label for="initial-deposit" class="block mb-2">預金</label>
+        <input id="initial-deposit" class="p-2 border border-gray-300 rounded-md w-full" type="number" placeholder="初期預金額を入力">
+      </div>
+
+      <div class="mb-4">
+        <label for="saving-target" class="block mb-2">目標金額</label>
+        <input id="saving-target" class="p-2 border border-gray-300 rounded-md w-full" type="number" placeholder="目標金額を入力">
+      </div>
+
+      <div class="mb-4">
+        <label for="saving-interest-rate" class="block mb-2">金利</label>
+        <input id="saving-interest-rate" class="p-2 border border-gray-300 rounded-md w-full" type="number"
+          placeholder="年利率を入力"> %
+      </div>
+
+      <button onclick="calculateYears()"
+        class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700">
+        計算
+      </button>
+
+      <div class="mt-5">
+        <label for="year" class="block text-xl font-bold mb-2">目標金額に達するまでの年数:</label>
+        <p id="year" class="text-gray-900 text-3xl"></p>
+      </div>
+    </div>
   </div>
+
   <script src="js/loop.js"></script>
 </body>
+
 </html>

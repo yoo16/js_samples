@@ -1,103 +1,47 @@
-/**
- * 変数
- */
-var drink1 = "コーヒー";
-var drink2 = "紅茶";
-var drink3 = "ほうじ茶";
+// 配列の定義
+var items = ['コーヒー', '紅茶', 'ほうじ茶', 'ウーロン茶'];
 
 /**
- * new Array()
+ * 配列を文字列で表示
  */
-var drinks = new Array();
-console.log(drinks);
+function showArrayString() {
+    // 配列をカンマ区切りの文字列に変換
+    var string = items.join(', ');
+    document.getElementById('array-string').innerHTML = string;
+}
 
 /**
- * []
+ * 配列の要素表示
  */
-var drinks = [];
-console.log(drinks);
+function showItem() {
+    const index = document.getElementById('input-index').value;
+    // インデックス範囲内かチェック
+    if (index >= 0 && index < items.length) {
+        document.getElementById('input-value').value = items[index];
+        document.getElementById('error').innerHTML = "";
+    } else {
+        // 配列の個数から、最大インデックスを設定
+        var maxIndex = items.length - 1;
+        var error = `0 から${maxIndex}の範囲で指定してください。`;
+        document.getElementById('error').innerHTML = error;
+    }
+}
 
 /**
- * create array
+ * 値の更新
  */
-var drinks = ['コーヒー', '紅茶', 'ほうじ茶'];
-console.log(drinks);
+function updateItem() {
+    const index = document.getElementById('input-index').value;
+    const value = document.getElementById('input-value').value;
 
-/**
- * show value by index
- */
-var drink = drinks[1];
-console.log("select drink:", drink);
+    // インデックスを指定して値更新
+    items[index] = value;
 
-drinks[1] = 'ウーロン茶';
-console.log(drinks);
+    // 配列の値表示
+    showItem();
 
-/**
- * Array.length
- */
-var length = drinks.length;
-console.log("length:", length);
+    // 配列の文字列表示
+    showArrayString();
+}
 
-
-/**
- * not spread syntax
- */
-var drinks = ['コーヒー', '紅茶'];
-// 展開しないで文字列追加
-drinks = [drinks, 'ほうじ茶'];
-console.log(drinks);
-
-
-/**
- * spread syntax
- */
-var drinks = ['コーヒー', '紅茶'];
-// 展開して文字列追加
-drinks = [...drinks, 'ほうじ茶'];
-console.log(drinks);
-
-
-/**
- * array push
- */
-drinks.push('炭酸水');
-console.log(drinks);
-
-/**
- * array pop
- */
-drinks.pop();
-console.log(drinks);
-
-/**
- * array shift
- */
-drinks.shift();
-console.log(drinks)
-
-/**
- * array unshift
- */
-drinks.unshift('アイスコーヒー');
-console.log(drinks);
-
-/**
- * array splice add
- */
-drinks.splice(1, 0, "オレンジジュース");
-console.log(drinks);
-
-/**
- * array splice
- */
-drinks.splice(2, 1);
-console.log(drinks);
-
-/**
- * array indexOf
- */
-var index = drinks.indexOf('ほうじ茶');
-console.log(index);
-
-
-monsters = ['']
+showArrayString();

@@ -2,123 +2,57 @@
 /**
  * 0 から1ずつ増やして10回表示
  */
-for (var i = 0; i < 10; i++) {
-    console.log(i + 1);
+for (var index = 0; index < 10; index++) {
+    console.log(index + 1);
 }
 
 /**
- * 0 から1ずつ増やして10回表示
+ * 1 から 1000までの足し算
  */
 var sum = 0;
-for (var i = 1; i <= 1000; i++) {
-    sum += i;
+for (let index = 1; index <= 1000; index++) {
+    sum += index;
 }
 console.log(sum);
 
-/**
- * 配列の中身を表示 for
- */
-var drinks = ['コーヒー', 'ミネラルウォーター', 'コーラ', 'ほうじ茶'];
-for (var i = 0; i < drinks.length; i++) {
-    console.log(drinks[i]);
+// for文を使って年齢のプルダウンメニューを生成
+const ageSelect = document.getElementById('age-select');
+for (let index = 0; index <= 100; index++) {
+    const option = document.createElement('option');
+    option.value = index;
+    option.textContent = index + ' 歳';
+    ageSelect.appendChild(option);
 }
-
-/**
- * 配列の中身を表示 for
- */
-for (var key in drinks) {
-    console.log(drinks[key]);
-}
-
-/**
- * while
- */
-var number = 100;
-var i = 0;
-while (number > 0) {
-    number -= 17;
-    i++;
-}
-console.log(i);
-console.log(number);
-
-
-var scores = [
-    [40, 55, 80],
-    [51, 61, 78],
-    [67, 81, 50],
-]
-
-console.log(scores);
-console.log(scores[2][1]);
-
-/**
- * if
- */
-var items = [
-    { id: 1, name: "ミネラルウォーター", price: 80, is_sale: true },
-    { id: 2, name: "ほうじ茶", price: 120, is_sale: false },
-    { id: 3, name: "コーヒー", price: 150, is_sale: true },
-    { id: 4, name: "紅茶", price: 130, is_sale: false },
-    { id: 5, name: "炭酸水", price: 90, is_sale: true },
-]
 
 /**
  * 複利計算 while
  */
-var money = 1000000;
-var rate = 1.01;
-var year = 0;
-var target = 2000000;
-while (money <= target) {
-    year++;
-    money *= rate;
-}
-var message = `${target}円になるには ${year}年かかります`;
-console.log(message);
+function calculateYears() {
+    // 入力値を取得
+    const initialDeposit = parseFloat(document.getElementById('initial-deposit').value);
+    const interestRate = parseFloat(document.getElementById('saving-interest-rate').value) / 100;
+    const savingTarget = parseFloat(document.getElementById('saving-target').value);
 
-/**
- * 連想配列の中身を表示 forEach
- */
-var items = [
-    { id: 1, name: '銅のつるぎ', price: 150 },
-    { id: 2, name: '鉄のやり', price: 550 },
-    { id: 3, name: '皮のたて', price: 90 },
-    { id: 4, name: '鉄のかぶと', price: 850 },
-    { id: 5, name: '皮のぼうし', price: 50 },
-];
-
-var items = [
-    { id: 1, name: 'ミネラルウォーター', price: 80, is_sale: true },
-    { id: 2, name: 'ほうじ茶', price: 120, is_sale: false },
-    { id: 3, name: 'コーヒー', price: 150, is_sale: true },
-    { id: 4, name: '紅茶', price: 130, is_sale: false },
-    { id: 5, name: '炭酸水', price: 90, is_sale: true },
-];
-
-/**
- * table list
- */
-var item_list = document.getElementById('item_list');
-var table = document.createElement('table');
-
-//data
-for (var index in items) {
-    var tr = document.createElement('tr');
-    var item = items[index];
-
-    for (var key in item) {
-        var td = document.createElement('td');
-        var data = item[key];
-        if (key == 'is_sale') {
-            data = (data) ? 'セール' : '';
-        }
-        td.innerHTML = data;
-        tr.appendChild(td);
+    // 入力が正しいかどうかのチェック
+    if (isNaN(initialDeposit)
+        || isNaN(interestRate)
+        || isNaN(savingTarget) 
+        || initialDeposit <= 0 
+        || interestRate <= 0 
+        || savingTarget <= initialDeposit) {
+        document.getElementById('year').textContent = '有効な値を入力してください。';
+        return;
     }
-    table.appendChild(tr);
+
+    var years = 0;
+    var currentAmount = initialDeposit;
+
+    // 複利計算: 目標金額に達するまで年ごとに増やす
+    while (currentAmount < savingTarget) {
+        currentAmount += currentAmount * interestRate;
+        years++;
+    }
+
+    // 結果を表示
+    document.getElementById('year').textContent = `${years} 年`;
 }
-item_list.appendChild(table);
-
-
-
