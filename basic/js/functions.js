@@ -1,23 +1,21 @@
 // オーダーアプリ
 const TAX_RATE = 0.1;
-var name = "コーヒー";
+var itemName = "コーヒー";
 var price = 500;
 var quantity = 2;
 var discount = 100;
 var totalPrice = 0;
+var tableNo = 1;
 
 /**
- * order()
- * オーダー表示
- * 
- * @param {*} name 
- * @param {*} price 
- * @param {*} quantity 
+ * showHTML()
+ * HTML表示
+ * @param {*} id 
+ * @param {*} value 
  */
-function order(name, price, quantity) {
-    document.getElementById('name').innerHTML = name;
-    document.getElementById('price').innerHTML = price;
-    document.getElementById('quantity').innerHTML = quantity;
+
+function showHTML(id, value) {
+    document.getElementById(id).innerHTML = value;
 }
 
 /**
@@ -42,10 +40,25 @@ function calculateTotalPrice(price, quantity, discount) {
  * @param {*} orderNo 
  * @returns 
  */
-function createOrderCode(tableNo, orderNo) {
+function createOrderCode(tableNo) {
+    var orderNo = randomNumber(1, 1000);
     var orderCode = tableNo + "-" + orderNo;
     return orderCode;
 }
+
+
+/**
+ * formatDate()
+ * 年月日生成
+ * 
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} day 
+ * @returns 
+ */
+const formatDate = function (year, month, day) {
+    return `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
+};
 
 /**
  * randomNumber()
@@ -61,41 +74,25 @@ const randomNumber = (min, max) => {
     return number;
 }
 
-/**
- * formatDate()
- * 年月日生成
- * 
- * @param {*} year 
- * @param {*} month 
- * @param {*} day 
- * @returns 
- */
-const formatDate = function(year, month, day) {
-    return `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
-};
-
-
-// オーダー
-order(name, price, quantity);
+showHTML('item-name', itemName);
+showHTML('price', price);
+showHTML('quantity', quantity);
 
 // 合計金額
 totalPrice = calculateTotalPrice(price, quantity, discount);
 
 // HTML表示（割引、合計金額）
-document.getElementById('discount').innerHTML = -discount;
-document.getElementById('totalPrice').innerHTML = totalPrice;
+showHTML('discount', discount);
+showHTML('totalPrice', totalPrice);
 
 // オーダー完了処理
-document.getElementById('status').innerHTML = "Loading..."
 setTimeout(() => {
-    document.getElementById('status').innerHTML = "オーダーが完了しました"
+    showHTML('status', "オーダー完了");
 
-    var tableNo = randomNumber(1, 10);
-    var orderNo = randomNumber(1000, 10000);
-    var orderCode = createOrderCode(tableNo, orderNo);
-    document.getElementById('order-code').innerHTML = orderCode;
+    var orderCode = createOrderCode(tableNo);
+    showHTML('order-code', orderCode);
+
+    // 日付表示
+    // var date = formatDate(2024, 10, 6);
+    // showHTML('order-at', date);
 }, 2000);
-
-
-var date = formatDate(2024, 10, 6);
-document.getElementById('orderAt').innerHTML = date;

@@ -2,21 +2,38 @@
  * ビルトイン関数
  */
 // parseInt() : 文字列を整数に変換
-var numberString = "2024";
+var numberString = "0005";
 var number = parseInt(numberString);
 // Number() : 文字列を数値に変換
 // var number = Number(numberString);
 
+console.log(numberString);
 console.log(number);
+
+var result = isNaN("コーヒー");
+console.log(result);
+
+var result = isNaN("0005");
+console.log(result);
+
+var result = isNaN(5);
+console.log(result);
+
+var height = 169.5;
+var result = Math.round(height);
+console.log(result);
+
+var result = Math.ceil(height);
+console.log(result);
+
+var result = Math.floor(height);
+console.log(result);
+
 
 // Math.max() を使用して最大値を取得
 var maxValue = Math.max(1, 5, 10, 3);
 console.log(maxValue);
 
-// setTimeout()
-setTimeout(() => {
-    console.log("実行");
-}, 5000);
 
 /**
  * ユーザ定義関数

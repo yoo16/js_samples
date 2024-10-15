@@ -1,24 +1,9 @@
-
-/**
- * 0 から1ずつ増やして10回表示
- */
-for (var index = 0; index < 10; index++) {
-    console.log(index + 1);
-}
-
-/**
- * 1 から 1000までの足し算
- */
-var sum = 0;
-for (let index = 1; index <= 1000; index++) {
-    sum += index;
-}
-console.log(sum);
-
 // for文を使って年齢のプルダウンメニューを生成
 const ageSelect = document.getElementById('age-select');
+const defaultYear = 30;
 for (let index = 0; index <= 100; index++) {
     const option = document.createElement('option');
+    option.selected = (defaultYear == index);
     option.value = index;
     option.textContent = index + ' 歳';
     ageSelect.appendChild(option);

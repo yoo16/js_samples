@@ -1,24 +1,25 @@
-// 変数・定数定義
 const TAX_RATE = 0.1;
-var name = "コーヒー";
+var money = 1000;  //所持金: 値を変えてみる
+var itemName = "コーヒー";
 var price = 500;
 var quantity = 2;
-var isMember = true;
+var isMember = true;  // 会員: 値を変えてみる
+// 会員の場合、割引100
 var discount = (isMember) ? 100 : 0;
 var totalPrice = 0;
-var money = 1000;  //値を変えてみる
+var tableNo = 1;
 var message = "";
 
 /**
- * オーダー表示
+ * showHTML()
+ * HTML表示
  */
-function order(name, price, quantity) {
-    document.getElementById('name').innerHTML = name;
-    document.getElementById('price').innerHTML = price;
-    document.getElementById('quantity').innerHTML = quantity;
+function showHTML(id, value) {
+    document.getElementById(id).innerHTML = value;
 }
 
 /**
+ * calculateTotalPrice()
  * 合計金額（税込）の計算 
  */
 function calculateTotalPrice(price, quantity, discount) {
@@ -27,14 +28,25 @@ function calculateTotalPrice(price, quantity, discount) {
 }
 
 /**
- * オーダーコード
+ * createOrderCode()
+ * オーダーコード生成
  */
-function createOrderCode(tableNo, orderNo) {
+function createOrderCode(tableNo) {
+    var orderNo = randomNumber(1, 1000);
     var orderCode = tableNo + "-" + orderNo;
     return orderCode;
 }
 
 /**
+ * formatDate()
+ * 年月日生成
+ */
+const formatDate = function (year, month, day) {
+    return `${year}/${String(month).padStart(2, '0')}/${String(day).padStart(2, '0')}`;
+};
+
+/**
+ * randomNumber()
  * ランダムな整数
  */
 const randomNumber = (min, max) => {
@@ -44,52 +56,56 @@ const randomNumber = (min, max) => {
 }
 
 /**
- * 会員ステータス
+ * order()
+ * オーダー
  */
-function memberStatus() {
-    if (isMember) {
-        document.getElementById('member-status').innerHTML = "会員";
-    }
+function order() {
+    var orderCode = createOrderCode(tableNo);
+    showHTML('order-code', orderCode);
+
+    // 日付表示
+    var date = formatDate(2024, 10, 6);
+    showHTML('order-at', date);
+
+    showHTML('status', "オーダー完了");
 }
 
 /**
+ * pay()
  * 支払い処理
  */
 function pay() {
     var message = "決済中...";
-    if (price <= 0) {
+    if (totalPrice  <= 0) {
         message = "金額エラー";
     } else if (money >= totalPrice) {
         message = "支払い完了";
     } else {
         message = "残高不足";
     }
-    document.getElementById('status').innerHTML = message;
+    showHTML('status', message)
 }
 
-// オーダー完了処理
-document.getElementById('status').innerHTML = "Loading..."
-setTimeout(() => {
-    document.getElementById('status').innerHTML = "オーダーが完了しました"
-
-    var tableNo = randomNumber(1, 10);
-    var orderNo = randomNumber(1000, 10000);
-    var orderCode = createOrderCode(tableNo, orderNo);
-    document.getElementById('order-code').innerHTML = orderCode;
-
-    // 支払い
-    pay();
-}, 2000);
-
+// 商品情報
+showHTML('item-name', itemName);
+showHTML('price', price);
+showHTML('quantity', quantity);
 
 // メンバーステータス
-memberStatus();
-
-// オーダー
-order(name, price, quantity);
+if (isMember) {
+    showHTML('member-status', "会員");
+}
 
 // 合計金額
 totalPrice = calculateTotalPrice(price, quantity, discount);
 
-document.getElementById('discount').innerHTML = -discount;
-document.getElementById('totalPrice').innerHTML = totalPrice;
+// 会員の場合、割引価格表示
+showHTML('discount', discount);
+
+// 合計金額表示
+showHTML('totalPrice', totalPrice);
+
+// オーダー
+setTimeout(order, 2000);
+// 決済
+setTimeout(pay, 5000);
