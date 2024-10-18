@@ -1,4 +1,6 @@
-//変数の宣言
+/**
+ * 二項演算
+ */
 var price = 500;
 price = price + 200;
 console.log(price);

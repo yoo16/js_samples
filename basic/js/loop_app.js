@@ -5,7 +5,7 @@ for (let index = 0; index <= 100; index++) {
     const option = document.createElement('option');
     option.selected = (defaultYear == index);
     option.value = index;
-    option.textContent = index + ' 歳';
+    option.innerHTML = index + ' 歳';
     ageSelect.appendChild(option);
 }
 
@@ -25,7 +25,7 @@ function calculateYears() {
         || initialDeposit <= 0 
         || interestRate <= 0 
         || savingTarget <= initialDeposit) {
-        document.getElementById('year').textContent = '有効な値を入力してください。';
+        document.getElementById('year').innerHTML = '有効な値を入力してください。';
         return;
     }
 
@@ -39,5 +39,5 @@ function calculateYears() {
     }
 
     // 結果を表示
-    document.getElementById('year').textContent = `${years} 年`;
+    document.getElementById('year').innerHTML = years;
 }
