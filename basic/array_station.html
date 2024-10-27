@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山手線 路線図</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto p-8 grid grid-cols-2 gap-8 items-start">
+        <!-- 左側：路線図 -->
+        <div class="bg-white shadow-md rounded-lg p-4">
+            <h1 class="text-2xl font-bold text-center mb-6">山手線 路線図</h1>
+            <div id="station-map" class="grid grid-cols-4 gap-4"></div>
+        </div>
+
+        <!-- 右側：駅看板 -->
+        <div class="bg-white shadow-md rounded-lg p-4 text-center">
+            <div id="current-station" class="text-3xl font-extrabold text-black mb-2">
+                東京
+            </div>
+            <div id="current-furigana" class="text-sm text-black mb-6">
+                とうきょう
+            </div>
+            <div class="flex justify-center space-x-4 bg-green-500">
+                <button 
+                onclick="prevStation()"
+                id="prev-button" class="font-extrabold text-white px-4 py-2 rounded-md">
+                </button>
+                <button 
+                onclick="nextStation()" 
+                id="next-button" class="font-extrabold text-white px-4 py-2 rounded-md">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 外部JavaScriptファイルの読み込み -->
+    <script src="js/array_station.js"></script>
+</body>
+
+</html>
