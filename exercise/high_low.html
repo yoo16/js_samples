@@ -1,31 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <title>Shop</title>
+  <title>Shop - High & Low Game</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-  <div class="container">
-    <h2 class="h2 bg-info p-3 text-white">High & Low Game</h2>
-    <div>
-      Score: <span id="score_display"></span>
-    </div>
-    <p id="question"></p>
-    <button id="retry_btn" class="btn btn-outline-primary" onclick="initGame()">もう一度</button>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="container max-w-md bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-semibold text-center text-gray-800 rounded-md py-3 mb-6">High & Low Game</h2>
 
-    <p id="message">High か Low か?</p>
-    <p id="result"></p>
+    <p id="result" class="text-center text-xl font-semibold my-4 text-gray-800"></p>
 
-    <div id="button_area">
-      <button class="btn btn-info" id="low_btn" onclick="choiceLow()">Low</button>
-      <button class="btn btn-success" id="draw_btn" onclick="choiceDraw()">Draw</button>
-      <button class="btn btn-danger" id="high_btn" onclick="choiceHigh()">High</button>
+    <div class="text-lg font-medium mb-4 flex items-center justify-between">
+      <span class="text-gray-700">Score:</span>
+      <span id="score-display" class="text-2xl font-bold text-blue-500">0</span>
     </div>
+
+    <div id="pc-number"
+      class="flex justify-center items-center h-24 w-24 border-2 border-gray-400 rounded-lg bg-white text-4xl font-bold text-gray-800 mx-auto mb-4 shadow-md">
+    </div>
+
+    <div id="my-number"
+      class="flex justify-center items-center h-24 w-24 border-2 border-gray-400 rounded-lg bg-white text-4xl font-bold text-gray-800 mx-auto mb-4 shadow-md">
+    </div>
+
+    <p id="message" class="text-center text-gray-600 text-lg my-4">High & Low?</p>
+
+    <div id="select-button-area" class="flex justify-center space-x-4 text-center">
+      <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" id="low-btn" onclick="choiceLow()">Low</button>
+      <button class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" id="draw-btn" onclick="choiceDraw()">Draw</button>
+      <button class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" id="high-btn" onclick="choiceHigh()">High</button>
+    </div>
+
+    <div class="flex justify-center space-x-4 text-center my-5">
+      <button id="retry-btn" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-blue-600" onclick="initGame()">Retry Game</button>
+    </div>
+
   </div>
 
   <script src="js/high_low.js"></script>

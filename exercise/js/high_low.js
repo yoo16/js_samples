@@ -1,14 +1,15 @@
-var result = document.getElementById('result');
-var question = document.getElementById('question')
-var retry_btn = document.getElementById('retry_btn')
-var button_area = document.getElementById('button_area')
-var score_display = document.getElementById('score_display');
+var resultDisplay = document.getElementById('result');
+var myNumberDisplay = document.getElementById('my-number');
+var pcNumberDisplay = document.getElementById('pc-number')
+var retryBtn = document.getElementById('retry-btn')
+var selectButtonArea = document.getElementById('select-button-area')
+var scoreDisplay = document.getElementById('score-display');
 
-retry_btn.style.display = 'none';
-
-var question_number = 0;
-var result_number = 0;
+var pcNumber = 0;
+var myNumber = 0;
 var score = 0;
+var isWin = false;
+var isDraw = false;
 
 function randomNumber(min, max) {
     var number = Math.floor(Math.random() * (max + 1 - min)) + min;
@@ -16,63 +17,68 @@ function randomNumber(min, max) {
 }
 
 function initGame() {
-    question_number = randomNumber(1, 13)
-    question.innerText = question_number
+    isWin = false;
+    isDraw = false;
 
-    result.style.display = 'none';
-    button_area.style.display = 'block';
+    // PCのカードをランダムで取得
+    pcNumber = randomNumber(1, 13);
+    pcNumberDisplay.innerHTML = pcNumber;
+
+    resultDisplay.style.display = 'none';
+    retryBtn.style.display = 'none';
+    selectButtonArea.style.display = 'flex';
+
+    // 全てのボタンを表示
+    document.getElementById('low-btn').style.display = 'inline';
+    document.getElementById('draw-btn').style.display = 'inline';
+    document.getElementById('high-btn').style.display = 'inline';
 }
 
-function checkGame(is_win) {
-    console.log(is_win);
-    var result_string = (is_win) ? 'Win' : 'Lose';
-    var message = result_string + '!! <br>' + result_number;
-    result.innerHTML = message;
+function checkGame() {
+    resultDisplay.innerHTML = (isWin) ? 'Win' : 'Lose';
+    myNumberDisplay.innerHTML = myNumber;
 
-    result.style.display = 'block';
-    button_area.style.display = 'none';
+    resultDisplay.style.display = 'block';
+    selectButtonArea.style.display = 'flex';
+    retryBtn.style.display = 'block';
+
+    updateScore(isWin, true);
 }
 
-
-function updateScore(is_win, is_draw) {
-    if (is_win) {
-        if (is_draw) {
-            score+= 10;
-        } else {
-            score+= 1;
-        }
+function updateScore(isWin, isDraw) {
+    if (isWin) {
+        score += isDraw ? 10 : 1;
     } else {
-        score-= 2;
+        score -= 2;
     }
-    score_display.innerHTML = score;
-}
-
-function showRetry() {
-    retry_btn.style.display = 'block';
+    scoreDisplay.innerHTML = score;
 }
 
 function choiceHigh() {
-    result_number = randomNumber(1, 13)
-    var is_win = (result_number > question_number);
-    checkGame(is_win)
-    updateScore(is_win, false);
-    showRetry();
+    myNumber = randomNumber(1, 13);
+    isWin = (myNumber > pcNumber);
+    checkGame();
+    hideButtonsExcept('high-btn');
 }
 
 function choiceLow() {
-    result_number = randomNumber(1, 13)
-    var is_win = (result_number < question_number);
-    checkGame(is_win)
-    updateScore(is_win, false);
-    showRetry();
+    myNumber = randomNumber(1, 13);
+    isWin = (myNumber < pcNumber);
+    checkGame();
+    hideButtonsExcept('low-btn');
 }
 
 function choiceDraw() {
-    result_number = randomNumber(1, 13)
-    var is_win = (result_number == question_number);
-    checkGame(is_win)
-    updateScore(is_win, true);
-    showRetry();
+    myNumber = randomNumber(1, 13);
+    isWin = (myNumber == pcNumber);
+    checkGame();
+    hideButtonsExcept('draw-btn');
+}
+
+function hideButtonsExcept(selectedButtonId) {
+    document.getElementById('low-btn').style.display = selectedButtonId === 'low-btn' ? 'inline' : 'none';
+    document.getElementById('draw-btn').style.display = selectedButtonId === 'draw-btn' ? 'inline' : 'none';
+    document.getElementById('high-btn').style.display = selectedButtonId === 'high-btn' ? 'inline' : 'none';
 }
 
 initGame();

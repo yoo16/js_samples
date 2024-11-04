@@ -5,21 +5,31 @@ character.style.position = 'absolute';
 
 var timer;
 const interval = 100;
-const step = 10
+const step = 10;
+var x = 0;
+var count = 0;
+var direction = 1;
 
 function start() {
-    var x = 0;
-    var count = 0;
-    clearInterval(timer)
+    clearInterval(timer);
     timer = setInterval(() => {
-        count++
-        x = step * count
-        character.style.left = x + 'px'
-    }, interval)
+        count++;
+        x += step * direction;
+        character.style.left = x + 'px';
+
+        // Get the width of the screen and the character
+        var screenWidth = window.innerWidth;
+        var characterWidth = character.offsetWidth;
+
+        // Reverse direction when reaching the screen edges
+        if (x + characterWidth >= screenWidth || x <= 0) {
+            direction *= -1;  // Reverse direction
+        }
+    }, interval);
 }
 
 function stop() {
-    clearInterval(timer)
+    clearInterval(timer);
 }
 
 function showPlot() {
@@ -31,3 +41,6 @@ function showPlot() {
 function hidePlot() {
     messageElement.innerText = 'キャラクターをマウスオーバーしてください';
 }
+
+// Optional: Start moving the character on page load
+start();
