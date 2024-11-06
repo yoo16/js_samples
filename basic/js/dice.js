@@ -8,6 +8,7 @@ titleElement.innerText = 'DICE';
 
 // id取得
 console.log(titleElement.id);
+// id設定
 titleElement.id = "dice-title";
 
 // class取得

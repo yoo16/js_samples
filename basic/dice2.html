@@ -22,15 +22,16 @@
   </nav>
 
   <main class="flex flex-col items-center mt-10 min-h-screen">
+    <!-- サイコロを振るボタン -->
+    <button onclick="rollDice()" id="rollButton"
+      class="mb-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      サイコロを振る
+    </button>
+
     <div id="dice" class="">
       <img id="result" src="./images/dice1.png" alt="Dice" class="w-[150px]">
     </div>
 
-    <!-- サイコロを振るボタン -->
-    <button onclick="rollDice()" id="rollButton"
-      class="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-      サイコロを振る
-    </button>
   </main>
 
   <script src="js/dice2.js"></script>
