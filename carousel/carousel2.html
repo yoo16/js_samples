@@ -11,9 +11,6 @@
 </head>
 
 <body class="min-h-screen flex flex-col items-center">
-    <!-- お知らせ -->
-    <div id="announcement-bar" class="scroll-animation w-full h-12 text-black text-center py-2 text-lg font-bold"></div>
-
     <!-- ナビゲーションメニュー -->
     <header class="w-full bg-white">
         <div class="container mx-auto flex items-center justify-between p-4">
@@ -35,7 +32,10 @@
     </div>
 
     <!-- サムネイルコンテナ -->
-    <div id="thumbnail-container" class="flex space-x-2 mt-4"></div>
+    <div id="thumbnail-container" class="flex mt-4"></div>
+
+    <!-- お知らせ -->
+    <div id="announcement-bar" class="scroll-animation w-full h-12 text-black text-center mt-5 py-5 text-lg font-bold"></div>
 
     <!-- モーダルウィンドウ -->
     <div id="modal" onclick="closeModal()"
@@ -44,7 +44,7 @@
     </div>
 
     <script src="js/data.js" defer></script>
-    <script src="js/item.js" defer></script>
+    <script src="js/modal.js" defer></script>
     <script src="js/announce.js" defer></script>
     <script src="js/carousel2.js" defer></script>
 </body>

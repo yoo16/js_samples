@@ -11,9 +11,6 @@
 </head>
 
 <body class="min-h-screen flex flex-col items-center">
-    <!-- お知らせ -->
-    <div id="announcement-bar" class="scroll-animation w-full h-12 text-black text-center py-2 text-lg font-bold"></div>
-
     <!-- ナビゲーションメニュー -->
     <header class="w-full bg-white">
         <div class="container mx-auto flex items-center justify-between p-4">
@@ -29,11 +26,13 @@
     </header>
 
     <!-- カルーセルコンテナ -->
-    <div id="carousel-container" class="carousel-container">
+    <div id="carousel-container" class="my-4 carousel-container">
         <div id="carousel-images" class="flex whitespace-nowrap">
             <!-- JavaScriptで画像を追加 -->
         </div>
     </div>
+    <!-- お知らせ -->
+    <div id="announcement-bar" class="scroll-animation w-full h-12 text-black text-center py-2 text-lg font-bold"></div>
 
     <!-- モーダルウィンドウ -->
     <div id="modal" onclick="closeModal()"
@@ -42,7 +41,7 @@
     </div>
 
     <script src="js/data.js" defer></script>
-    <script src="js/item.js" defer></script>
+    <script src="js/modal.js" defer></script>
     <script src="js/announce.js" defer></script>
     <script src="js/carousel1.js" defer></script>
 </body>

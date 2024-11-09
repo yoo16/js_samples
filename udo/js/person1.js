@@ -13,7 +13,7 @@ class Person {
     }
 
     greet() {
-        addMessage(`わたしは、${this.name}（${this.furigana}）、${this.age}歳。`, this.name);
+        addMessage(`${this.name}（${this.furigana}）、${this.age}歳。`, this.name);
         addMessage(`好きなことは、${this.likes}。`, this.name);
         addMessage(`得意なことは、${this.ability}です。`, this.name);
         showMessages();

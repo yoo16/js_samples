@@ -13,10 +13,9 @@
 
 .carousel-image {
     display: inline-block;
-    border-radius: 30px;
-    margin: 0 10px;
-    width: 50%;
+    margin: 0x;
     height: 300px;
+    min-height: 300px;
     object-fit: contain;
     cursor: pointer;
 }

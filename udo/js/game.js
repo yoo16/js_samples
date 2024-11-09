@@ -55,7 +55,8 @@ function selectPerson(person) {
     displayStatus(person);
 
     // メッセージ
-    showMessage("このキャラクターで良いですか？");
+    const text = `「${person.name}」でゲームをはじめますか？\nよろしければ【決定】ボタンをおしてください。`;
+    showMessage(text);
 
     // 決定ボタン表示
     selectButton.classList.remove('hidden');
@@ -74,7 +75,7 @@ function selectPerson(person) {
  * キャラクターイメージ表示
  **/
 function showImage(imagePath) {
-     // 既存の画像をクリア
+    // 既存の画像をクリア
     characterImageElement.innerHTML = "";
     if (imagePath) {
         const image = new Image();
@@ -125,7 +126,12 @@ function showMessage(message, name = "") {
     function typeMessage() {
         if (messageIndex < message.length) {
             // メッセージを1文字ずつ表示
-            messageElement.textContent += message[messageIndex];
+            var char = message[messageIndex];
+
+            // 改行コードの場合、<br> に置き換え
+            if (char == "\n") char = "<br>";
+
+            messageElement.innerHTML += char;
             messageIndex++;
             // タイムラグ
             typingTimeout = setTimeout(typeMessage, 50);
