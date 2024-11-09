@@ -14,10 +14,10 @@ function openModal(id) {
 
     // アイテムがあればモーダル表示
     modalContent.innerHTML = `
-            <h2 class="text-2xl font-bold mb-2">${item.name}</h2>
+            <h2 class="text-2xl font-bold my-5">${item.name}</h2>
             <img src="${item.image}" class="w-full h-80 rounded-xl object-cover mb-4" />
             <p class="text-left mb-4">${item.description}</p>
-            <button onclick="closeModal()" class="bg-gray-500 text-white py-2 px-4 rounded">Close</button>
+            <button onclick="closeModal()" class="w-full bg-gray-500 text-white py-2 px-4 rounded">Close</button>
         `;
     modal.classList.remove("hidden");
 }
