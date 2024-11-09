@@ -74,12 +74,12 @@ function selectPerson(person) {
  * キャラクターイメージ表示
  **/
 function showImage(imagePath) {
+     // 既存の画像をクリア
     characterImageElement.innerHTML = "";
     if (imagePath) {
-        // キャラクター画像作成
         const image = new Image();
         image.src = imagePath;
-        image.className = "w-[300px] rounded-xl";
+        image.className = "w-[300px] rounded-xl slide-in";
         characterImageElement.appendChild(image);
     }
 }
