@@ -1,0 +1,70 @@
+:root {
+    --highlight-color: #d6452b;
+}
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 500px;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+    align-items: stretch;
+}
+
+.carousel-image {
+    flex-shrink: 0;
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.carousel-button.left {
+    left: 10px;
+}
+
+.carousel-button.right {
+    right: 10px;
+}
+
+/* サムネイル画像 */
+.thumbnail-image {
+    width: 100px;
+    height: 80px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 10px;
+}
+
+.thumbnail-image:hover {
+    border-color: var(--highlight-color);
+}
+
+.active-thumbnail {
+    border-color: var(--highlight-color);
+}
+
+/* サムネイルコンテナのスタイル */
+#thumbnail-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
