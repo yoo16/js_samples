@@ -1,4 +1,4 @@
-const persons = [
+const players = [
     {
         id: 1,
         name: "星野 陽菜",

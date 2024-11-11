@@ -1,14 +1,14 @@
 const statusContainer = document.getElementById("status-container");
 const selectButton = document.getElementById('select-button')
 const messageElement = document.getElementById("message");
-const selectPersonElement = document.getElementById("select-person")
+const selectCharacterElement = document.getElementById("select-character")
 const characterNameElement = document.getElementById("characterName");
-const characterImageElement = document.getElementById("characterImage");
+const playerImageElement = document.getElementById("playerImage");
 const thumbnailContainer = document.getElementById("thumbnail-container");
 const continueMark = document.getElementById("continue-mark");
 
 // 選択キャラクター
-var selectedPerson = {};
+var selectedPlayer = {};
 // 複数メッセージ
 var messages = [];
 // 複数メッセージインデックス
@@ -20,12 +20,12 @@ var typingTimeout;
  * サムネイル画像を生成
  */
 function createThumbnails() {
-    persons.forEach(person => {
+    players.forEach(player => {
         const thumb = document.createElement("img");
-        thumb.id = "person-" + person.id;
-        thumb.src = person.imagePath;
+        thumb.id = "player-" + player.id;
+        thumb.src = player.imagePath;
         thumb.className = "thumbnail-image w-24 h-24 object-cover rounded-full border-2 cursor-pointer";
-        thumb.onclick = () => selectPerson(person);
+        thumb.onclick = () => selectPlayer(player);
         thumbnailContainer.appendChild(thumb);
     });
 }
@@ -33,29 +33,29 @@ function createThumbnails() {
 /**
  * キャラクターの詳細をステータスエリアに表示
  */
-function displayStatus(person) {
+function displayStatus(player) {
     // キャラクター画像表示
-    showImage(person.imagePath);
+    showImage(player.imagePath);
 
-    document.getElementById("person-name").textContent = person.name;
-    document.getElementById("person-furigana").textContent = `(${person.furigana})`;
-    document.getElementById("person-description").textContent = person.description;
+    document.getElementById("player-name").textContent = player.name;
+    document.getElementById("player-furigana").textContent = `(${player.furigana})`;
+    document.getElementById("player-description").textContent = player.description;
 }
 
 /**
  * 画像を選択
  */
-function selectPerson(person) {
-    if (!person) return;
+function selectPlayer(player) {
+    if (!player) return;
 
     // キャラクター選択
-    selectedPerson = person;
+    selectedPlayer = player;
 
     // ステータスを表示
-    displayStatus(person);
+    displayStatus(player);
 
     // メッセージ
-    const text = `「${person.name}」でゲームをはじめますか？\nよろしければ【決定】ボタンをおしてください。`;
+    const text = `「${player.name}」でゲームをはじめますか？\nよろしければ【決定】ボタンをおしてください。`;
     showMessage(text);
 
     // 決定ボタン表示
@@ -66,7 +66,7 @@ function selectPerson(person) {
     document.querySelectorAll(".thumbnail-image").forEach(img => {
         img.classList.remove("border-blue-500");
     });
-    document.getElementById(`person-${selectedPerson.id}`).classList.add("border-blue-500");
+    document.getElementById(`player-${selectedPlayer.id}`).classList.add("border-blue-500");
 }
 
 
@@ -76,12 +76,12 @@ function selectPerson(person) {
  **/
 function showImage(imagePath) {
     // 既存の画像をクリア
-    characterImageElement.innerHTML = "";
+    playerImageElement.innerHTML = "";
     if (imagePath) {
         const image = new Image();
         image.src = imagePath;
         image.className = "w-[300px] rounded-xl slide-in";
-        characterImageElement.appendChild(image);
+        playerImageElement.appendChild(image);
     }
 }
 
@@ -162,7 +162,7 @@ function nextMessage() {
  * 入力エリアを隠す
  **/
 function hideInputArea() {
-    selectPersonElement.classList.add('hidden');
+    selectCharacterElement.classList.add('hidden');
     selectButton.classList.add('hidden');
 }
 
@@ -170,9 +170,9 @@ function hideInputArea() {
  * ゲームスタート
  */
 function start() {
-    if (selectedPerson.id) {
-        const person = new Person(selectedPerson);
-        person.greet();
+    if (selectedPlayer.id) {
+        const player = new Player(selectedPlayer);
+        player.greet();
         hideInputArea();
     } else {
         showMessage("キャラクターを選択してください。");
