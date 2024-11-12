@@ -31,4 +31,7 @@ function Person(name, age) {
 // オブジェクトリテラルで処理
 document.getElementById('object-literal').innerHTML = person.greet();
 
+// 関数型またはクラス型で、インスタンス生成
 const person1 = new Person("Alice", 30);
+// ブラウザに greet() の結果を表示
+document.getElementById('instance-object').innerHTML = person.greet();
