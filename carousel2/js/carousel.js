@@ -64,13 +64,14 @@ function moveSlide(direction) {
  */
 function createThumbnails() {
     items.forEach((item, index) => {
+        // 現在のインデックス設定
+        currentIndex = index;
         // サムネイル画像作成
         const thumb = document.createElement("img");
         thumb.src = item.image;
         thumb.classList.add("thumbnail-image");
         // サムネイルクリックで、カルーセル移動
         thumb.onclick = () => {
-            currentIndex = index;
             updateCarousel();
             stopSlide()
             startSlide()
@@ -79,6 +80,10 @@ function createThumbnails() {
     });
 }
 
+/**
+ * clickArrow()
+ * 矢印アイコンクリック
+ */
 function clickArrow(direction) {
     moveSlide(direction)
     stopSlide()
