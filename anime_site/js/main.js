@@ -21,7 +21,6 @@ characters.forEach((character, index) => {
     name.textContent = character.name;
     card.appendChild(name);
 
-
     // ボタン
     const button = document.createElement("button");
     button.className = "bg-pink-500 text-white py-2 px-4 rounded hover:bg-pink-600 focus:outline-none";

@@ -1,14 +1,11 @@
-
 // カルーセルの表示場所
 const carouselImages = document.getElementById("carousel-images");
 // サムネイルの表示場所
 const thumbnailContainer = document.getElementById("thumbnail-container");
-
 // 自動スライド変数
 var autoSlide;
 // スライドショーのインターバル
 const slideShowInterval = 5000;
-
 // 画像インデックス
 var currentIndex = 0;
 // アニメーション中フラグ
@@ -23,20 +20,22 @@ function createCarousel() {
         const img = document.createElement("img");
         img.src = item.image;
         img.classList.add("carousel-image");
-        // クリック時にモーダルを開く
         img.onclick = () => openModal(item.id);
         carouselImages.appendChild(img);
     });
 }
 
 /**
- * updateCarousel
+ * updateCarousel()
  * カルーセルのアニメーションスライド処理
  */
 function updateCarousel() {
     const offset = -currentIndex * 100;
     carouselImages.style.transform = `translateX(${offset}%)`;
-    carouselImages.style.transition = "transform 0.5s ease";
+    carouselImages.style.transition = "transform 1.0s ease";
+    // サムネイル更新
+    updateThumbnails();
+
 }
 
 /**
@@ -73,10 +72,17 @@ function createThumbnails() {
         thumb.onclick = () => {
             currentIndex = index;
             updateCarousel();
-            updateThumbnails();
+            stopSlide()
+            startSlide()
         };
         thumbnailContainer.appendChild(thumb);
     });
+}
+
+function clickArrow(direction) {
+    moveSlide(direction)
+    stopSlide()
+    startSlide()
 }
 
 /**
@@ -95,6 +101,23 @@ function updateThumbnails() {
 }
 
 /**
+ * startSlide()
+ * スライドショー開始
+ */
+function startSlide() {
+    updateThumbnails();
+    autoSlide = setInterval(() => moveSlide(1), slideShowInterval);
+}
+
+/**
+ * stopSlide()
+ * スライドショー開始
+ */
+function stopSlide() {
+    clearInterval(autoSlide)
+}
+
+/**
  * 初期設定
  */
 // カルーセル作成
@@ -102,4 +125,4 @@ createCarousel();
 // サムネイルの作成
 createThumbnails();
 // スライドショー開始
-autoSlide = setInterval(() => moveSlide(1), slideShowInterval);
+startSlide();

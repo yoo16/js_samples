@@ -3,25 +3,30 @@
 }
 
 .carousel-container {
-    position: relative;
+    /*  width, height の範囲外は非表示 */
     overflow: hidden;
     width: 100%;
-    height: 500px;
+    margin: 1rem 0;
 }
 
 .carousel-images {
+    /* 横並び */
     display: flex;
-    transition: transform 0.5s ease;
-    height: 100%;
-    align-items: stretch;
+    height: 300px;
 }
 
 .carousel-image {
-    flex-shrink: 0;
-    min-width: 100%;
-    height: 100%;
-    object-fit: cover;
     cursor: pointer;
+    /* コンテナ内に収まるように縮小 */
+    object-fit: contain;
+    /* 画像の幅を固定 */
+    width: 100%;
+    /* 高さを自動調整 */
+    height: auto;
+    /* 画像が縮小されないように */
+    flex-shrink: 0;
+    /* 各画像を中央に揃える */
+    margin: 0 auto;
 }
 
 .carousel-button {
@@ -45,8 +50,8 @@
 
 /* サムネイル画像 */
 .thumbnail-image {
-    width: 100px;
-    height: 80px;
+    width: 80px;
+    height: 60px;
     object-fit: cover;
     border: 2px solid transparent;
     transition: border 0.3s;

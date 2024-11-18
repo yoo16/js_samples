@@ -1,11 +1,3 @@
-// キャッチコピーの文字
-var message = "心ほどける、甘くて香ばしいブレイクタイム";
-// 背景画像の配列
-const images = [
-    'images/cafe-shop-1.jpg',
-    'images/cafe-shop-2.jpg',
-    'images/cafe-shop-3.jpg',
-];
 // 画像の指定インデックス
 var imageIndex = 0;
 // アニメーションテキストのディレイ時間
@@ -14,6 +6,16 @@ const animationTextDelay = 200;
 const fadeInTime = 1000;
 // 背景画像の切り替え時間
 const backgroundSwitchTime = 8000;
+
+// キャッチコピーの文字
+var message = "心ほどける、甘くて香ばしいブレイクタイム";
+
+// 背景画像の配列
+const images = [
+    'images/cafe-shop-1.jpg',
+    'images/cafe-shop-2.jpg',
+    'images/cafe-shop-3.jpg',
+];
 
 // キャッチコピーのElement
 const copyElement = document.getElementById('copy');
@@ -24,10 +26,11 @@ const backgroundImage = document.getElementById('background-image');
  * animationText()
  * アニメーションテキスト
  */
-function animationText(text, callback) {
+function animationText(text) {
     var index = 0;
     function displayNextChar() {
         const span = document.createElement('span');
+        // span.textContent = text;
         span.textContent = text[index];
         span.classList.add('fade-in');
         copyElement.appendChild(span);
@@ -54,8 +57,10 @@ function switchBackground() {
     imageIndex = (imageIndex + 1) % images.length;
 
     // Imageオブジェクト作成
-    const image = new Image();
-    // 画像を設定
+    // const image = new Image();
+    const image = document.createElement('img');
+
+    // 画像のパスを設定
     image.src = images[imageIndex];
 
     // 画像がロードされたら実行

@@ -171,6 +171,7 @@ function hideInputArea() {
  */
 function start() {
     if (selectedPlayer.id) {
+        console.log(selectedPlayer)
         const player = new Player(selectedPlayer);
         player.greet();
         hideInputArea();
