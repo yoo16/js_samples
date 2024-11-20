@@ -1,35 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DOM 3 Lesson</title>
+  <title>DOM操作のデモ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-  <h2>1) createElement() と after()</h2>
-  <button type="button" onclick="addMessage()">追加</button>
-  <h3 id="message_top">Message</h3>
+<body class="bg-gray-100 flex flex-col items-center py-10">
 
-  <h2>2) appendChild() と removeChild()</h2>
-  <button type="button" onclick="addCity()">追加</button>
-  <button type="button" onclick="removeCity()">削除</button>
+  <div class="bg-white shadow-md rounded-lg p-6 w-[50%]">
+    <h2 class="text-lg font-bold mb-2">createElement() & after()</h2>
+    <button type="button" onclick="addMessage()" class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">追加</button>
+    <h3 id="message_top" class="mt-4 text-gray-700 font-medium">Message</h3>
+  </div>
 
-  <div id="city_area"></div>
+  <div class="bg-white shadow-md rounded-lg p-6 w-[50%] mt-6">
+    <h2 class="text-lg font-bold mb-2">appendChild() & removeChild()</h2>
+    <div class="flex gap-4 mb-4">
+      <button type="button" onclick="addCity()" class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">追加</button>
+      <button type="button" onclick="removeCity()" class="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300">削除</button>
+    </div>
+    <div id="city_area" class="bg-gray-100 p-4 rounded-md min-h-[50px] text-gray-500"></div>
+  </div>
 
-  <h2>3) appendChild() と removeChild() の応用</h2>
-  <input id="item_name" type="text" name="item_name">
-  <button type="button" onclick="addItem()">追加</button>
-  <button type="button" onclick="removeItems()">削除</button>
+  <div class="bg-white shadow-md rounded-lg p-6 w-[50%] mt-6">
+    <h2 class="text-lg font-bold mb-2">appendChild() & removeChild() の応用</h2>
+    <div class="flex items-center gap-4 mb-4">
+      <input id="item_name" type="text" name="item_name" placeholder="項目を入力" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+      <button type="button" onclick="addItem()" class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">追加</button>
+      <button type="button" onclick="removeItems()" class="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300">削除</button>
+    </div>
+    <ul id="item_list" class="list-disc pl-6 text-gray-700"></ul>
+  </div>
 
-  <ul id="item_list"></ul>
-
-  <h2>4) after() の応用</h2>
-  <button type="button" onclick="addNumber()">追加</button>
-  <div id="start">Start</div>
+  <div class="bg-white shadow-md rounded-lg p-6 w-[50%] mt-6">
+    <h2 class="text-lg font-bold mb-2">after() の応用</h2>
+    <button type="button" onclick="addNumber()" class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300">追加</button>
+    <div id="start" class="mt-4 text-gray-700 font-medium"></div>
+  </div>
 
   <script src="js/dom4.js"></script>
+
 </body>
 
 </html>
