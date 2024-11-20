@@ -10,22 +10,10 @@
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
   <div class="container mx-auto text-center p-8">
-    <!-- メッセージ -->
-    <p id="message" class="text-lg font-semibold text-gray-700 mb-4">
-      キャラクターをマウスオーバーしてください
-    </p>
-
-    <!-- ボタン -->
-    <div class="mb-6 space-x-4">
-      <button class="bg-blue-500 text-white px-4 py-2 rounded" onclick="start()">Start</button>
-      <button class="bg-red-500 text-white px-4 py-2 rounded" onclick="stop()">Stop</button>
-    </div>
-
     <!-- キャラクター画像 -->
     <div class="flex justify-center">
       <img id="character" src="../images/character_021.png" alt="キャラクター"
-        class="w-[32px] h-[32px] object-contain"
-        onmouseover="showPlot()" onmouseout="hideProt()">
+        class="w-[32px] h-[32px] object-contain">
     </div>
   </div>
 

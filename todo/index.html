@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoリスト</title>
+</head>
+<body>
+    <h1>ToDoリスト</h1>
+    <input type="text" id="taskInput" placeholder="新しいタスクを追加">
+    <button onclick="addTask()">追加</button>
+    <ul id="taskList"></ul>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskText = taskInput.value;
+            if (taskText === "") return;  // 空の入力を無視
+
+            const li = document.createElement("li");
+            li.innerText = taskText;
+            document.getElementById("taskList").appendChild(li);
+            taskInput.value = "";  // 入力フィールドをクリア
+        }
+    </script>
+</body>
+</html>

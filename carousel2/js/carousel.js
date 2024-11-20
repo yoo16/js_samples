@@ -35,18 +35,19 @@ function updateCarousel() {
     carouselImages.style.transition = "transform 1.0s ease";
     // サムネイル更新
     updateThumbnails();
-
 }
 
 /**
  * moveSlide
  * 方向に応じてスライド
+ * 左: 1
+ * 右: -1
  */
 function moveSlide(direction) {
     if (isTransitioning) return;
     isTransitioning = true;
 
-    // 画像インデックス計算
+    // direction でインデックス計算
     currentIndex = (currentIndex + direction + items.length) % items.length;
 
     // カルーセル処理
@@ -57,37 +58,46 @@ function moveSlide(direction) {
     }, 500);
 }
 
-
 /**
  * createThumbnails()
  * サムネイル画像を作成し、クリックでカルーセルが移動
  */
 function createThumbnails() {
     items.forEach((item, index) => {
-        // 現在のインデックス設定
-        currentIndex = index;
         // サムネイル画像作成
         const thumb = document.createElement("img");
         thumb.src = item.image;
         thumb.classList.add("thumbnail-image");
         // サムネイルクリックで、カルーセル移動
         thumb.onclick = () => {
+            // 現在のインデックス設定
+            currentIndex = index;
             updateCarousel();
-            stopSlide()
-            startSlide()
+            stopSlide();
+            startSlide();
         };
         thumbnailContainer.appendChild(thumb);
     });
 }
 
 /**
- * clickArrow()
- * 矢印アイコンクリック
+ * next()
+ * 次のカルーセル
  */
-function clickArrow(direction) {
-    moveSlide(direction)
+function next() {
     stopSlide()
     startSlide()
+    moveSlide(1)
+}
+
+/**
+ * prev()
+ * 前のカルーセル
+ */
+function prev() {
+    stopSlide()
+    startSlide()
+    moveSlide(-1)
 }
 
 /**

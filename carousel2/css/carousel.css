@@ -12,7 +12,7 @@
 .carousel-images {
     /* 横並び */
     display: flex;
-    height: 300px;
+    height: 280px;
 }
 
 .carousel-image {

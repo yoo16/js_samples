@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>じゃんけんゲーム</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex flex-col items-center justify-center">
+
+    <h1 class="text-3xl font-bold p-6">じゃんけんゲーム</h1>
+
+    <!-- 結果表示 -->
+    <p id="result" class="text-xl p-6 font-bold text-green-800">じゃんけん！</p>
+
+    <!-- プレイヤーの選択ボタン -->
+    <div id="playerChoices" class="space-x-6 mb-8">
+        <button onclick="play(0)" class="focus:outline-none">
+            <img src="images/0.png" alt="グー"
+                class="choice w-24 h-24 object-contain rounded-full shadow-lg transition-transform transform hover:scale-110">
+        </button>
+        <button onclick="play(1)" class="focus:outline-none">
+            <img src="images/1.png" alt="チョキ"
+                class="choice w-24 h-24 object-contain rounded-full shadow-lg transition-transform transform hover:scale-110">
+        </button>
+        <button onclick="play(2)" class="focus:outline-none">
+            <img src="images/2.png" alt="パー"
+                class="choice w-24 h-24 object-contain rounded-full shadow-lg transition-transform transform hover:scale-110">
+        </button>
+    </div>
+
+    <!-- 選択結果の表示 -->
+    <div class="my-4">
+        <!-- コンピュータの手 -->
+        <div class="text-center">
+            <p class="text-lg font-semibold">コンピュータの手</p>
+            <img id="computerChoiceImage" src="images/0.png" alt="コンピュータの手"
+                class="w-24 h-24 object-contain rounded-full shadow-lg">
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
