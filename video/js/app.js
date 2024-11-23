@@ -1,6 +1,7 @@
 const video = document.getElementById('video');
 const videoTitle = document.getElementById('video-title');
 const videoThumbnails = document.getElementById("videoThumbnails");
+const commentsList = document.getElementById("commentsList");
 const playPauseBtn = document.getElementById('playPauseBtn');
 const progressSlider = document.getElementById('progressSlider');
 const playIcon = document.getElementById('playIcon');
@@ -307,12 +308,13 @@ function updateComments(currentTime) {
             const commentText = document.createElement('span');
             commentText.textContent = comment.text;
 
+            // コメントアイテム
+            const commentItem = document.createElement('div');
+            commentItem.className = "p-1 text-xs text-gray-700";
             // コメント時間とコメントテキスト追加
             commentItem.append(commentTime, commentText)
 
-            // コメントリスト
-            const commentItem = document.createElement('div');
-            commentItem.className = "p-1 text-xs text-gray-700";
+            // コメントリストにコメントアイテム追加
             commentsList.appendChild(commentItem);
 
             // すでに表示したコメントとして記録
