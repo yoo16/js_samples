@@ -1,5 +1,6 @@
 const video = document.getElementById('video');
 const playPauseBtn = document.getElementById('playPauseBtn');
+const progressSlider = document.getElementById('progressSlider');
 const playIcon = document.getElementById('playIcon');
 const pauseIcon = document.getElementById('pauseIcon');
 const volumeOnIcon = document.getElementById('volumeOnIcon');
@@ -40,6 +41,8 @@ function loadVideo(filePath) {
  * ビデオ読み込み後の処理
  */
 function onLoadedVideo(event) {
+    // 再生時間設定
+    progressSlider.value = video.currentTime;
     // ビデオ音量設定
     video.volume = volume;
     // 音量スライダー設定
@@ -69,6 +72,32 @@ function playPause() {
         video.pause();
     }
     updatePlayIcon();
+}
+
+/**
+ * onProgressSlider()
+ * スライダードラッグ時のイベントハンドラ
+ */
+function onProgressSlider(event) {
+    const sliderValue = event.target.value;
+    const duration = video.duration;
+    video.currentTime = (sliderValue / 100) * duration;
+}
+
+/**
+ * updateProgress()
+ * 再生スライダー更新
+ */
+function updateProgress() {
+    const currentTime = video.currentTime;
+    const duration = video.duration;
+
+    // スライダーの位置更新
+    const progress = (currentTime / duration) * 100;
+    progressSlider.value = progress;
+
+    // スライダーの背景更新
+    progressSlider.style.background = `linear-gradient(to right, red ${progress}%, gray ${progress}%)`;
 }
 
 /**
@@ -105,12 +134,14 @@ function fullscreen() {
  */
 function toggleMute() {
     if (video.muted) {
-        // ミュートOFF
+        // ミュートOFF muted = false
         video.muted = false;
+        // 音量スライダーにビデオ音量を設定
         volumeSlider.value = video.volume;
     } else {
-        // ミュートON
+        // ミュートON muted = true
         video.muted = true;
+        // 音量スライダーを 0
         volumeSlider.value = 0;
     }
     // 音声アイコン更新
@@ -244,9 +275,12 @@ function updateCurrentTimeAndComments() {
     // 再生時間を更新
     updateCurrentTime();
 
-     // コメントの表示を更新
+    // コメントの表示を更新
     const currentTime = Math.floor(video.currentTime);
     updateComments(currentTime);
+
+    // スライダーの位置を更新
+    updateProgress();
 }
 
 /**
