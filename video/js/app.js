@@ -86,7 +86,6 @@ function loadAndPlayVideo(selectedVideo) {
     updateDuration(0)
 }
 
-
 /**
  * onLoadedVideo()
  * ビデオ読み込み後の処理
@@ -361,6 +360,9 @@ function init() {
     generateVideoList();
     // 音量設定
     updateVolume(defaultVolume);
+
+    // 最初の動画選択(mute=true でないと自動再生されない)
+    loadAndPlayVideo(videos[0])
 }
 
 init();
