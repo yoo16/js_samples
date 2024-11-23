@@ -1,0 +1,56 @@
+/* スライダーのトラック部分（背景） */
+#volumeSlider::-webkit-slider-runnable-track {
+    background: #d1d5db;
+    /* グレー */
+    height: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#volumeSlider::-moz-range-track {
+    background: #d1d5db;
+    /* グレー */
+    height: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#volumeSlider::-ms-track {
+    background: transparent;
+    /* デフォルトで透明 */
+    border-color: transparent;
+    color: transparent;
+    height: 6px;
+    cursor: pointer;
+}
+
+/* スライダーのつまみ部分（つまみ） */
+#volumeSlider::-webkit-slider-thumb {
+    appearance: none;
+    background: #6b7280;
+    /* 濃いグレー */
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -3px;
+    /* トラック中央に配置 */
+}
+
+#volumeSlider::-moz-range-thumb {
+    background: #6b7280;
+    /* 濃いグレー */
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#volumeSlider::-ms-thumb {
+    background: #6b7280;
+    /* 濃いグレー */
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
