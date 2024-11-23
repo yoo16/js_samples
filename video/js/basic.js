@@ -2,7 +2,7 @@ const video = document.getElementById('video');
 const volumeSlider = document.getElementById('volumeSlider');
 
 // ビデオボリューム(0 - 1)
-const volume = 0;
+var volume = 0;
 // ビデオファイル
 const videoFile = "videos/video1.mp4";
 
@@ -29,16 +29,18 @@ function onLoadedVideo() {
  * changeVolume()
  * 音声ボリューム変更
  */
-function changeVolume(event) {
-    const volume = event.target.value;
-    // ボリューム設定
-    video.volume = volume;
-    // Mute判別
-    video.muted = volume == 0;
-    // 音声アイコン更新
-    updateVolumeIcon();
+function onChangeVolume(event) {
+    volume = event.target.value;
+    changeVolume(volume)
 }
 
+/**
+ * changeVolume()
+ * 音声ボリューム変更
+ */
+function changeVolume(value) {
+    video.volume = value;
+}
 
 /**
  * play()

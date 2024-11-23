@@ -10,9 +10,14 @@ const currentTimeDisplay = document.getElementById('currentTime');
 const durationDisplay = document.getElementById('duration');
 
 // ビデオスキップ（秒）
-const step = 5;
+const step1 = 0.5;
+
+// ビデオスキップ2（秒）
+const step2 = 3;
+
 // ビデオボリューム(0 - 1)
-const volume = 0.5;
+var volume = 0.5;
+
 // ビデオファイル
 const videoFile = "videos/video1.mp4";
 
@@ -31,7 +36,6 @@ function loadVideo(filePath) {
  * ビデオ読み込み後の処理
  */
 function onLoadedVideo() {
-    console.log("can play")
     video.volume = volume
     volumeSlider.value = volume
 
@@ -101,12 +105,20 @@ function toggleMute() {
  * changeVolume()
  * 音声ボリューム変更
  */
-function changeVolume(event) {
-    const volume = event.target.value;
+function onChangeVolume(event) {
+    volume = event.target.value;
+    changeVolume(volume)
+}
+
+/**
+ * changeVolume()
+ * 音声ボリューム変更
+ */
+function changeVolume(value) {
     // ボリューム設定
-    video.volume = volume;
+    video.volume = value;
     // Mute判別
-    video.muted = volume == 0;
+    video.muted = (value == 0);
     // 音声アイコン更新
     updateVolumeIcon();
 }
@@ -167,15 +179,21 @@ function changePlaybackSpeed() {
 
 // キーボードイベント
 window.onkeydown = (event) => {
-    if (event.key === " ") {
+    if (event.key == " ") {
         event.preventDefault();
         playPause();
-    } else if (event.key === "ArrowRight") {
+    } else if (event.shiftKey && event.key == "ArrowRight") {
         event.preventDefault();
-        skip(step);
-    } else if (event.key === "ArrowLeft") {
+        skip(step2);
+    } else if (event.key == "ArrowRight") {
         event.preventDefault();
-        skip(-step);
+        skip(step1);
+    } else if (event.shiftKey && event.key == "ArrowLeft") {
+        event.preventDefault();
+        skip(-step2);
+    } else if (event.key == "ArrowLeft") {
+        event.preventDefault();
+        skip(-step1);
     }
 };
 
