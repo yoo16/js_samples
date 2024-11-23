@@ -1,4 +1,6 @@
 const video = document.getElementById('video');
+const videoTitle = document.getElementById('video-title');
+const videoThumbnails = document.getElementById("videoThumbnails");
 const playPauseBtn = document.getElementById('playPauseBtn');
 const progressSlider = document.getElementById('progressSlider');
 const playIcon = document.getElementById('playIcon');
@@ -10,8 +12,11 @@ const playbackSpeed = document.getElementById('playbackSpeed');
 const currentTimeDisplay = document.getElementById('currentTime');
 const durationDisplay = document.getElementById('duration');
 
-// ビデオファイル
-const videoFile = "videos/video1.mp4";
+// コメントデータ
+var comments = [];
+
+// コメント表示済みデータ
+var displayedComments = [];
 
 // ビデオスキップ（秒）
 const step1 = 0.5;
@@ -19,43 +24,77 @@ const step1 = 0.5;
 // ビデオスキップ2（秒）
 const step2 = 3;
 
-// ビデオボリューム(0 - 1)
-var volume = 0.1;
-
-// コメント表示用
-var displayedComments = [];
+// デフォルト音量ボリューム(0 - 1)
+const defaultVolume = 0.1;
 
 /**
- * loadVideo()
- * ビデオ読み込み
+ * generateVideoList()
+ * 動画サムネイルリスト
  */
-function loadVideo(filePath) {
-    // ビデオファイル設定
-    video.src = filePath;
-    // ビデオファイル読み込み
-    video.load();
+function generateVideoList() {
+    videos.forEach((video, index) => {
+        // 画像
+        const thumbnail = document.createElement("img");
+        thumbnail.src = video.thumbnailPath;
+        thumbnail.alt = video.title;
+        thumbnail.className = "h-20 object-cover rounded mr-2";
+
+        // タイトル
+        const title = document.createElement("span");
+        title.textContent = video.title;
+        title.className = "text-sm text-gray-700";
+
+        // サムネイルアイテム
+        const videoItem = document.createElement("div");
+        videoItem.className = "flex items-center bg-white p-1 cursor-pointer hover:bg-gray-200";
+        // サムネイルアイテムに画像、タイトル追加
+        videoItem.append(thumbnail, title);
+
+        // 動画クリック時の処理
+        videoItem.onclick = () => loadAndPlayVideo(video);
+
+        // サムネイルリストに追加
+        videoThumbnails.appendChild(videoItem);
+    });
 }
+
+/**
+ * loadAndPlayVideo()
+ * 動画をロードして再生
+ */
+function loadAndPlayVideo(selectedVideo) {
+    // ビデオタイトル
+    videoTitle.textContent = selectedVideo.title;
+
+    // 動画のロード
+    video.src = selectedVideo.videoPath;
+    video.load();
+    video.play();
+
+    // コメントデータを更新
+    comments = selectedVideo.comments;
+    // 表示済みコメントをリセット
+    displayedComments = [];
+    // コメントリストをリセット
+    commentsList.innerHTML = "";
+
+    // UI 更新
+    updatePlayIcon();
+    progressSlider.value = 0;
+    updateCurrentTime(0)
+    updateDuration(0)
+}
+
 
 /**
  * onLoadedVideo()
  * ビデオ読み込み後の処理
  */
 function onLoadedVideo(event) {
-    // 再生時間設定
-    progressSlider.value = video.currentTime;
-    // ビデオ音量設定
-    video.volume = volume;
-    // 音量スライダー設定
-    volumeSlider.value = volume;
-    // 再生アイコン表示
-    updatePlayIcon();
-    // 再生時間表示
-    updateDuration();
-    // トータル時間表示
-    updateCurrentTime();
-}
+    // 時間関連のデータ更新
+    updateTimeData();
 
-function onEnded(event) {
+    // 再生アイコンの更新
     updatePlayIcon();
 }
 
@@ -75,13 +114,41 @@ function playPause() {
 }
 
 /**
+ * updateTimeData()
+ * 時間関連データの更新
+ */
+function updateTimeData() {
+    // 再生時間を更新
+    const currentTime = video.currentTime;
+    // 動画のトータル時間
+    const duration = video.duration;
+
+    // 現在の再生時間を更新
+    updateCurrentTime(currentTime);
+
+    // トータル再生時間を更新
+    updateDuration(duration);
+
+    // スライダーの位置更新
+    const progress = (currentTime / duration) * 100;
+    progressSlider.value = progress;
+
+    // スライダー背景の更新
+    progressSlider.style.background = `linear-gradient(to right, red ${progress}%, gray ${progress}%)`;
+
+    // コメントを更新
+    updateComments(Math.floor(currentTime));
+}
+
+/**
  * onProgressSlider()
  * スライダードラッグ時のイベントハンドラ
  */
 function onProgressSlider(event) {
+    // スライダーの値
     const sliderValue = event.target.value;
-    const duration = video.duration;
-    video.currentTime = (sliderValue / 100) * duration;
+    // 動画の現在の時間 = スライドの割合 x トータル時間
+    video.currentTime = (sliderValue / 100) * video.duration;
 }
 
 /**
@@ -92,8 +159,9 @@ function updateProgress() {
     const currentTime = video.currentTime;
     const duration = video.duration;
 
-    // スライダーの位置更新
+    // スライダーの位置計算
     const progress = (currentTime / duration) * 100;
+    // スライダーの位置更新
     progressSlider.value = progress;
 
     // スライダーの背景更新
@@ -117,6 +185,7 @@ function updatePlayIcon() {
 /**
  * fullscreen()
  * フルスクリーン
+ * ブラウザの種類によって異なる
  */
 function fullscreen() {
     if (video.requestFullscreen) {
@@ -149,25 +218,25 @@ function toggleMute() {
 }
 
 /**
- * changeVolume()
+ * onChangeVolume()
  * 音声ボリューム変更
  */
 function onChangeVolume(event) {
-    // 音量スライダーの値取得
-    volume = event.target.value;
-    // 音量設定
-    changeVolume(volume)
+    // 音量スライダーの値取得 & 音量設定
+    updateVolume(event.target.value)
 }
 
 /**
- * changeVolume()
- * 音量変更
+ * updateVolume()
+ * 音声更新
  */
-function changeVolume(value) {
+function updateVolume(volume) {
     // 音量設定
-    video.volume = value;
+    video.volume = volume;
     // Mute判別
-    video.muted = (value == 0);
+    video.muted = (volume == 0);
+    // 音量スライダー設定
+    volumeSlider.value = volume;
     // 音声アイコン更新
     updateVolumeIcon();
 }
@@ -192,10 +261,7 @@ function updateVolumeIcon() {
  * updateCurrentTime()
  * 現在の時間更新
  */
-function updateCurrentTime() {
-    // 現在の再生時間
-    const currentTime = video.currentTime;
-    // 時間フォーマットして表示
+function updateCurrentTime(currentTime) {
     currentTimeDisplay.textContent = formatTime(currentTime);
 }
 
@@ -203,8 +269,8 @@ function updateCurrentTime() {
  * updateDuration()
  * ビデオの長さ更新
  */
-function updateDuration() {
-    durationDisplay.textContent = formatTime(video.duration);
+function updateDuration(duration) {
+    durationDisplay.textContent = formatTime(duration);
 }
 
 /**
@@ -221,6 +287,48 @@ function skip(seconds) {
  */
 function changePlaybackSpeed() {
     video.playbackRate = parseFloat(playbackSpeed.value);
+}
+
+/**
+ * updateComments()
+ * コメント更新
+ */
+function updateComments(currentTime) {
+    // 表示済みのコメントを除外して新しいコメントを追加
+    comments.forEach(comment => {
+        // コメントの時間が動画の再生時間以上だったら、コメント表示
+        if (currentTime >= comment.time && !displayedComments.includes(comment.time)) {
+            // コメント時間
+            const commentTime = document.createElement('span');
+            commentTime.textContent = formatTime(currentTime);
+            commentTime.className = "mr-1"
+
+            // コメントテキスト
+            const commentText = document.createElement('span');
+            commentText.textContent = comment.text;
+
+            // コメント時間とコメントテキスト追加
+            commentItem.append(commentTime, commentText)
+
+            // コメントリスト
+            const commentItem = document.createElement('div');
+            commentItem.className = "p-1 text-xs text-gray-700";
+            commentsList.appendChild(commentItem);
+
+            // すでに表示したコメントとして記録
+            displayedComments.push(comment.time);
+        }
+    });
+}
+
+/**
+ * formatTime()
+ * 時間を 00:00 形式にフォーマット
+ */
+function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
 
 // キーボードイベント
@@ -244,54 +352,13 @@ window.onkeydown = (event) => {
 };
 
 /**
- * コメントを更新する
+ * 初期化処理
  */
-function updateComments(currentTime) {
-    // 表示済みのコメントを除外して新しいコメントを追加
-    comments.forEach(comment => {
-        // コメントの時間が動画の再生時間以上だったら、コメント表示
-        if (currentTime >= comment.time && !displayedComments.includes(comment.time)) {
-            // 時間をフォーマット
-            const formattedTime = formatTime(currentTime);
-
-            const commentItem = document.createElement('div');
-            commentItem.innerHTML = `
-                <span class="mr-1">${formattedTime}</span>
-                <span>${comment.text}</span>
-                `
-            commentItem.className = "p-1 text-xs text-gray-700";
-            commentsList.appendChild(commentItem);
-
-            // すでに表示したコメントとして記録
-            displayedComments.push(comment.time);
-        }
-    });
+function init() {
+    // ビデオ読み込み
+    generateVideoList();
+    // 音量設定
+    updateVolume(defaultVolume);
 }
 
-/**
- * 現在の時間とコメントを更新
- */
-function updateCurrentTimeAndComments() {
-    // 再生時間を更新
-    updateCurrentTime();
-
-    // コメントの表示を更新
-    const currentTime = Math.floor(video.currentTime);
-    updateComments(currentTime);
-
-    // スライダーの位置を更新
-    updateProgress();
-}
-
-/**
- * formatTime()
- * 時間を 00:00 形式にフォーマット
- */
-function formatTime(time) {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-}
-
-// ビデオ読み込み
-loadVideo(videoFile);
+init();
