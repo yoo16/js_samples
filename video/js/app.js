@@ -19,7 +19,7 @@ const step1 = 0.5;
 const step2 = 3;
 
 // ビデオボリューム(0 - 1)
-var volume = 0.5;
+var volume = 0.1;
 
 // コメント表示用
 var displayedComments = [];
@@ -29,8 +29,9 @@ var displayedComments = [];
  * ビデオ読み込み
  */
 function loadVideo(filePath) {
-    video.pause();
+    // ビデオファイル設定
     video.src = filePath;
+    // ビデオファイル読み込み
     video.load();
 }
 
@@ -39,11 +40,15 @@ function loadVideo(filePath) {
  * ビデオ読み込み後の処理
  */
 function onLoadedVideo(event) {
+    // ビデオ音量設定
     video.volume = volume;
+    // 音量スライダー設定
     volumeSlider.value = volume;
-
+    // 再生アイコン表示
     updatePlayIcon();
+    // 再生時間表示
     updateDuration();
+    // トータル時間表示
     updateCurrentTime();
 }
 
@@ -57,8 +62,10 @@ function onEnded(event) {
  */
 function playPause() {
     if (video.paused) {
+        // ビデオ停止中なら再生
         video.play();
     } else {
+        // ビデオ再生中なら停止
         video.pause();
     }
     updatePlayIcon();
@@ -98,9 +105,11 @@ function fullscreen() {
  */
 function toggleMute() {
     if (video.muted) {
+        // ミュートOFF
         video.muted = false;
         volumeSlider.value = video.volume;
     } else {
+        // ミュートON
         video.muted = true;
         volumeSlider.value = 0;
     }
@@ -113,16 +122,18 @@ function toggleMute() {
  * 音声ボリューム変更
  */
 function onChangeVolume(event) {
+    // 音量スライダーの値取得
     volume = event.target.value;
+    // 音量設定
     changeVolume(volume)
 }
 
 /**
  * changeVolume()
- * 音声ボリューム変更
+ * 音量変更
  */
 function changeVolume(value) {
-    // ボリューム設定
+    // 音量設定
     video.volume = value;
     // Mute判別
     video.muted = (value == 0);
@@ -151,10 +162,10 @@ function updateVolumeIcon() {
  * 現在の時間更新
  */
 function updateCurrentTime() {
-    const currentTime = Math.floor(video.currentTime);
-    const minutes = Math.floor(currentTime / 60);
-    const seconds = currentTime % 60;
-    currentTimeDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    // 現在の再生時間
+    const currentTime = video.currentTime;
+    // 時間フォーマットして表示
+    currentTimeDisplay.textContent = formatTime(currentTime);
 }
 
 /**
@@ -207,16 +218,18 @@ window.onkeydown = (event) => {
 function updateComments(currentTime) {
     // 表示済みのコメントを除外して新しいコメントを追加
     comments.forEach(comment => {
+        // コメントの時間が動画の再生時間以上だったら、コメント表示
         if (currentTime >= comment.time && !displayedComments.includes(comment.time)) {
+            // 時間をフォーマット
             const formattedTime = formatTime(currentTime);
 
-            const listItem = document.createElement('div');
-            listItem.innerHTML = `
+            const commentItem = document.createElement('div');
+            commentItem.innerHTML = `
                 <span class="mr-1">${formattedTime}</span>
                 <span>${comment.text}</span>
                 `
-            listItem.className = "p-1 text-xs text-gray-700";
-            commentsList.appendChild(listItem);
+            commentItem.className = "p-1 text-xs text-gray-700";
+            commentsList.appendChild(commentItem);
 
             // すでに表示したコメントとして記録
             displayedComments.push(comment.time);
@@ -228,10 +241,11 @@ function updateComments(currentTime) {
  * 現在の時間とコメントを更新
  */
 function updateCurrentTimeAndComments() {
-    const currentTime = Math.floor(video.currentTime);
-    // 再生時間の表示を更新
+    // 再生時間を更新
     updateCurrentTime();
+
      // コメントの表示を更新
+    const currentTime = Math.floor(video.currentTime);
     updateComments(currentTime);
 }
 
