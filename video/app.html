@@ -10,53 +10,60 @@
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center">
-    <div class="bg-white shadow-lg rounded-lg p-4 w-full relative">
-        <video id="video" class="w-full rounded mb-4"
-            ontimeupdate="updateCurrentTime()"
-            oncanplay="onLoadedVideo()"
-            onended="onEnded()"
-            >
-            <source src="" type="video/mp4">
-        </video>
+    <div class="bg-white shadow-lg rounded-lg p-4 w-full relative flex">
+        <!-- 左側の動画部分 -->
+        <div class="w-3/4">
+            <video id="video" class="w-full rounded mb-4" ontimeupdate="updateCurrentTimeAndComments()"
+                oncanplay="onLoadedVideo()" onended="onEnded()">
+                <source src="" type="video/mp4">
+            </video>
 
-        <div class="flex items-center justify-start mb-4">
-            <!-- Play/Pause Button -->
-            <button onclick="playPause()" id="playPauseBtn"
-                class="mx-2 text-gray-500 rounded flex items-center justify-center appearance-none">
-                <img id="playIcon" src="icons/play-icon.svg" alt="Play Icon" class="h-8 w-8">
-                <img id="pauseIcon" src="icons/pause-icon.svg" alt="Pause Icon" class="h-8 w-8 hidden">
-            </button>
+            <div class="flex items-center justify-start mb-4">
+                <!-- Play/Pause Button -->
+                <button onclick="playPause()" id="playPauseBtn"
+                    class="mx-2 text-gray-500 rounded flex items-center justify-center appearance-none">
+                    <img id="playIcon" src="icons/play-icon.svg" alt="Play Icon" class="h-8 w-8">
+                    <img id="pauseIcon" src="icons/pause-icon.svg" alt="Pause Icon" class="h-8 w-8 hidden">
+                </button>
 
-            <!-- Current Time and Duration -->
-            <div class="mx-4 text-sm text-gray-600">
-                <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                <!-- Current Time and Duration -->
+                <div class="mx-4 text-sm text-gray-600">
+                    <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                </div>
+
+                <!-- Volume Control -->
+                <div onclick="toggleMute()" id="volumeBtn" class="relative flex items-center text-gray-600 px-2">
+                    <img id="volumeOnIcon" src="icons/volume-on-icon.svg" alt="Volume On Icon" class="h-6 w-6">
+                    <img id="volumeMuteIcon" src="icons/volume-mute-icon.svg" alt="Volume Mute Icon"
+                        class="h-6 w-6 hidden">
+                </div>
+                <input oninput="onChangeVolume(event)" id="volumeSlider" type="range" min="0" max="1" step="0.01"
+                    class="mr-2 w-24 appearance-none">
+
+                <!-- Playback Speed Control -->
+                <select onchange="changePlaybackSpeed()" id="playbackSpeed"
+                    class="mx-4 text-xs text-gray-600 px-4 py-2 rounded border-0 appearance-none">
+                    <option value="0.5">0.5x</option>
+                    <option value="1" selected>Normal</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                </select>
+
+                <!-- Fullscreen Button -->
+                <button onclick="fullscreen()" id="fullscreenBtn"
+                    class="text-xs text-gray-600 p-2 w-6 border border-2 border-gray-500 rounded-sm flex items-center">
+                </button>
             </div>
-
-            <!-- Volume Control -->
-            <div onclick="toggleMute()" id="volumeBtn" class="relative flex items-center text-gray-600 px-2">
-                <img id="volumeOnIcon" src="icons/volume-on-icon.svg" alt="Volume On Icon" class="h-6 w-6">
-                <img id="volumeMuteIcon" src="icons/volume-mute-icon.svg" alt="Volume Mute Icon" class="h-6 w-6 hidden">
-            </div>
-            <input oninput="onChangeVolume(event)" id="volumeSlider" type="range" min="0" max="1" step="0.01"
-                class="mr-2 w-24 appearance-none">
-
-            <!-- Playback Speed Control -->
-            <select onchange="changePlaybackSpeed()" id="playbackSpeed"
-                class="mx-4 text-xs text-gray-600 px-4 py-2 rounded border-0 appearance-none">
-                <option value="0.5">0.5x</option>
-                <option value="1" selected>Normal</option>
-                <option value="1.5">1.5x</option>
-                <option value="2">2x</option>
-            </select>
-
-            <!-- Fullscreen Button -->
-            <button onclick="fullscreen()" id="fullscreenBtn"
-                class="text-xs text-gray-600 p-2 w-6 border border-2 border-gray-500 rounded-sm flex items-center">
-            </button>
         </div>
 
+        <!-- 右側のコメント部分 -->
+        <div id="commentsContainer" class="w-1/4 bg-gray-50 rounded-lg shadow-inner p-4 ml-4">
+            <h2 class="text-md mb-2">コメント一覧</h2>
+            <div id="commentsList" class="space-y-1"></div>
+        </div>
     </div>
 
+    <script src="data/comments.js" defer></script>
     <script src="js/app.js" defer></script>
 </body>
 

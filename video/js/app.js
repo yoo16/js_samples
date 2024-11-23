@@ -9,6 +9,9 @@ const playbackSpeed = document.getElementById('playbackSpeed');
 const currentTimeDisplay = document.getElementById('currentTime');
 const durationDisplay = document.getElementById('duration');
 
+// ビデオファイル
+const videoFile = "videos/video1.mp4";
+
 // ビデオスキップ（秒）
 const step1 = 0.5;
 
@@ -18,8 +21,8 @@ const step2 = 3;
 // ビデオボリューム(0 - 1)
 var volume = 0.5;
 
-// ビデオファイル
-const videoFile = "videos/video1.mp4";
+// コメント表示用
+var displayedComments = [];
 
 /**
  * loadVideo()
@@ -159,10 +162,7 @@ function updateCurrentTime() {
  * ビデオの長さ更新
  */
 function updateDuration() {
-    const duration = Math.floor(video.duration);
-    const minutes = Math.floor(duration / 60);
-    const seconds = duration % 60;
-    durationDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    durationDisplay.textContent = formatTime(video.duration);
 }
 
 /**
@@ -200,6 +200,50 @@ window.onkeydown = (event) => {
         skip(-step1);
     }
 };
+
+/**
+ * コメントを更新する
+ */
+function updateComments(currentTime) {
+    // 表示済みのコメントを除外して新しいコメントを追加
+    comments.forEach(comment => {
+        if (currentTime >= comment.time && !displayedComments.includes(comment.time)) {
+            const formattedTime = formatTime(currentTime);
+
+            const listItem = document.createElement('div');
+            listItem.innerHTML = `
+                <span class="mr-1">${formattedTime}</span>
+                <span>${comment.text}</span>
+                `
+            listItem.className = "p-1 text-xs text-gray-700";
+            commentsList.appendChild(listItem);
+
+            // すでに表示したコメントとして記録
+            displayedComments.push(comment.time);
+        }
+    });
+}
+
+/**
+ * 現在の時間とコメントを更新
+ */
+function updateCurrentTimeAndComments() {
+    const currentTime = Math.floor(video.currentTime);
+    // 再生時間の表示を更新
+    updateCurrentTime();
+     // コメントの表示を更新
+    updateComments(currentTime);
+}
+
+/**
+ * formatTime()
+ * 時間を 00:00 形式にフォーマット
+ */
+function formatTime(time) {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
 
 // ビデオ読み込み
 loadVideo(videoFile);
