@@ -12,7 +12,7 @@ const durationDisplay = document.getElementById('duration');
 // ビデオスキップ（秒）
 const step = 5;
 // ビデオボリューム(0 - 1)
-const volume = 0.7;
+const volume = 0.5;
 // ビデオファイル
 const videoFile = "videos/video1.mp4";
 
