@@ -35,13 +35,17 @@ function loadVideo(filePath) {
  * onLoadedVideo()
  * ビデオ読み込み後の処理
  */
-function onLoadedVideo() {
-    video.volume = volume
-    volumeSlider.value = volume
+function onLoadedVideo(event) {
+    video.volume = volume;
+    volumeSlider.value = volume;
 
     updatePlayIcon();
     updateDuration();
     updateCurrentTime();
+}
+
+function onEnded(event) {
+    updatePlayIcon();
 }
 
 /**

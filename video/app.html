@@ -11,9 +11,11 @@
 
 <body class="bg-gray-100 flex items-center justify-center">
     <div class="bg-white shadow-lg rounded-lg p-4 w-full relative">
-        <video id="video" class="w-full rounded mb-4" 
+        <video id="video" class="w-full rounded mb-4"
             ontimeupdate="updateCurrentTime()"
-            oncanplay="onLoadedVideo()">
+            oncanplay="onLoadedVideo()"
+            onended="onEnded()"
+            >
             <source src="" type="video/mp4">
         </video>
 

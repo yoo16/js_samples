@@ -6,8 +6,8 @@ characters.forEach((character, index) => {
     card.className = "text-center bg-white rounded-lg shadow-lg overflow-hidden";
 
     const img = document.createElement("img");
-    img.className = "w-full h-80 object-cover";
-    img.src = character.image;
+    img.className = "w-full h-96 object-cover";
+    img.src = character.imagePath;
     img.alt = character.name;
     card.appendChild(img);
 
@@ -33,28 +33,29 @@ characters.forEach((character, index) => {
 });
 
 // モーダルウィンドウの表示
+// モーダルウィンドウの表示
 function showModal(character) {
     const modal = document.getElementById("modal");
-    document.getElementById("modalImage").src = character.image;
+    document.getElementById("modalImage").src = character.imagePath;
     document.getElementById("modalName").textContent = character.name;
     document.getElementById("modalFurigana").textContent = character.furigana;
-
-    const details = document.getElementById("modalDetails");
-    details.innerHTML = `
-        <li><strong>年齢:</strong> ${character.age}</li>
-        <li><strong>性別:</strong> ${character.gender}</li>
-        <li><strong>能力:</strong> ${character.ability}</li>
-        <li><strong>好きなもの:</strong> ${character.likes}</li>
-    `;
-
-    // 説明
+    document.getElementById('age').textContent = character.age;
+    document.getElementById('gender').textContent = character.gender;
+    document.getElementById('ability').textContent = character.ability;
+    document.getElementById('likes').textContent = character.likes;
     document.getElementById("description").innerHTML = character.description;
 
     modal.classList.remove("hidden");
+
+    // スクロールを無効にする
+    document.body.style.overflow = "hidden";
 }
 
 // モーダルウィンドウの非表示
 function closeModal(event) {
     const modal = document.getElementById("modal");
     modal.classList.add("hidden");
+
+    // スクロールを再有効化する
+    document.body.style.overflow = "";
 }

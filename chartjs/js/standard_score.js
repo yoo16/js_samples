@@ -43,8 +43,9 @@ function init() {
 
 init();
 console.log(data);
-var ctx = document.getElementById('chart');
-var chart = new Chart(ctx, {
+
+var chartElement = document.getElementById('chart');
+var chart = new Chart(chartElement, {
     type: 'line',
     data: {
         labels: exam_names,

@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>キャラクター紹介</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="js/characters.js" defer></script>
-    <script src="js/main.js" defer></script>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <div class="container mx-auto p-5">
@@ -27,10 +25,30 @@
                 <h2 id="modalName" class="text-3xl font-semibold text-gray-800 mb-2"></h2>
                 <div id="modalFurigana" class="text-gray-600 mb-2"></div>
                 <div id="description" class="py-3"></div>
-                <ul id="modalDetails" class="list-disc list-inside space-y-2 text-gray-700"></ul>
+                <div id="detail" class="space-y-2 text-gray-700">
+                    <div>
+                        <label for="age" class="font-bold">年齢</label>
+                        <span id="age"></span>
+                    </div>
+                    <div>
+                        <label for="gender" class="font-bold">性別</label>
+                        <span id="gender"></span>
+                    </div>
+                    <div>
+                        <label for="ability" class="font-bold">能力</label>
+                        <span id="ability"></span>
+                    </div>
+                    <div>
+                        <label for="likes" class="font-bold">好きなもの</label>
+                        <span id="likes"></span>
+                    </div>
+                </div>
             </div>
             <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
         </div>
     </div>
+
+    <script src="js/characters.js" defer></script>
+    <script src="js/introduction.js" defer></script>
 </body>
 </html>

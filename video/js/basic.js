@@ -17,6 +17,18 @@ function loadVideo(filePath) {
 }
 
 /**
+ * onLoadedMetadata()
+ * ビデオメタデータ読み込み後の処理
+ */
+function onLoadedMetadata() {
+    document.getElementById('duration').textContent = video.duration
+    document.getElementById('volume').textContent = video.volume
+    document.getElementById('currentTime').textContent = video.currentTime
+    document.getElementById('paused').textContent = video.paused
+    document.getElementById('playbackRate').textContent = video.playbackRate
+}
+
+/**
  * onLoadedVideo()
  * ビデオ読み込み後の処理
  */
