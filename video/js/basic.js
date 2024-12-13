@@ -11,9 +11,8 @@ const videoFile = "videos/video1.mp4";
  * ビデオ読み込み
  */
 function loadVideo(filePath) {
-    video.pause();
     video.src = filePath;
-    video.load();
+    // video.load();
 }
 
 /**

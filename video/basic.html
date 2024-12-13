@@ -11,9 +11,7 @@
 
 <body class="bg-gray-100 flex items-center justify-center">
     <div class="bg-white shadow-lg rounded-lg p-4 w-[50%] relative">
-        <video oncanplay="onLoadedVideo()" onloadedmetadata="onLoadedMetadata()" id="video"
-            class="w-full rounded mb-4">
-            <source src="videos/video1.mp4" type="video/mp4">
+        <video oncanplay="onLoadedVideo()" onloadedmetadata="onLoadedMetadata()" id="video" class="w-full rounded mb-4">
         </video>
 
         <div class="flex items-center justify-start mb-4">
@@ -30,7 +28,8 @@
                 class="mr-2 w-24 appearance-none">
         </div>
 
-        <div>
+        <div id="video-status">
+            <h2 class="text-2xl font-bold">Status</h2>
             <div>
                 <label for="">duration:</label>
                 <span id="duration"></span>
@@ -52,8 +51,6 @@
                 <span id="playbackRate"></span>
             </div>
         </div>
-    </div>
-
     </div>
 
     <script src="js/basic.js" defer></script>
