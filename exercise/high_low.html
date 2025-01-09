@@ -4,40 +4,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shop - High & Low Game</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>High & Low Game</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="container max-w-md bg-white rounded-lg shadow-lg p-6">
-    <h2 class="text-2xl font-semibold text-center text-gray-800 rounded-md py-3 mb-6">High & Low Game</h2>
+<body class="bg-gray-100 flex justify-center">
 
-    <p id="result" class="text-center text-xl font-semibold my-4 text-gray-800"></p>
+  <div class="container max-w-xl bg-gray-200 rounded-lg mt-6">
 
-    <div class="text-lg font-medium mb-4 flex items-center justify-between">
-      <span class="text-gray-700">Score:</span>
-      <span id="score-display" class="text-2xl font-bold text-blue-500">0</span>
+    <div class="px-6 text-lg font-medium flex items-center justify-between">
+      <h2 class="font-bold text-gray-600">High & Low</h2>
+      <div class=" p-3 text-gray-700">
+        <span>score:</span>
+        <span id="score-display">0</span>
+      </div>
     </div>
 
-    <div id="pc-number"
-      class="flex justify-center items-center h-24 w-24 border-2 border-gray-400 rounded-lg bg-white text-4xl font-bold text-gray-800 mx-auto mb-4 shadow-md">
+    <div id="result-area" class="hidden flex justify-center">
+      <div class="">
+        <button onclick="initGame()" id="retry-btn"
+          class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600">Retry Game</button>
+        <div id="result" class="p-3 text-center text-2xl font-semibold text-gray-800"></div>
+      </div>
     </div>
 
-    <div id="my-number"
-      class="flex justify-center items-center h-24 w-24 border-2 border-gray-400 rounded-lg bg-white text-4xl font-bold text-gray-800 mx-auto mb-4 shadow-md">
+    <div id="pc">
+      <h3 class="text-center text-gray-600 font-bold p-3">PC</h3>
+      <div id="pc-card"
+        class="flex justify-center items-center h-40 w-32 border-1 border-gray-500 rounded-lg bg-white text-4xl font-bold text-gray-800 mx-auto mb-4 shadow-md">
+      </div>
     </div>
 
-    <p id="message" class="text-center text-gray-600 text-lg my-4">High & Low?</p>
-
-    <div id="select-button-area" class="flex justify-center space-x-4 text-center">
-      <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" id="low-btn" onclick="choiceLow()">Low</button>
-      <button class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600" id="draw-btn" onclick="choiceDraw()">Draw</button>
-      <button class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600" id="high-btn" onclick="choiceHigh()">High</button>
+    <div id="player">
+      <div id="my-card"
+        class="flipLeft flex justify-center items-center h-40 w-32 border-1 border-gray-500 rounded-lg bg-white text-4xl font-bold text-gray-800 mx-auto shadow-md">
+      </div>
+      <h3 class="text-center text-gray-600 font-bold p-3">Player</h3>
     </div>
 
-    <div class="flex justify-center space-x-4 text-center my-5">
-      <button id="retry-btn" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-blue-600" onclick="initGame()">Retry Game</button>
+    <div id="select-button-area" class="p-6 flex justify-center space-x-4 text-center">
+      <button id="low-btn" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
+        onclick="choiceLow()">Low</button>
+      <button id="draw-btn" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
+        onclick="choiceDraw()">Draw</button>
+      <button id="high-btn" class="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600"
+        onclick="choiceHigh()">High</button>
     </div>
 
   </div>
