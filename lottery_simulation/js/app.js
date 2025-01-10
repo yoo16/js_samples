@@ -17,8 +17,9 @@ function init() {
     lifetimeProfit = 0
     // 初期メッセージ
     document.getElementById("message").innerHTML = `
-        1等 ${PRIZE_AMOUNT_1.toLocaleString()}円！
-        2等 ${PRIZE_AMOUNT_2.toLocaleString()}円！
+        <p>1等 ${PRIZE_AMOUNT_1.toLocaleString()}円！</p>
+        <p>2等 ${PRIZE_AMOUNT_2.toLocaleString()}円！</p>
+        <p>1回 ${LOTTERY_COST}円</p>
         `;
     document.getElementById("result").innerHTML = "1等当選するまで計算します！";
 }
