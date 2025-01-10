@@ -1,9 +1,11 @@
 const rarities = [
-    { type: 'N', name: 'ノーマル', probability: 70 },
-    { type: 'R', name: 'レア', probability: 23 },
-    { type: 'SR', name: 'スーパーレア', probability: 6 },
-    { type: 'SSR', name: 'スーパースペシャルレア', probability: 1 }
+    { type: 'N', name: 'ピクシー', image: './images/cards/pixy.png', probability: 70 },
+    { type: 'R', name: 'ドラゴン', image: './images/cards/dragon.png', probability: 23 },
+    { type: 'SR', name: 'グリムリーパー', image: './images/cards/grim.png', probability: 6 },
+    { type: 'SSR', name: 'ビーナス', image: './images/cards/venus.png', probability: 1 }
 ];
+
+const noneImage = './images/cards/none.png';
 
 var totalCount = 0;
 var counts = { N: 0, R: 0, SR: 0, SSR: 0 };
@@ -11,6 +13,8 @@ const interval = 1000;
 
 // Element
 var cardImage = document.getElementById('card-image');
+cardImage.src = noneImage;
+
 var loadingModal = document.getElementById('loading-modal');
 
 /**
@@ -57,14 +61,15 @@ const play = () => {
  * カードの切り替え処理
  */
 const showCard = (card) => {
-    setTimeout(() => {
-        // 新しい画像をセット
-        var newCardImage = `./images/card-${card.type}.png`;
-        cardImage.src = newCardImage;
-        cardImage.classList.add('revealed');
+    cardImage.src = noneImage;
+    cardImage.classList.add('is-active');
 
+    setTimeout(() => {
+        cardImage.src = card.image;
         // モーダル非表示
         loadingModal.classList.add('hidden');
+        cardImage.src = card.image;
+        cardImage.classList.remove('is-active');
 
         // カウント更新
         totalCount++;
