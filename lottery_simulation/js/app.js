@@ -4,53 +4,65 @@ const PRIZE_AMOUNT_1 = 700000000;   // 1等賞金
 const PRIZE_AMOUNT_2 = 1000000;     // 2等賞金
 const MAX_NUMBER_1 = 20000000;      // 1等の最大番号
 const MAX_NUMBER_2 = 5000000;       // 2等の最大番号
-
-// 生涯収支
+var prizeWon = 0;
+var attempts = 0;
+var totalCost = 0;
+var isWinner = false;
+var winningNumber1 = "";
+var winningNumber2 = "";
 var lifetimeProfit = 0;
 
-// 当たり番号をランダムに設定
-const winningNumber1 = Math.floor(Math.random() * MAX_NUMBER_1) + 1;  // 1等
-const winningNumber2 = Math.floor(Math.random() * MAX_NUMBER_2) + 1;  // 2等
-
-// 初期メッセージ
-document.getElementById("message").innerHTML = `1等 ${PRIZE_AMOUNT_1.toLocaleString()}円！ 2等 ${PRIZE_AMOUNT_2.toLocaleString()}円！`;
+function init() {
+    // 生涯収支
+    lifetimeProfit = 0
+    // 初期メッセージ
+    document.getElementById("message").innerHTML = `
+        1等 ${PRIZE_AMOUNT_1.toLocaleString()}円！
+        2等 ${PRIZE_AMOUNT_2.toLocaleString()}円！
+        `;
+    document.getElementById("result").innerHTML = "1等当選するまで計算します！";
+}
 
 // シミュレーション関数
-function simulateLottery() {
-    var attempts = 0;
-    var totalCost = 0;
-    var prizeWon = 0;
-    var isWinner = false;
+async function simulateStart() {
+    isWinner = false;
+    // 1等番号
+    winningNumber1 = Math.floor(Math.random() * MAX_NUMBER_1) + 1;
+    // 2等番号
+    winningNumber2 = Math.floor(Math.random() * MAX_NUMBER_2) + 1;
 
     // １等当選するまでループ
     while (!isWinner) {
-        // 試行回数を増やす
-        attempts++; 
-
+        // 試行回数
+        attempts++;
         // くじを引く
         const ticketNumber = Math.floor(Math.random() * MAX_NUMBER_1) + 1;
-        totalCost += LOTTERY_COST; // 総コストを計算
+        // 総コストを計算
+        totalCost += LOTTERY_COST;
 
         // 当選チェック
         if (ticketNumber === winningNumber1) {
-            prizeWon = PRIZE_AMOUNT_1; // 1等当選
+            // 1等
+            prizeWon = PRIZE_AMOUNT_1;
             isWinner = true;
         } else if (ticketNumber === winningNumber2) {
-            prizeWon = PRIZE_AMOUNT_2; // 2等当選
-        }
-
-        // １等当選表示
-        if (isWinner) {
-            document.getElementById("result").innerHTML = "🎉 1等当選！";
-            document.getElementById("lotteryNumber").innerHTML = winningNumber1;
+            // 2等
+            prizeWon = PRIZE_AMOUNT_2;
         }
     }
 
+    showResult();
+}
+
+function showResult() {
     // 今回の収支計算
     const profit = prizeWon - totalCost;
-
     // 生涯収支計算
     lifetimeProfit += profit;
+
+    // １等当選表示
+    document.getElementById("result").innerHTML = "🎉 1等当選！";
+    document.getElementById("lotteryNumber").innerHTML = winningNumber1;
 
     // 収支表示
     document.getElementById("attempts").textContent = attempts.toLocaleString();
@@ -58,3 +70,5 @@ function simulateLottery() {
     document.getElementById("profit").textContent = profit.toLocaleString();
     document.getElementById("lifetime-profit").textContent = lifetimeProfit.toLocaleString();
 }
+
+init();
