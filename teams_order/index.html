@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>順番決定アプリ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="min-h-screen flex my-3 justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-4xl w-full">
+            <h1 class="text-2xl font-bold mb-6 text-center">順番決定アプリ</h1>
+
+            <!-- グリッドレイアウト -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- 入力欄 -->
+                <div id="input" class="col-span-1">
+                    <div class="mb-6">
+                        <label for="teamCount"
+                            class="block mb-2 text-sm font-medium text-gray-700">数を入力して追加してください</label>
+                        <div class="flex space-x-2">
+                            <input type="number" id="teamCount" min="1"
+                                class="flex-grow p-2 border border-gray-300 rounded" placeholder="例: 5">
+                            <button onclick="createFields()" id="generateFields"
+                                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                                追加
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 名前入力欄 -->
+                    <div id="team-list" class="mb-6"></div>
+
+                    <!-- シャッフルボタン -->
+                    <div class="text-center">
+                        <button onclick="shuffleTeams()" id="shuffleBtn"
+                            class="hidden bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">シャッフル</button>
+                    </div>
+                </div>
+
+                <!-- 結果表示 -->
+                <div
+                    class="col-span-1 p-4 text-gray-700 bg-gray-50 border border-gray-300 rounded-lg shadow-inner text-lg">
+                    <h2 class="text-center">順番</h2>
+                    <div id="result">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
