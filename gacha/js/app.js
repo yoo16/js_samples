@@ -1,8 +1,8 @@
 const rarities = [
     { type: 'N', name: 'ピクシー', image: './images/pixy.png', probability: 60 },
-    { type: 'R', name: 'ドラゴン', image: './images/dragon.png', probability: 30 },
-    { type: 'SR', name: 'グリムリーパー', image: './images/grim.png', probability: 7 },
-    { type: 'SSR', name: 'ビーナス', image: './images/venus.png', probability: 3 }
+    { type: 'R', name: 'ドラゴン', image: './images/dragon.png', probability: 39 },
+    { type: 'SR', name: 'グリムリーパー', image: './images/grim.png', probability: 8 },
+    { type: 'SSR', name: 'ビーナス', image: './images/venus.png', probability: 2 }
 ];
 
 const noneImage = './images/none.png';
