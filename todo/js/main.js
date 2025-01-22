@@ -1,38 +1,86 @@
 $(function () {
-
 	var $input = $('#todo-input');
 	var $list = $('#todo-list');
+	// ローカルストレージ
 	var storage = window.localStorage;
 
 	/*
 	 * Todoを追加する関数
 	 */
 	function addTodo(text, isComplete) {
-		// リストアイテムをつくる
-		var $text = $('<span>').addClass('px-3 text').text(text);
-		var $checkbox = $('<input type="checkbox">');
-		var $remove = $('<span>').text('削除').addClass('p-2 text-xs bg-red-500 text-white');
+		// リストアイテムのHTMLを作成
+		var listItemHtml = `
+		<li class="flex items-center justify-between ${isComplete ? 'complete' : ''}">
+			<div class="flex items-center">
+				<input type="checkbox" class="mr-2" ${isComplete ? 'checked' : ''}>
+				<span class="text ${isComplete ? 'line-through' : ''}">${text}</span>
+			</div>
+			<div>
+				<span class="remove px-2 py-1 text-sm bg-red-500 rounded text-white cursor-pointer">削除</span>
+			</div>
+		</li>
+		`;
 
-		var $li = $('<li>');
-		$li.append($checkbox).append($text).append($remove);
+		// リストに追加する
+		$list.append(listItemHtml);
 
-		// 完了済みの場合の処理
-		if (isComplete) {
-			$li.addClass('complete');
-			$li.children('.text').addClass('line-through');
-			$checkbox.attr('checked', true);
-		}
+		// 追加されたリストアイテムを取得（最後の li）
+		var $li = $list.children('li').last();
+		var $checkbox = $li.find('input[type="checkbox"]');
+		var $text = $li.find('.text');
+		var $remove = $li.find('.remove');
 
 		// チェックボックスをクリック
 		$checkbox.on('click', function () {
+			// チェックボックスがチェックされているか？
 			if ($(this).is(':checked')) {
+				// liタグに class=complete を追加
 				$li.addClass('complete');
-				$li.children('.text').addClass('line-through');
+				// テキスト(spanタグ)に class=line-through を追加
+				$text.addClass('line-through');
 			} else {
+				// liタグから class=complete を削除
 				$li.removeClass('complete');
-				$li.children('.text').removeClass('line-through');
+				// テキスト(spanタグ)から class=line-through を削除
+				$text.removeClass('line-through');
 			}
 			updateData();
+		});
+
+		$text.on('click', function () {
+			// テキストを取得
+			var currentText = $(this).text();
+		
+			// 入力フィールドを作成
+			var $inputField = $('<input>')
+				.addClass('edit-input p-2')
+				.val(currentText)
+				.on('blur', function () {
+					// 入力フィールドからフォーカスが外れたときの処理
+					var newText = $(this).val();
+		
+					// テキストを更新
+					$text.text(newText);
+		
+					// フォーカスが外れたらテキスト表示に戻す
+					$text.show();
+					$inputField.remove();
+		
+					// ローカルストレージを更新
+					updateData();
+				})
+				.on('keypress', function (event) {
+					// Enterキーを押した場合も入力完了とする
+					if (event.which === 13) {
+						$(this).blur();
+					}
+				});
+		
+			// テキストを非表示にして入力フィールドを追加
+			$(this).hide().after($inputField);
+		
+			// 入力フィールドにフォーカスを当てる
+			$inputField.focus();
 		});
 
 		// 削除ボタンをクリックしたときの処理
@@ -44,8 +92,6 @@ $(function () {
 				});
 			}
 		});
-		// リストに追加する
-		$list.append($li);
 	}
 
 	/*
@@ -66,7 +112,9 @@ $(function () {
 		storage['todo.list'] = JSON.stringify(list);
 	}
 
-	// フォームを送信したときの処理
+	/**
+	 * フォームを送信
+	 */
 	$('.todoForm').bind('submit', function (event) {
 		// フォームのデフォルトの動作を止める
 		event.preventDefault();
@@ -80,11 +128,14 @@ $(function () {
 		updateData();
 	});
 
-	// LocalStroageからデータを復元
+	/**
+	 * LocalStorageからデータ読み込み
+	 */
 	function loadData() {
-		var storageList = storage['todo.list'];
-		if (storageList) {
-			JSON.parse(storageList).forEach(function (item) {
+		if (storage['todo.list']) {
+			// データがあれば、JSONデータをJSオブジェクトに変換
+			const todoList = JSON.parse(storage['todo.list']);
+			todoList.forEach(function (item) {
 				addTodo(item.text, item.complete);
 			});
 		}

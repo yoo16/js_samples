@@ -1,21 +1,25 @@
-function getApiURL() {
-    const currentURL = location.href
-    const fileName = currentURL.substring(currentURL.lastIndexOf('/') + 1);
-    const baseURL = currentURL.replace(fileName, '');
-    return baseURL;
-}
-
-const BASE_URL = getApiURL();
-const PREFECTURE_FILE_PATH = BASE_URL + 'data/prefectures.json';
+const PREFECTURE_FILE_PATH = './data/prefectures.json';
 const SEARCH_URI = "https://zipcloud.ibsnet.co.jp/api/search";
 
+const errorDisplay = document.getElementById('error');
 
 // 都道府県JSON読み込み
 const loadPrefectures = async () => {
-    const response = await fetch(PREFECTURE_FILE_PATH);
-    const text = await response.text()
-    const prefectures = JSON.parse(text)
-    renderPrefectures(prefectures);
+    try {
+        // TODO: 都道府県JSON読み込み（非同期）: PREFECTURE_FILE_PATH
+        const response = await fetch(PREFECTURE_FILE_PATH);
+        if (!response.ok) {
+            errorDisplay.innerHTML = '都道府県読み込みエラー';
+            return;
+        }
+        const prefectures = await response.json();
+        console.log(prefectures);
+
+        // 都道府県プルダウン作成
+        renderPrefectures(prefectures);
+    } catch (error) {
+        errorDisplay.innerHTML = error;
+    }
 }
 
 // 都道府県プルダウン作成
@@ -32,7 +36,8 @@ const loadPrefecturesForThen = () => {
     fetch(PREFECTURE_FILE_PATH)
         .then((response) => {
             if (!response.ok) {
-                throw new Error('Network error');
+                errorDisplay.innerHTML = '都道府県読み込みエラー';
+                return;
             }
             console.log(response.json());
             return response.json();
@@ -46,31 +51,37 @@ const loadPrefecturesForThen = () => {
 }
 
 // 郵便番号検索
-const searchAPI = async (zipcode) => {
+const searchAddress = async (zipcode) => {
     if (!zipcode) return;
-    const query_param = new URLSearchParams({ zipcode: zipcode, })
-    const uri = SEARCH_URI + "?" + query_param;
-    // console.log(uri)
-    const response = await fetch(uri);
-    const data = await response.json();
-    return data;
+    try {
+        const query_param = new URLSearchParams({ zipcode: zipcode, })
+        const uri = SEARCH_URI + "?" + query_param;
+        console.log(uri);
+        const response = await fetch(uri);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+
+    }
 }
 
 const searchHandler = async () => {
     const zipcode = document.getElementById('zipcode').value;
     if (!zipcode) {
-        alert('郵便番号を入力してください')
+        errorDisplay.innerHTML = '郵便番号を入力してください';
+        return;
     }
-    var data = await searchAPI(zipcode);
-    if (!data) return;
-    if (!data.results) return;
-    var results = data.results[0]
-
-    document.getElementById('prefecture').value = results.prefcode;
-    document.getElementById('city').value = results.address2 + results.address3;
+    var data = await searchAddress(zipcode);
+    console.log(data);
+    if (data.results) {
+        var results = data.results[0]
+        document.getElementById('prefecture').value = results.prefcode;
+        document.getElementById('city').value = results.address2 + results.address3;
+    } else {
+        errorDisplay.innerHTML = data.message;
+    }
 }
 
 (() => {
     loadPrefectures();
-    // loadPrefecturesForThen();
 })();

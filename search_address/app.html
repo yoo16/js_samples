@@ -12,7 +12,7 @@
 
     <main class="container mx-auto mt-16 p-10 bg-white shadow-lg rounded-lg max-w-2xl">
         <h2 class="text-3xl font-bold mb-8 text-center text-gray-800">住所検索</h2>
-
+        <div id="error" class="py-2 text-red-800"></div>
         <!-- 郵便番号 -->
         <div class="mb-8">
             <label class="block text-gray-700 font-medium mb-3 text-lg">郵便番号</label>
@@ -20,7 +20,7 @@
                 <input 
                 onchange="searchHandler()"
                 id="zipcode" class="form-input border border-gray-300 rounded-lg p-3 flex-grow" type="text" placeholder="例: 1500001" />
-                <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 flex-shrink-0">
+                <button onclick="searchHandler()" class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 flex-shrink-0">
                     検索
                 </button>
             </div>
