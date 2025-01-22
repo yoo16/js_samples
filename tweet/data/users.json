@@ -1,0 +1,32 @@
+{
+    "1": {
+        "id": 1,
+        "name": "mobile_you",
+        "display_name": "モバイル ユウタ",
+        "bio": "モバイルについてつぶやきます。\n",
+        "profile_image_url": "images/me.png",
+        "followers_count": 520,
+        "following_count": 180,
+        "joined_date": "2021-03-15"
+    },
+    "2": {
+        "id": 2,
+        "name": "tech_taro",
+        "display_name": "テック太郎",
+        "bio": "プログラミングと最新テクノロジーについてつぶやきます。",
+        "profile_image_url": "images/me.png",
+        "followers_count": 520,
+        "following_count": 180,
+        "joined_date": "2021-03-15"
+    },
+    "3": {
+        "id": 3,
+        "name": "tokyo_jiro",
+        "display_name": "東京 二郎",
+        "bio": "東京ついてつぶやきます。\n",
+        "profile_image_url": "images/me.png",
+        "followers_count": 120,
+        "following_count": 100,
+        "joined_date": "2021-07-18"
+    }
+}

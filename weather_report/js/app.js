@@ -8,7 +8,7 @@ var weatherData;
 async function fetchWeather() {
     try {
         // API URI
-        const uri = 'api/weather/list.php';
+        const uri = 'api/weather/report.php';
         // const uri = 'api/weather/list.json';
 
         const response = await fetch(uri);
@@ -55,9 +55,9 @@ async function displayWeather(area = "") {
                     <img class="w-12 h-12" src="images/${condition}.png" alt="${condition}">
                 </p>
                 <p class="text-gray-500">
-                <span class="text-red-500 font-bold">${temperature_max}</span>
-                /
-                <span class="text-blue-500 font-bold">${temperature_min}</span>
+                    <span class="text-red-500 font-bold">${temperature_max}</span>
+                    /
+                    <span class="text-blue-500 font-bold">${temperature_min}</span>
                 </p>
                 <p class="text-gray-500">${precipitationProbability}%</p>
             `;
@@ -89,12 +89,10 @@ function setupFilterButtons() {
     filterButtons.forEach((button) => {
         button.addEventListener('click', (event) => {
             const area = event.currentTarget.dataset.area || '';
-            // console.log(area)
             displayWeather(area);
         });
     });
 }
-
 
 /**
  * エラーメッセージ
@@ -105,8 +103,9 @@ function displayError(error) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // フィルターボタンをセットアップ
-    setupFilterButtons();
     // 全データ表示
     displayWeather();
+
+    // フィルターボタンをセットアップ
+    setupFilterButtons();
 });

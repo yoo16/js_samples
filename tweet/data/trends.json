@@ -1,0 +1,34 @@
+{
+    "trends": [
+        {
+            "category": "J-Pop",
+            "trend": "朝ドラテーマ",
+            "description": "新しい朝ドラのテーマソングが話題に。",
+            "rank": 1
+        },
+        {
+            "category": "テクノロジー",
+            "trend": "Android新機種",
+            "description": "最新のAndroidスマートフォンがリリースされ注目を集めています。",
+            "rank": 2
+        },
+        {
+            "category": "ゲーム",
+            "trend": "1,000万ダウンロード",
+            "description": "人気ゲームが1,000万ダウンロードを突破し大きな話題に。",
+            "rank": 3
+        },
+        {
+            "category": "食べ物",
+            "trend": "レアチョコレート",
+            "description": "珍しい原材料を使った高級チョコレートが注目されています。",
+            "rank": 4
+        },
+        {
+            "category": "ニュース",
+            "trend": "連休明け",
+            "description": "連休明けで各地の交通機関や経済活動が話題になっています。",
+            "rank": 5
+        }
+    ]
+}
