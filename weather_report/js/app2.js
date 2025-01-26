@@ -11,6 +11,11 @@ var weatherData;
 var centers;
 var offices;
 
+/**
+ * getCenter
+ * API取得: エリアセンターデータ
+ * @returns 
+ */
 async function getCenter() {
     try {
         // API URI
@@ -26,6 +31,11 @@ async function getCenter() {
     }
 }
 
+/**
+ * getForecast
+ * API取得: 天気予報データ
+ * @returns 
+ */
 async function getForecast(officeCode) {
     try {
         // API URI
@@ -42,6 +52,10 @@ async function getForecast(officeCode) {
     }
 }
 
+/**
+ * displayCenters
+ * エリアセンター表示
+ */
 async function displayCenters() {
     try {
         // Fetch API データ
@@ -67,6 +81,8 @@ async function displayCenters() {
                 const office = offices[officeCode];
                 li.textContent = office.name;
                 li.dataset.officeCode = officeCode;
+                li.className = 'text-sky-600 cursor-pointer';
+                // クリックイベント
                 li.addEventListener('click', () => displayWeather(officeCode));
                 ul.appendChild(li)
             }
@@ -78,8 +94,16 @@ async function displayCenters() {
     }
 }
 
-// Function to isplay weather data
+/**
+ * displayWeather
+ * 天気表示
+ * @param {*} officeCode 
+ */
 async function displayWeather(officeCode) {
+    // ローディングスピナーを表示
+    const loadingSpinner = document.getElementById("loading-spinner");
+    loadingSpinner.classList.remove("hidden");
+
     // 現在のリストクリア
     weatherContainer.innerHTML = '';
     errorContainer.innerHTML = '';
@@ -89,26 +113,31 @@ async function displayWeather(officeCode) {
         forecastData = await getForecast(officeCode);
         console.log(forecastData);
 
+        // スムーススクロールでトップへ移動
+        document.getElementById("title").scrollIntoView({ behavior: "smooth" });
         // 予報日時
-        reportedAtContainer.textContent = forecastData[0].reportDatetime;
-
+        reportedAtContainer.textContent = dateFormat(forecastData[0].reportDatetime);
+        // 天気データ
         const weathers = forecastData[0].timeSeries[0].areas;
+        // 降水量
         const precipitations = forecastData[0].timeSeries[1].areas;
+        // 予報基本データ
         const areas = forecastData[0].timeSeries[2].areas;
 
         // 天気カード生成
         areas.forEach((value, index) => {
             console.log("value: ", value)
+
+            // 天気データのある地域のみ処理
+            if (!weathers[index]) return;
+
             const name = value.area.name;
             const temperature = value.temps;
 
             const weather = weathers[index];
-            if (!weathers[index]) return;
-
             const code = weather.weatherCodes[0];
-            console.log("code: ", code)
-            const weatherName = weather.weathers[0];
             const image = weatherCodes[code][0];
+            const weatherName = weather.weathers[0];
 
             const precipitaion = precipitations[index].pops[0];
 
@@ -130,8 +159,12 @@ async function displayWeather(officeCode) {
         });
     } catch (error) {
         displayError("予報データがありません。");
+    } finally {
+        // ローディングスピナーを非表示
+        loadingSpinner.classList.add("hidden");
     }
 }
+
 
 /**
  * エラーメッセージ
@@ -139,6 +172,14 @@ async function displayWeather(officeCode) {
  */
 function displayError(error) {
     errorContainer.innerHTML = error;
+}
+
+function dateFormat(dateString) {
+    // 日付オブジェクトを作成
+    const date = new Date(dateString);
+    // フォーマット
+    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
+    return formattedDate;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
