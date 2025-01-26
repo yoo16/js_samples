@@ -20,8 +20,10 @@ document.addEventListener("DOMContentLoaded", function () {
             quoteDiv.classList.add("hidden");
             authorDiv.classList.add("hidden");
 
+            // 待機時間
             setTimeout(() => {
-                const success = Math.random() > 0.2; // 80%の確率で成功
+                 // 80%の確率で成功
+                const success = Math.random() > 0.2;
                 if (success) {
                     var index = Math.floor(Math.random() * quotes.length);
                     const randomQuote = quotes[index];
