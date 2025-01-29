@@ -19,8 +19,8 @@ var offices;
 async function getCenter() {
     try {
         // API URI
-        // const uri = 'https://www.jma.go.jp/bosai/common/const/area.json';
-        const uri = './data/area2.json';
+        const uri = 'https://www.jma.go.jp/bosai/common/const/area.json';
+        // const uri = './data/jma-area.json';
         const response = await fetch(uri);
         if (!response.ok) {
             displayError("エリア取得に失敗しました");
