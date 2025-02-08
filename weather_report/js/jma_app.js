@@ -133,6 +133,7 @@ async function displayWeather(officeCode) {
 
             const name = value.area.name;
             const temperature = value.temps;
+            console.log(temperature);
 
             const weather = weathers[index];
             const code = weather.weatherCodes[0];
@@ -149,9 +150,9 @@ async function displayWeather(officeCode) {
                         <img class="w-12 h-12" src="svg/${image}" alt="${weatherName}">
                     </p>
                     <p class="text-gray-500">
-                        <span class="text-red-500 font-bold">${temperature[0]}</span>
+                        <span class="text-red-500 font-bold">${temperature[3]}</span>
                         /
-                        <span class="text-blue-500 font-bold">${temperature[1]}</span>
+                        <span class="text-blue-500 font-bold">${temperature[2]}</span>
                     </p>
                     <p class="text-gray-500">${precipitaion}%</p>
                 `;
