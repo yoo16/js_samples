@@ -1,4 +1,5 @@
 const canvas = document.getElementById("faceCanvas");
+const message = document.getElementById("message");
 
 // 2Dコンテイスト作成
 const ctx = canvas.getContext("2d");
@@ -14,6 +15,8 @@ let faces = [];
  * @param {*} event 
  */
 function spawnFace(event) {
+    message.classList.add('hidden');
+
     // クリックした座標
     let x = event.clientX;
     let y = event.clientY;
@@ -23,6 +26,25 @@ function spawnFace(event) {
     // 新しい顔文字作成
     faces.push(new Face(x, y, speedX, speedY));
 }
+
+/**
+ * フレームアニメーション
+ */
+function animate() {
+    // 現在のコンテキストの描画クリア
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // 顔文字の移動（複数同時）
+    faces.forEach(face => {
+        face.move();
+        face.draw();
+    });
+    // 衝突チェック
+    // checkCollisions();
+
+    // フレームアニメーション
+    requestAnimationFrame(animate);
+}
+
 
 /**
  * 衝突処理
@@ -56,24 +78,6 @@ function checkCollisions() {
             }
         }
     }
-
-}
-
-/**
- * フレームアニメーション
- */
-function animate() {
-    // 現在のコンテキストの描画クリア
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // 顔文字の移動（複数同時）
-    faces.forEach(face => {
-        face.move();
-        face.draw();
-    });
-    // 衝突チェック
-    checkCollisions();
-    // フレームアニメーション
-    requestAnimationFrame(animate);
 }
 
 // クリックイベント

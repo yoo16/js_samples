@@ -2,6 +2,13 @@
 const canvas = document.getElementById('drawCanvas');
 const ctx = canvas.getContext('2d');
 
+// HTML 側のコントロール要素の取得
+const colorPicker = document.getElementById('colorPicker');
+const lineWidthRange = document.getElementById('lineWidth');
+const lineWidthValue = document.getElementById('lineWidthValue');
+const resetButton = document.getElementById('resetButton');
+const downloadButton = document.getElementById('downloadButton');
+
 // 描画状態を管理する変数
 let isDrawing = false;
 let lastX = 0;
@@ -10,43 +17,6 @@ let lastY = 0;
 // 現在の描画設定（初期値）
 let currentColor = '#3490dc';
 let currentLineWidth = 3;
-
-// HTML 側のコントロール要素の取得
-const colorPicker = document.getElementById('colorPicker');
-const lineWidthRange = document.getElementById('lineWidth');
-const lineWidthValue = document.getElementById('lineWidthValue');
-const resetButton = document.getElementById('resetButton');
-const downloadButton = document.getElementById('downloadButton');
-
-// コントロール変更時のイベントリスナー
-colorPicker.addEventListener('change', (e) => {
-    currentColor = e.target.value;
-});
-
-lineWidthRange.addEventListener('input', (e) => {
-    currentLineWidth = e.target.value;
-    lineWidthValue.textContent = currentLineWidth;
-});
-
-// リセットボタンのイベントリスナー
-resetButton.addEventListener('click', () => {
-    // キャンバス全体をクリア
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-});
-
-// ダウンロードボタンのイベントリスナー
-downloadButton.addEventListener('click', () => {
-    // Canvas の内容を PNG のデータURL に変換
-    const dataURL = canvas.toDataURL('image/png');
-
-    // 一時的なリンク（aタグ）を生成してクリックし、ダウンロードを実行
-    const a = document.createElement('a');
-    a.href = dataURL;
-    a.download = 'canvas.png';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-});
 
 // 描画開始処理
 function startDrawing(x, y) {
@@ -87,7 +57,8 @@ canvas.addEventListener('mousemove', (e) => {
 canvas.addEventListener('mouseup', endDrawing);
 canvas.addEventListener('mouseout', endDrawing);
 
-// タッチイベントの設定
+// Event
+// タッチ開始
 canvas.addEventListener('touchstart', (e) => {
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches[0];
@@ -95,6 +66,7 @@ canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
 });
 
+// タッチ移動
 canvas.addEventListener('touchmove', (e) => {
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches[0];
@@ -102,5 +74,37 @@ canvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
 });
 
+// タッチ終了
 canvas.addEventListener('touchend', endDrawing);
 canvas.addEventListener('touchcancel', endDrawing);
+
+// コントロール変更時のイベントリスナー
+colorPicker.addEventListener('change', (e) => {
+    currentColor = e.target.value;
+});
+
+// 太さ入力
+lineWidthRange.addEventListener('input', (e) => {
+    currentLineWidth = e.target.value;
+    lineWidthValue.textContent = currentLineWidth;
+});
+
+// リセットボタンクリック
+resetButton.addEventListener('click', () => {
+    // キャンバス全体をクリア
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// ダウンロードボタンクリック
+downloadButton.addEventListener('click', () => {
+    // Canvas の内容を PNG のデータURL に変換
+    const dataURL = canvas.toDataURL('image/png');
+
+    // 一時的なリンク（aタグ）を生成してクリックし、ダウンロードを実行
+    const a = document.createElement('a');
+    a.href = dataURL;
+    a.download = 'canvas.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+});

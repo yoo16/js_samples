@@ -3,20 +3,6 @@ const canvas = document.getElementById('myCanvas');
 // 2D コンテキスト
 const ctx = canvas.getContext('2d');
 
-/**
- * drawTriangle()
- */
-function drawTriangle() {
-    ctx.fillStyle = 'skyblue';
-    ctx.strokeStyle = 'skyblue';
-    ctx.beginPath();
-    ctx.moveTo(50, 0);
-    ctx.lineTo(150, 0);
-    ctx.lineTo(100, 100);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-}
 
 /**
  * drawSquare()
@@ -24,8 +10,21 @@ function drawTriangle() {
 function drawSquare() {
     ctx.fillStyle = 'red';
     ctx.strokeStyle = 'red';
-    ctx.fillRect(200, 0, 100, 100);
+    ctx.fillRect(200, 0, 50, 50);
     ctx.strokeRect(200, 0, 100, 100);
+}
+
+
+/**
+ * drawTriangle()
+ */
+function drawTriangle() {
+    ctx.beginPath();
+    ctx.moveTo(50, 0);
+    ctx.lineTo(150, 0);
+    ctx.lineTo(100, 100);
+    ctx.closePath();
+    ctx.stroke();
 }
 
 /**
@@ -42,7 +41,12 @@ function drawCircle() {
 }
 
 /**
- * drawText();
+ * drawTextOnCanvas();
+ * @param {*} text
+ * @param {*} x 
+ * @param {*} y 
+ * @param {*} font 
+ * @param {*} color 
  */
 function drawTextOnCanvas(text, x, y, font, color) {
     ctx.font = font;
