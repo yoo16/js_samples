@@ -13,8 +13,11 @@ const numDots = 200;
 // 距離制限
 const distanceLimit = 100;
 
+
 /**
  * ドットの生成
+ * @description
+ *  numDots 個のドットを作成し、dots 配列に格納する
  */
 function createDots() {
     for (let i = 0; i < numDots; i++) {
@@ -23,16 +26,21 @@ function createDots() {
     }
 }
 
+
 /**
- * アニメーション
+ * アニメーションフレームの更新処理
+ * @description
+ *  - トレイル効果のための透明な黒塗り
+ *  - 各ドットの更新
+ *  - 各ドットの描画
+ *  - ドット同士の線を描画
+ *  - 次のフレームをリクエスト
  */
 function animate() {
     // トレイル効果
     // 各フレームで、完全に消去せずに半透明の黒で上書きする
     ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
     ctx.fillRect(0, 0, w, h);
-    // ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-    // ctx.fillRect(255, 255, w, h);
 
     // 各ドットの更新と描画
     for (const dot of dots) {

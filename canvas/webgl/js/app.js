@@ -14,6 +14,7 @@ function gpuInfo(gl) {
         // GPU のベンド情報を取得
         document.getElementById('gpu-vendor').textContent = gl.getParameter(gl.VENDOR);
     } else {
-        console.log('WebGL がサポートされていません。');
+        // WebGL がサポートされていない場合
+        document.getElementById('error-message').textContent = 'WebGL がサポートされていません。';
     }
 }

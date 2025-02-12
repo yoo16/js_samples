@@ -1,3 +1,4 @@
+// DOM 要素
 const video = document.getElementById('video');
 const captureBtn = document.getElementById('capture-btn');
 const photoInput = document.getElementById('photo');
@@ -10,6 +11,13 @@ const imageModal = document.getElementById('imageModal');
 const capturedImage = document.getElementById('capturedImage');
 const closeImageModal = document.getElementById('closeImageModal');
 
+// キャンバスサイズ
+const canvasWidth = 640;
+const canvasHeight = 480;
+
+// シャッタータイマーの遅延時間（秒）を設定（ここでは3秒）
+const shutterDelaySeconds = 3;
+
 // キャプチャされた画像を保持するための DataTransfer オブジェクト
 const dataTransfer = new DataTransfer();
 
@@ -18,29 +26,40 @@ const countdownAudio = new Audio('audio/countdown.wav');
 
 // 音声再生のON/OFFを制御するフラグ（初期値：ON）
 let audioEnabled = true;
-toggleAudioBtn.addEventListener('click', () => {
-  audioEnabled = !audioEnabled;
-  toggleAudioBtn.textContent = audioEnabled ? "Audio ON" : "Audio OFF";
-});
 
-// カメラ起動処理
+
+/**
+ * カメラ有効
+ * @description
+ * - getUserMedia() を使用して、カメラストリームを取得
+ * - 取得したストリームを、video要素に設定
+ * @returns {Promise<void>}
+ */
 const onCamera = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     video.srcObject = stream;
 };
 
-// 画像キャプチャ処理
+/**
+ * ボタンクリックイベントハンドラ（画像キャプチャ）
+ * @description
+ * - 画像を生成して、input[type="file"] に設定
+ * - 画像を表示するモーダルを表示
+ * - 画像生成中はローディングモーダルを表示
+ * @returns {Promise<void>}
+ */
 const onCapture = async () => {
     // ローディングモーダルを表示
     loadingModal.classList.remove('hidden');
 
-    // 新しい canvas 作成（この canvas は画像生成用で、画面上に追加しなくてもよい）
+    // 新しい canvas 作成
     const newCanvas = document.createElement('canvas');
-    newCanvas.width = 640;
-    newCanvas.height = 480;
+    newCanvas.width = canvasWidth;
+    newCanvas.height = canvasHeight;
     const ctx = newCanvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, 640, 480);
+    ctx.drawImage(video, 0, 0, canvasWidth, canvasHeight);
 
+    // キャプチャされた画像を DataTransfer に追加
     newCanvas.toBlob((blob) => {
         // ファイル生成（必要に応じて）
         const file = new File([blob], `captured-image-${Date.now()}.jpg`, { type: 'image/jpeg' });
@@ -59,9 +78,16 @@ const onCapture = async () => {
     });
 };
 
-// シャッタータイマーの遅延時間（秒）を設定（ここでは3秒）
-const shutterDelaySeconds = 3;
 
+/**
+ * カウントダウン処理
+ * @description
+ * 1. カウントダウン用のオーバーレイを表示
+ * 2. カウントダウンを開始し、1秒間隔で数字を減らす
+ * 3. カウントが0になったら、カメラを撮影し、画像を生成
+ * 4. カウントダウン用のオーバーレイを非表示に
+ * 5. captureBtn を有効化
+ */
 const countDown = () => {
     let count = shutterDelaySeconds;
     countdownCircle.textContent = count;
@@ -82,6 +108,10 @@ const countDown = () => {
     }, 1000);
 }
 
+/**
+ * Countdown Audio を再生
+ * @function playSound
+ */
 const playSound = () => {
     countdownAudio.currentTime = 0;
     countdownAudio.play();
@@ -98,9 +128,16 @@ captureBtn.addEventListener('click', () => {
     countDown();
 });
 
-// 画像モーダルの「Close」ボタンでモーダルを非表示にする
+// 画像モーダルの「Close」ボタンでモーダルを非表示
 closeImageModal.addEventListener('click', () => {
     imageModal.classList.add('hidden');
 });
 
+// Audio ON/OFF を切り替え
+toggleAudioBtn.addEventListener('click', () => {
+    audioEnabled = !audioEnabled;
+    toggleAudioBtn.textContent = audioEnabled ? "Audio ON" : "Audio OFF";
+});
+
+// カメラ有効
 onCamera();
