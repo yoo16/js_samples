@@ -10,12 +10,21 @@ const toggleAudioBtn = document.getElementById('toggleAudioBtn');
 const imageModal = document.getElementById('imageModal');
 const capturedImage = document.getElementById('capturedImage');
 const closeImageModal = document.getElementById('closeImageModal');
+const downloadImageBtn = document.getElementById('downloadImage');
+const frameThumbnails = document.querySelectorAll('.frame-thumbnail');
+
+// 合成用の Canvas を作成
+const compositeCanvas = document.createElement('canvas');
+const compositeCtx = compositeCanvas.getContext('2d');
+
+// 現在選択中のフレーム画像（初期は最初のサムネイル）
+let currentFrameSrc = document.querySelector('.frame-thumbnail').dataset.frame;
 
 // キャンバスサイズ
 const canvasWidth = 640;
 const canvasHeight = 480;
 
-// シャッタータイマーの遅延時間（秒）を設定（ここでは3秒）
+// シャッタータイマーの遅延時間（秒）
 const shutterDelaySeconds = 3;
 
 // キャプチャされた画像を保持するための DataTransfer オブジェクト
@@ -24,16 +33,29 @@ const dataTransfer = new DataTransfer();
 // カウントダウンのオーディオを読み込む
 const countdownAudio = new Audio('audio/countdown.wav');
 
-// 音声再生のON/OFFを制御するフラグ（初期値：ON）
+// 音声再生のON/OFF制御フラグ（初期値：ON）
 let audioEnabled = true;
+
+// 合成用フレーム画像オブジェクト
+const overlayFrame = new Image();
+overlayFrame.src = currentFrameSrc;
 
 
 /**
- * カメラ有効
+ * 合成用の Canvas を作成し、DOM へ追加
+ *
  * @description
- * - getUserMedia() を使用して、カメラストリームを取得
- * - 取得したストリームを、video要素に設定
- * @returns {Promise<void>}
+ *   合成用の Canvas を作成し、DOM へ追加する。
+ *   この Canvas には、合成された画像が描画される。
+ */
+function createCompositeCanvas() {
+    compositeCanvas.width = canvasWidth;
+    compositeCanvas.height = canvasHeight;
+    canvasArea.appendChild(compositeCanvas);
+}
+
+/**
+ * カメラの有効化
  */
 const onCamera = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -41,59 +63,30 @@ const onCamera = async () => {
 };
 
 /**
- * ボタンクリックイベントハンドラ（画像キャプチャ）
- * @description
- * - 画像を生成して、input[type="file"] に設定
- * - 画像を表示するモーダルを表示
- * - 画像生成中はローディングモーダルを表示
- * @returns {Promise<void>}
+ * 画像キャプチャ処理
+ * compositeCanvas の内容（ビデオとフレームの合成済み）をキャプチャして Blob 化
  */
 const onCapture = async () => {
-    // ローディングモーダルを表示
     loadingModal.classList.remove('hidden');
-
-    // 新しい canvas 作成
-    const newCanvas = document.createElement('canvas');
-    newCanvas.width = canvasWidth;
-    newCanvas.height = canvasHeight;
-    const ctx = newCanvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, canvasWidth, canvasHeight);
-
-    // キャプチャされた画像を DataTransfer に追加
-    newCanvas.toBlob((blob) => {
-        // ファイル生成（必要に応じて）
+    compositeCanvas.toBlob((blob) => {
         const file = new File([blob], `captured-image-${Date.now()}.jpg`, { type: 'image/jpeg' });
         dataTransfer.items.add(file);
         photoInput.files = dataTransfer.files;
-
-        // Blob からオブジェクトURLを生成して、モーダル内の <img> に設定
         const imageUrl = URL.createObjectURL(blob);
         capturedImage.src = imageUrl;
-
-        // 画像表示モーダルを表示（モーダルは１枚の画像のみ表示）
         imageModal.classList.remove('hidden');
-
-        // ローディングモーダルを非表示に
         loadingModal.classList.add('hidden');
-    });
+    }, 'image/jpeg');
 };
-
 
 /**
  * カウントダウン処理
- * @description
- * 1. カウントダウン用のオーバーレイを表示
- * 2. カウントダウンを開始し、1秒間隔で数字を減らす
- * 3. カウントが0になったら、カメラを撮影し、画像を生成
- * 4. カウントダウン用のオーバーレイを非表示に
- * 5. captureBtn を有効化
  */
 const countDown = () => {
     let count = shutterDelaySeconds;
     countdownCircle.textContent = count;
     countdownOverlay.classList.remove('hidden');
     countdownCircle.classList.add('animate-ping');
-
     const countdownInterval = setInterval(() => {
         count--;
         if (count > 0) {
@@ -106,38 +99,75 @@ const countDown = () => {
             captureBtn.disabled = false;
         }
     }, 1000);
-}
+};
 
 /**
- * Countdown Audio を再生
- * @function playSound
+ * Countdown Audio の再生
  */
 const playSound = () => {
     countdownAudio.currentTime = 0;
     countdownAudio.play();
-}
+};
 
-// キャプチャボタンをクリックしたとき、タイマーで遅延後にキャプチャ実行
+// キャプチャボタン押下時
 captureBtn.addEventListener('click', () => {
     captureBtn.disabled = true;
-
-    if (audioEnabled) {
-        playSound();
-    }
-
+    if (audioEnabled) playSound();
     countDown();
 });
 
-// 画像モーダルの「Close」ボタンでモーダルを非表示
+
+// サムネイルクリック時のイベントを設定
+frameThumbnails.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+        // クリックされたサムネイルからフレーム画像のパスを取得
+        currentFrameSrc = thumb.dataset.frame;
+        overlayFrame.src = currentFrameSrc;
+
+        // 選択中のサムネイルにスタイルを適用
+        frameThumbnails.forEach(t => t.classList.remove('border-blue-500'));
+        thumb.classList.add('border-blue-500');
+    });
+});
+
+// ビデオが再生開始されたら、Canvas に合成描画を開始
+video.addEventListener('play', () => {
+    const drawComposite = () => {
+        if (video.paused || video.ended) return;
+        // ビデオの現在のフレームを描画
+        compositeCtx.drawImage(video, 0, 0, canvasWidth, canvasHeight);
+        // フレーム画像が読み込まれている場合、合成
+        if (overlayFrame.complete) {
+            compositeCtx.drawImage(overlayFrame, 0, 0, canvasWidth, canvasHeight);
+        }
+        requestAnimationFrame(drawComposite);
+    };
+    drawComposite();
+});
+
+
+// 画像モーダルの「Close」ボタン
 closeImageModal.addEventListener('click', () => {
     imageModal.classList.add('hidden');
 });
 
-// Audio ON/OFF を切り替え
+// ダウンロードボタンのイベント
+downloadImageBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.href = capturedImage.src;
+    link.download = `captured-image-${Date.now()}.jpg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+});
+
+// Audio ON/OFF 切替
 toggleAudioBtn.addEventListener('click', () => {
     audioEnabled = !audioEnabled;
     toggleAudioBtn.textContent = audioEnabled ? "Audio ON" : "Audio OFF";
 });
 
-// カメラ有効
+// カメラ有効化
 onCamera();
+// 合成用の Canvas を作成
+createCompositeCanvas();

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ドットアニメーション（歩く人・丸いドット）</title>
+    <style>
+        /* キャンバスの輪郭を付け、画像がギザギザにならないように設定 */
+        canvas {
+            border: 1px solid #000;
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- キャンバス要素 -->
+    <canvas id="canvas" width="300" height="150"></canvas>
+    <script>
+        // ―― スプライト（歩く人）の2フレームを定義 ――
+        // "X" が描画するドット（黒）、空白は背景を表します。
+        const spriteFrame1 = [
+            "X  XX  ",
+            "   X   ",
+            "X XXX X",
+            "X  X   ",
+            "X X X X",
+            "X  X   ",
+            "  X   X",
+            "X  X   "
+        ];
+        const spriteFrame2 = [
+            "X X X X",
+            "   X  X",
+            "  X X X",
+            "   X  X",
+            "  X X X",
+            "   X  X",
+            "X   X X",
+            "X  X  X"
+        ];
+        const spriteFrame3 = [
+            "X X X X",
+            "X      ",
+            "X X X  ",
+            "X  X   ",
+            "X X X  ",
+            "X  X   ",
+            "X   X  ",
+            "X  X   "
+        ];
+        const spriteFrames = [spriteFrame1, spriteFrame2, spriteFrame3];
+
+        // ―― Canvasの設定 ――
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // 各ドットの表示サイズ（例：10px×10px）
+        const spriteScale = 10;
+
+        // アニメーション制御用の変数
+        let currentFrame = 0;
+        let frameTimer = 0;
+        const frameInterval = 300; // 300msごとにフレームを切り替え
+
+        // スプライトの横位置（右に移動）
+        let xPos = 0;
+
+        // ―― ドット絵スプライトを丸いドットで描画する関数 ――
+        // sprite: 文字列配列, x, y: 描画開始位置
+        function drawSprite(sprite, x, y) {
+            for (let row = 0; row < sprite.length; row++) {
+                for (let col = 0; col < sprite[row].length; col++) {
+                    if (sprite[row][col] === "X") {
+                        ctx.fillStyle = "black";
+                        // 各ドットの中心座標を計算
+                        const centerX = x + col * spriteScale + spriteScale / 2;
+                        const centerY = y + row * spriteScale + spriteScale / 2;
+                        const radius = spriteScale / 2;
+                        ctx.beginPath();
+                        ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+        }
+
+        // ―― アニメーションループ ――
+        let lastTime = 0;
+        function animate(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = timestamp - lastTime;
+            lastTime = timestamp;
+
+            // フレーム切り替えタイマーの更新
+            frameTimer += deltaTime;
+            if (frameTimer > frameInterval) {
+                currentFrame = (currentFrame + 1) % spriteFrames.length;
+                frameTimer = 0;
+            }
+
+            // キャンバス全体を白でクリア
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // スプライトの描画位置を決定（下部に余白を設ける）
+            const spriteHeight = spriteFrames[currentFrame].length * spriteScale;
+            const yPos = canvas.height - spriteHeight - 10;
+
+            // 現在のフレームのスプライトを描画
+            drawSprite(spriteFrames[currentFrame], xPos, yPos);
+
+            // スプライトの横位置を更新（右方向に移動）
+            xPos += 2; // 移動速度
+            if (xPos > canvas.width) {
+                xPos = -spriteFrames[currentFrame][0].length * spriteScale;
+            }
+
+            // 次のフレームをリクエスト
+            requestAnimationFrame(animate);
+        }
+
+        // アニメーション開始
+        requestAnimationFrame(animate);
+    </script>
+</body>
+
+</html>
