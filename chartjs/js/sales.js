@@ -1,19 +1,20 @@
-let myChart; // グローバル変数で管理
-
-// チャートを生成する共通関数
-function createChart(type, data, options) {
-    // 2Dコンテキストを取得
-    const ctx = document.getElementById('myChart').getContext('2d');
-    // Chart.jsのインスタンスを生成
-    myChart = new Chart(ctx, {
-        type: type,
-        data: data,
-        options: options
-    });
-}
+// グローバル変数で管理
+let salesChart;
+let softwaresChart;
 
 // 初期データ
-let chartData = {
+let salesData = {
+    labels: [],
+    datasets: [{
+        label: '',
+        data: [],
+        backgroundColor: [],
+        borderColor: [],
+        borderWidth: 1
+    }]
+};
+
+let softwaresData = {
     labels: [],
     datasets: [{
         label: '',
@@ -25,7 +26,7 @@ let chartData = {
 };
 
 // 初期オプション
-let chartOptions = {
+let salesOptions = {
     scales: {
         y: {
             beginAtZero: true
@@ -33,53 +34,102 @@ let chartOptions = {
     }
 };
 
-async function loadGraphData() {
+let softwareOptions = {
+    scales: {
+        y: {
+            beginAtZero: true
+        }
+    }
+};
+
+
+// 売上のチャートを生成する関数
+function createSalesChart(type, data, options) {
+    const ctx = document.getElementById('sales-chart').getContext('2d');
+    salesChart = new Chart(ctx, {
+        type: type,
+        data: data,
+        options: options
+    });
+}
+
+// ソフトウェアのチャートを生成する関数
+function createSoftwaresChart(type, data, options) {
+    const ctx = document.getElementById('softwares-chart').getContext('2d');
+    softwaresChart = new Chart(ctx, {
+        type: type,
+        data: data,
+        options: options
+    });
+}
+
+// 共通の非同期データ取得関数
+async function loadData(uri) {
     try {
-        // APIからデータを取得
-        const results = await fetch('./api/sales.json');
+        const results = await fetch(uri);
         if (!results.ok) {
             alert('データ取得に失敗しました。');
             return;
         }
-        // json形式でデータを取得
         const data = await results.json();
-
-        // APIから取得したデータでグローバル変数を更新
-        chartData.labels = data.labels;
-        chartData.datasets[0].label = data.datasets[0].label;
-        chartData.datasets[0].data = data.datasets[0].data;
-        chartData.datasets[0].backgroundColor = data.datasets[0].backgroundColor;
-        chartData.datasets[0].borderColor = data.datasets[0].borderColor;
+        return data;
     } catch (error) {
         console.error('データ取得エラー:', error);
     }
 }
 
-// 棒グラフを描画する関数
-function barGraph() {
-    // 現在のチャートを破棄
-    if (myChart) myChart.destroy();
-
-    // 新しいチャートを棒グラフとして再生成
-    createChart('bar', chartData, chartOptions);
+// 売上データを取得する関数
+async function loadSalesData() {
+    // await を利用して Promise の解決を待つ
+    salesData = await loadData('api/sales.json');
 }
 
-// 折れ線グラフを描画する関数
-function lineGraph() {
-    // 現在のチャートを破棄
-    if (myChart) myChart.destroy();
+// ソフトウェアデータを取得する関数
+async function loadSoftwaresData() {
+    softwaresData = await loadData('api/softwares.json');
+}
 
-    // 新しいチャートを折れ線グラフとして再生成
-    createChart('line', chartData, chartOptions);
+// 棒グラフを描画する関数（売上チャート用）
+function barChart() {
+    if (salesChart) {
+        salesChart.destroy();
+    }
+    createSalesChart('bar', salesData, salesOptions);
+}
+
+// 折れ線グラフを描画する関数（売上チャート用）
+function lineGraph() {
+    if (salesChart) {
+        salesChart.destroy();
+    }
+    createSalesChart('line', salesData, salesOptions);
+}
+
+// 円グラフを描画する関数（ソフトウェアチャート用）
+function pieChart() {
+    if (softwaresChart) {
+        softwaresChart.destroy();
+    }
+    createSoftwaresChart('pie', softwaresData, softwareOptions);
+}
+
+// ドーナツグラフを描画する関数（ソフトウェアチャート用）
+function doughnutChart() {
+    if (softwaresChart) {
+        softwaresChart.destroy();
+    }
+    createSoftwaresChart('doughnut', softwaresData, softwareOptions);
 }
 
 // グラフの初期化関数
-async function initGraph() {
-    // 初期データを取得
-    await loadGraphData();
-    // 初期グラフを描画
-    barGraph();
-}
+(async function initChart() {
+    // 売上データを取得
+    await loadSalesData();
+    // 売上データ取得後にグラフを描画
+    barChart();
 
-// グラフの初期化を実行
-initGraph();
+    // ソフトウェアデータ取得
+    await loadSoftwaresData();
+    // ソフトウェアデータ取得後にグラフを描画
+    createSoftwaresChart('pie', softwaresData, softwareOptions);
+})();

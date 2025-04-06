@@ -13,15 +13,32 @@
 <body>
     <main class="container mx-auto">
         <!-- グラフ切り替え -->
-        <div class="flex justify-center mt-4">
-            <button id="graph-bar" onclick="barGraph()"
-                class="bg-blue-500 text-white font-bold py-2 px-4 rounded">棒グラフ</button>
-            <button id="graph-line" onclick="lineGraph()"
-                class="bg-blue-500 text-white font-bold py-2 px-4 rounded ml-2">折れ線グラフ</button>
-        </div>
 
-        <!-- グラフ描画用の canvas 要素 -->
-        <canvas id="myChart" width="400" height="200"></canvas>
+        <div id="graphs" class="grid md:grid-cols-2 gap-4 p-4">
+            <!-- 売上グラフ描画用の canvas 要素 -->
+            <section class="my-5">
+                <h2 class="text-center text-2xl font-bold">売上グラフ</h2>
+                <canvas id="sales-chart" width="400"></canvas>
+                <div class="flex justify-center mt-4">
+                    <button id="graph-bar" onclick="barChart()"
+                        class="bg-blue-500 text-white font-bold py-2 px-4 rounded">棒グラフ</button>
+                    <button id="graph-line" onclick="lineGraph()"
+                        class="bg-blue-500 text-white font-bold py-2 px-4 rounded ml-2">折れ線グラフ</button>
+                </div>
+            </section>
+
+            <!-- ソフトウェアグラフ描画用の canvas 要素 -->
+            <section class="my-5">
+                <h2 class="text-center text-2xl font-bold">ソフトウェアグラフ</h2>
+                <canvas id="softwares-chart" class="my-5" width="400"></canvas>
+                <div class="flex justify-center mt-4">
+                    <button id="graph-bar" onclick="pieChart()"
+                        class="bg-blue-500 text-white font-bold py-2 px-4 rounded">円グラフ</button>
+                    <button id="graph-line" onclick="doughnutChart()"
+                        class="bg-blue-500 text-white font-bold py-2 px-4 rounded ml-2">ドーナツグラフ</button>
+                </div>
+            </section>
+        </div>
     </main>
 
     <script src="js/sales.js"></script>
