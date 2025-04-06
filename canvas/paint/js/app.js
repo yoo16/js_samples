@@ -1,6 +1,7 @@
 // DOM 要素
 const colorPicker = document.getElementById('colorPicker');
 const lineWidthRange = document.getElementById('lineWidth');
+const eraserButton = document.getElementById('eraserButton');
 const lineWidthValue = document.getElementById('lineWidthValue');
 const resetButton = document.getElementById('resetButton');
 const downloadButton = document.getElementById('downloadButton');
@@ -17,6 +18,7 @@ let lastY = 0;
 // 現在の描画設定（初期値）
 let currentColor = '#3490dc';
 let currentLineWidth = 3;
+let isEraser = false;
 
 /**
  * 描画を開始する
@@ -35,11 +37,24 @@ function startDrawing(x, y) {
  */
 function draw(x, y) {
     if (!isDrawing) return;
+
+    // 消しゴムモードの場合、合成方法を destination-out に設定
+    ctx.globalCompositeOperation = isEraser ? 'destination-out' : 'source-over';
+
     // 前回の位置から現在の位置まで線を描画
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
     ctx.lineTo(x, y);
     // 現在の色と線の太さを適用
+    if (isEraser) {
+        currentColor = '#ffffff';
+    } else {
+        currentColor = colorPicker.value;
+    }
+    // 丸みをつける
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    // 線を描画
     ctx.strokeStyle = currentColor;
     ctx.lineWidth = currentLineWidth;
     ctx.stroke();
@@ -51,6 +66,7 @@ function draw(x, y) {
  * 描画フラグを false に設定し、描画動作を停止する。
  */
 function endDrawing() {
+    ctx.globalCompositeOperation = 'source-over';
     isDrawing = false;
 }
 
@@ -122,3 +138,16 @@ downloadButton.addEventListener('click', () => {
     a.click();
     document.body.removeChild(a);
 });
+
+// 消しゴムボタン
+eraserButton.addEventListener('click', () => {
+    isEraser = !isEraser;
+    if (isEraser) {
+        eraserButton.classList.remove('bg-gray-300');
+        eraserButton.classList.add('bg-green-500', 'text-white');
+    } else {
+        eraserButton.classList.remove('bg-green-500', 'text-white');
+        eraserButton.classList.add('bg-gray-300');
+    }
+});
+

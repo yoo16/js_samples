@@ -20,14 +20,22 @@
             <label for="colorPicker" class="font-medium">色:</label>
             <input type="color" id="colorPicker" value="#3490dc" class="border border-gray-300 rounded p-1">
         </div>
+        <!-- 消しゴムの選択 -->
+        <div class="flex items-center gap-2">
+            <label for="lineWidth" class="font-medium">消しゴム:</label>
+            <button id="eraserButton" class="bg-gray-300 font-bold py-2 px-4 rounded">
+                消しゴム
+            </button>
+
+        </div>
         <!-- 線の太さの選択 -->
         <div class="flex items-center gap-2">
             <label for="lineWidth" class="font-medium">線の太さ:</label>
-            <input type="range" id="lineWidth" min="1" max="10" value="3" class="w-32">
+            <input type="range" id="lineWidth" min="1" max="50" value="3" class="w-32">
             <span id="lineWidthValue" class="w-6 text-center">3</span>
         </div>
         <!-- リセットボタン -->
-        <button id="resetButton" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none">
+        <button id="resetButton" class="bg-red-500 text-white px-4 py-2 rounded :hoverbg-red-600 focus:outline-none">
             リセット
         </button>
         <!-- ダウンロードボタン -->
