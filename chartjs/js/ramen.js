@@ -8,7 +8,7 @@ const pieCtx = document.getElementById('pieChart').getContext('2d');
  * @returns 
  */
 async function loadRamenData() {
-    const uri = './data/ramen.json';
+    const uri = 'api/ramen.json';
     const response = await fetch(uri);
     if (!response.ok) {
         throw new Error('ラーメンデータの取得に失敗しました');
