@@ -126,14 +126,14 @@ async function displayWeather(officeCode) {
 
         // 天気カード生成
         areas.forEach((value, index) => {
-            console.log("value: ", value)
-
             // 天気データのある地域のみ処理
             if (!weathers[index]) return;
 
             const name = value.area.name;
             const temperature = value.temps;
-            console.log(temperature);
+            var temperatureMin = temperature[0];
+            var temperatureMax = temperature[1];
+            // console.log("temps:", value.temps);
 
             const weather = weathers[index];
             const code = weather.weatherCodes[0];
@@ -150,9 +150,9 @@ async function displayWeather(officeCode) {
                         <img class="w-12 h-12" src="svg/${image}" alt="${weatherName}">
                     </p>
                     <p class="text-gray-500">
-                        <span class="text-red-500 font-bold">${temperature[3]}</span>
+                        <span class="text-red-500 font-bold">${temperatureMin}</span>
                         /
-                        <span class="text-blue-500 font-bold">${temperature[2]}</span>
+                        <span class="text-blue-500 font-bold">${temperatureMax}</span>
                     </p>
                     <p class="text-gray-500">${precipitaion}%</p>
                 `;

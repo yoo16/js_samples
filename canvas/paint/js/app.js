@@ -8,6 +8,7 @@ const downloadButton = document.getElementById('downloadButton');
 
 // canvas 要素と描画コンテキストの取得
 const canvas = document.getElementById('drawCanvas');
+// 2Dコンテキスト作成
 const ctx = canvas.getContext('2d');
 
 // 描画状態を管理する変数
@@ -41,22 +42,18 @@ function draw(x, y) {
     // 消しゴムモードの場合、合成方法を destination-out に設定
     ctx.globalCompositeOperation = isEraser ? 'destination-out' : 'source-over';
 
+    // 丸みをつける
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    // 線の色
+    ctx.strokeStyle = isEraser ? '#ffffff' : colorPicker.value;
+    // 線の太さ
+    ctx.lineWidth = currentLineWidth;
+
     // 前回の位置から現在の位置まで線を描画
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
     ctx.lineTo(x, y);
-    // 現在の色と線の太さを適用
-    if (isEraser) {
-        currentColor = '#ffffff';
-    } else {
-        currentColor = colorPicker.value;
-    }
-    // 丸みをつける
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-    // 線を描画
-    ctx.strokeStyle = currentColor;
-    ctx.lineWidth = currentLineWidth;
     ctx.stroke();
     [lastX, lastY] = [x, y];
 }
@@ -143,11 +140,32 @@ downloadButton.addEventListener('click', () => {
 eraserButton.addEventListener('click', () => {
     isEraser = !isEraser;
     if (isEraser) {
-        eraserButton.classList.remove('bg-gray-300');
+        eraserButton.classList.remove('bg-white');
         eraserButton.classList.add('bg-green-500', 'text-white');
     } else {
         eraserButton.classList.remove('bg-green-500', 'text-white');
-        eraserButton.classList.add('bg-gray-300');
+        eraserButton.classList.add('bg-white');
     }
 });
 
+function resizeCanvasPreserve() {
+    // 現在の描画状態を画像として保存
+    const dataURL = canvas.toDataURL();
+
+    // リサイズ
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // 保存した画像を読み込んで再描画
+    const img = new Image();
+    img.onload = () => {
+        ctx.drawImage(img, 0, 0); // 左上に復元
+    };
+    img.src = dataURL;
+}
+
+// 初回設定
+resizeCanvasPreserve();
+
+// リサイズ時に復元付きで再設定
+window.addEventListener('resize', resizeCanvasPreserve);
