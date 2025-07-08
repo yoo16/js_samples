@@ -1,34 +1,39 @@
-async function fetchScatterData() {
-    const res = await fetch('api/sleeping.json');
-    if (!res.ok) {
-        throw new Error('データの取得に失敗しました');
-    }
-    return await res.json();
-}
+// Canvas の取得
+const lineChart = document.getElementById('lineChart');
+// コンテキストの取得
+const ctx = lineChart.getContext('2d');
+// データのラベル
+const label = '1週間のデータ';
+// x軸に睡眠時間
+const labels = [4.5, 5.5, 6.5, 7.5, 8.5, 9.5, 10.5, 11, 12];
+// y軸に生産性
+const data = [2, 3, 5, 7, 8, 9, 8, 6, 5];
+// 背景色と境界線の色
+const backgroundColor = 'rgba(54, 162, 235, 0.7)';
+const borderColor = 'rgba(54, 162, 235, 1)';
+const pointRadius = 6;
 
-async function createScatterChart() {
-    const ctx = document.getElementById('scatterChart').getContext('2d');
-    const json = await fetchScatterData();
-
+async function createLineChart() {
     new Chart(ctx, {
-        type: 'scatter',
+        type: 'line',
         data: {
+            labels: labels,
             datasets: [{
-                label: json.label,
-                data: json.data,
-                backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                pointRadius: 6
+                label,
+                data,
+                backgroundColor,
+                borderColor,
+                pointRadius,
             }]
         },
         options: {
-            responsive: true,
             plugins: {
                 tooltip: {
                     callbacks: {
                         label: function (context) {
-                            const x = context.raw.x;
-                            const y = context.raw.y;
-                            return `睡眠: ${x}時間 / 生産性: ${y}`;
+                            const sleep = context.label;
+                            const productivity = context.raw;
+                            return `睡眠: ${sleep}時間 / 生産性: ${productivity}`;
                         }
                     }
                 }
@@ -40,8 +45,6 @@ async function createScatterChart() {
                         text: '睡眠時間（時間）',
                         font: { size: 14 }
                     },
-                    min: 4,
-                    max: 13,
                     ticks: {
                         stepSize: 1
                     }
@@ -63,8 +66,4 @@ async function createScatterChart() {
     });
 }
 
-// 実行
-createScatterChart().catch(error => {
-    console.error('エラー:', error);
-    alert('グラフの表示に失敗しました。');
-});
+createLineChart()
