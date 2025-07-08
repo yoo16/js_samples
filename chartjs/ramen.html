@@ -9,16 +9,29 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="bg-yellow-50 min-h-screen flex flex-col items-center justify-center space-y-8 p-4">
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl">
-        <h2 class="text-2xl font-bold text-center mb-4">📊 ラーメン人気ランキング（棒グラフ）</h2>
-        <canvas id="barChart"></canvas>
+<body class="min-h-screen flex flex-col items-center justify-center space-y-8 p-4">
+    <h1 class="text-2xl font-bold text-center mb-4">🍜 ラーメン人気ランキング</h1>
+
+    <!-- 横並びのグラフ -->
+    <div class="flex flex-wrap gap-4 justify-center w-full max-w-6xl">
+        <!-- 男女別 棒グラフ -->
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full sm:w-[50%] lg:w-[50%]">
+            <h2 class="text-2xl font-bold text-center mb-4">男女別</h2>
+            <div>
+                <canvas id="barChart"></canvas>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 総合 円グラフ -->
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full sm:w-[25%] lg:w-[25%]">
+            <h2 class="text-2xl font-bold text-center mb-4">総合</h2>
+            <div id="total-container" class="p-4 w-full max-w-4xl"></div>
+        </div>
     </div>
 
-    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl">
-        <h1 class="text-2xl font-bold text-center mb-4">🍜 ラーメン人気ランキング（円グラフ）</h1>
-        <canvas id="pieChart"></canvas>
-    </div>
+    <!-- 表 -->
+    <div id="gender-container" class="p-4 w-full max-w-4xl"></div>
 
     <script src="js/ramen.js"></script>
 </body>
