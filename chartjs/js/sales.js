@@ -1,3 +1,7 @@
+const messageContainer = document.getElementById('message-container');
+const salesContainer = document.getElementById('sales-chart');
+const softwaresContainer = document.getElementById('softwares-chart');
+
 // グローバル変数で管理
 let salesChart;
 let softwaresChart;
@@ -45,7 +49,7 @@ let softwareOptions = {
 
 // 売上のチャートを生成する関数
 function createSalesChart(type, data, options) {
-    const ctx = document.getElementById('sales-chart').getContext('2d');
+    const ctx = salesContainer.getContext('2d');
     salesChart = new Chart(ctx, {
         type: type,
         data: data,
@@ -55,7 +59,7 @@ function createSalesChart(type, data, options) {
 
 // ソフトウェアのチャートを生成する関数
 function createSoftwaresChart(type, data, options) {
-    const ctx = document.getElementById('softwares-chart').getContext('2d');
+    const ctx = softwaresContainer.getContext('2d');
     softwaresChart = new Chart(ctx, {
         type: type,
         data: data,
@@ -68,19 +72,18 @@ async function loadData(uri) {
     try {
         const results = await fetch(uri);
         if (!results.ok) {
-            alert('データ取得に失敗しました。');
+            messageContainer.innerHTML = "データ取得エラー";
             return;
         }
         const data = await results.json();
         return data;
     } catch (error) {
-        console.error('データ取得エラー:', error);
+        messageContainer.innerHTML = "データ取得エラー";
     }
 }
 
 // 売上データを取得する関数
 async function loadSalesData() {
-    // await を利用して Promise の解決を待つ
     salesData = await loadData('api/sales.json');
 }
 
