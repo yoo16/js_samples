@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cookie</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-900 antialiased">
+    <main class="mx-auto max-w-md p-6">
+        <header class="mb-6">
+            <h1 class="text-3xl font-semibold tracking-tight">Cookie</h1>
+            <p class="mt-1 text-sm text-gray-600">
+                名前を保存すると Cookie に保存されます。削除ボタンで削除できます。
+            </p>
+        </header>
+
+        <!-- 入力カード -->
+        <section class="mb-6">
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">ユーザー名</label>
+                <div class="flex gap-2">
+                    <input id="name" type="text" placeholder="Taro"
+                        class="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-2 text-[15px] placeholder:text-gray-400"
+                        autocomplete="off" />
+                    <button id="saveBtn" type="button"
+                        class="rounded-xl bg-sky-600 px-4 py-2 text-white font-medium shadow-sm hover:bg-sky-700">
+                        保存
+                    </button>
+                    <button id="deleteBtn" type="button"
+                        class="rounded-xl bg-red-600 px-4 py-2 text-white font-medium shadow-sm hover:bg-red-700">
+                        削除
+                    </button>
+                </div>
+                <p class="mt-2 text-xs text-gray-500">※ 有効期限は 7 日</p>
+            </div>
+        </section>
+
+        <!-- 入力カード -->
+        <section class="mb-6">
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                <form action="update.php" method="post">
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">バックエンドに送信</label>
+                    <div class="flex gap-2">
+                        <input id="item" type="text" placeholder=""
+                            class="flex-1 rounded-xl border border-gray-300 bg-white px-4 py-2 text-[15px] placeholder:text-gray-400"
+                            autocomplete="off" />
+                        <button id="saveBtn" type="submit"
+                            class="rounded-xl bg-sky-600 px-4 py-2 text-white font-medium shadow-sm hover:bg-sky-700">
+                            送信
+                        </button>
+                    </div>
+                </form>
+                <p class="mt-2 text-xs text-gray-500">※ 有効期限は 7 日</p>
+            </div>
+        </section>
+
+        <!-- 表示カード -->
+        <section>
+            <div class="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                <h2 class="text-sm font-medium text-gray-700 mb-2">現在の Cookie</h2>
+                <pre id="cookies"
+                    class="min-h-[96px] whitespace-pre-wrap rounded-xl border border-gray-100 bg-gray-50 p-3 text-sm text-gray-800"
+                    role="status" aria-live="polite">(読み込み中…)</pre>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/cookie.js" defer></script>
+    <script src="js/basic.js" defer></script>
+</body>
+
+</html>
