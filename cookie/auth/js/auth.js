@@ -56,16 +56,5 @@
             const data = await postJSON("./api/logout.php", {});
             out(data);
         });
-
-        // XSS攻撃の例
-        $("#steal").addEventListener("click", () => {
-            out({ stolen_cookie: document.cookie });
-            alert(document.cookie);
-        });
-
-        $("#rewrite").addEventListener("click", () => {
-            document.cookie = "sid=xxxxxx; path=/";
-            out({ new_cookie: document.cookie });
-        });
     });
 })();

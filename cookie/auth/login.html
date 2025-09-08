@@ -10,7 +10,7 @@
 </head>
 
 <body class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-200 text-slate-800 antialiased">
-    <div class="flex items-center justify-center min-h-screen p-4">
+    <main id="main" class="flex items-center justify-center min-h-screen p-4">
         <div class="w-full max-w-md">
             <!-- Card -->
             <div class="bg-white/90 backdrop-blur shadow-xl rounded-2xl border border-slate-200">
@@ -69,14 +69,15 @@
                     <!-- Output -->
                     <div class="space-y-2">
                         <label class="block text-sm font-medium text-slate-700">レスポンス</label>
-                        <pre id="out"
-                            class="h-48 overflow-auto rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs leading-relaxed text-slate-800"></pre>
+                        <div id="out"
+                            class="h-48 overflow-auto rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs leading-relaxed text-slate-800">
+                        </div>
                     </div>
                 </div>
 
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- 分離したJS（そのまま） -->
     <script src="./js/auth.js" defer></script>
