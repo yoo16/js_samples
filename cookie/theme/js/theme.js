@@ -1,11 +1,11 @@
 const KEY = "theme";
+const label = document.getElementById("themeLabel");
+const icon = document.getElementById("themeIcon");
 
 function applyTheme(theme) {
-    const root = document.documentElement; // <html>
+    // <html>にクラス
+    const root = document.documentElement;
     root.classList.toggle("dark", theme === "dark");
-    // UI（任意）
-    const label = document.getElementById("themeLabel");
-    const icon = document.getElementById("themeIcon");
     if (label) label.textContent = theme === "dark" ? "ダーク" : "ライト";
     if (icon) icon.textContent = theme === "dark" ? "🌙" : "🌞";
     document.getElementById("themeBtn")?.setAttribute("aria-pressed", String(theme === "dark"));
