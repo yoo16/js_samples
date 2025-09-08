@@ -40,5 +40,22 @@
             const data = await postJSON("./logout.php", {});
             out(data);
         });
+
+        // JSからCookieを盗む（HttpOnly=false の場合可能）
+        $("#steal").addEventListener("click", () => {
+            // Cookieが丸見え
+            const cookies = document.cookie; 
+            out({ stolen_cookie: cookies });
+            alert("盗まれたCookie: " + cookies);
+        });
+
+        // JSからCookieを書き換える
+        $("#rewrite").addEventListener("click", () => {
+            // 攻撃者がセッションIDを強制上書き
+            document.cookie = "account_name=evil_hacker; path=/";
+            document.cookie = "sid=xxxxxxxxx; path=/";
+            out({ message: "Cookieを書き換えました", new_cookie: document.cookie });
+        });
+
     });
 })();

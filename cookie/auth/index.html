@@ -32,19 +32,19 @@
                         <div class="space-y-2">
                             <label for="email" class="block text-sm font-medium text-slate-700">メールアドレス</label>
                             <input id="email" type="email" placeholder="email" value="test@test.com"
-                                class="w-full rounded-xl border-slate-300 focus:border-sky-500 focus:ring-sky-500 bg-white px-3 py-2 text-slate-900 shadow-sm"
+                                class="w-full rounded-xl border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm"
                                 autocomplete="username" />
                         </div>
 
                         <div class="space-y-2">
                             <label for="password" class="block text-sm font-medium text-slate-700">パスワード</label>
                             <input id="password" type="password" placeholder="password" value="secret123"
-                                class="w-full rounded-xl border-slate-300 focus:border-sky-500 focus:ring-sky-500 bg-white px-3 py-2 text-slate-900 shadow-sm"
+                                class="w-full rounded-xl border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm"
                                 autocomplete="current-password" />
                         </div>
 
                         <button id="login"
-                            class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-sky-600/20 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition">
+                            class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-sky-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-sky-600/20 hover:bg-sky-700">
                             Login
                         </button>
                     </div>
@@ -52,13 +52,18 @@
                     <!-- Actions -->
                     <div class="grid grid-cols-2 gap-3">
                         <button id="me"
-                            class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-sky-500 transition">
+                            class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
                             /me（認証確認）
                         </button>
                         <button id="logout"
-                            class="inline-flex items-center justify-center rounded-xl border border-rose-300 bg-rose-50 px-4 py-2 text-sm font-medium text-rose-700 hover:bg-rose-100 focus:outline-none focus:ring-2 focus:ring-rose-500 transition">
+                            class="inline-flex items-center justify-center rounded-xl border border-rose-300 bg-rose-50 px-4 py-2 text-sm font-medium text-rose-700 hover:bg-rose-100">
                             Logout
                         </button>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="steal" class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">JSでCookieを盗む</button>
+                        <button id="rewrite" class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">JSでCookieを書き換え</button>
                     </div>
 
                     <!-- Output -->
