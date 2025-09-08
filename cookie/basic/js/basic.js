@@ -1,3 +1,6 @@
+// Cookieのキー: ユーザー名
+const KEY = "account_name";
+
 // 初期表示
 showCookies();
 
@@ -11,7 +14,7 @@ document.getElementById("mode").addEventListener("change", (e) => {
 // Cookie一覧表示
 function showCookies() {
     document.getElementById("cookies").textContent = document.cookie || "(なし)";
-    document.getElementById("account_name").value = getCookie("account_name");
+    document.getElementById("account_name").value = getCookie(KEY);
 }
 
 // 保存ボタン
@@ -21,13 +24,13 @@ document.getElementById("saveBtn").addEventListener("click", () => {
     const maxAgeValue = document.getElementById("maxAge").value;
 
     const value = document.getElementById("account_name").value || "tokyo";
-    setCookie('account_name', value, mode, expiresValue, maxAgeValue);
+    setCookie(KEY, value, mode, expiresValue, maxAgeValue);
 
     showCookies();
 });
 
 // 削除ボタン
 document.getElementById("deleteBtn").addEventListener("click", () => {
-    deleteCookie("account_name");
+    deleteCookie(KEY);
     showCookies();
 });

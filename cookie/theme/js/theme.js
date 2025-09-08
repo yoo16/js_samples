@@ -1,4 +1,4 @@
-const KEY = "theme"; // 'light' | 'dark'
+const KEY = "theme";
 
 function applyTheme(theme) {
     const root = document.documentElement; // <html>
