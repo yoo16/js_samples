@@ -1,24 +1,47 @@
-// Cookie の設定
-function setCookie(name, value, days = 180) {
-    const d = new Date();
-    d.setDate(d.getDate() + days);
-    // 1行・改行なしでセット（path=/ は必須）
-    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${d.toUTCString()}; path=/; SameSite=Lax`;
+// Cookieを保存
+function setCookie(name, value, mode, expiresValue, maxAgeValue) {
+    // 基本情報の設定
+    let cookieStr = `${name}=${encodeURIComponent(value)}; path=/; SameSite=Lax`;
+
+    // 有効期限の設定
+    if (mode === "expires" && expiresValue) {
+        const date = new Date(expiresValue);
+        cookieStr += `; expires=${date.toUTCString()}`;
+    }
+    // max-ageの設定
+    if (mode === "max-age" && maxAgeValue) {
+        cookieStr += `; max-age=${maxAgeValue}`;
+    }
+
+    // Cookieの設定
+    document.cookie = cookieStr;
 }
 
-// Cookie から値を取得
+// Cookieを取得
 function getCookie(name) {
     const cookies = document.cookie.split("; ");
-    for (const c of cookies) {
-        const [key, value] = c.split("=");
-        if (key === name) return decodeURIComponent(value);
+    for (const cookie of cookies) {
+        const [key, value] = cookie.split("=");
+        if (key === name) {
+            return decodeURIComponent(value);
+        }
     }
-    return null;
+    return null; // 見つからなければ null
 }
 
-// Cookie 削除
-function deleteCookie() {
-    // Cookie を過去の日付に設定して削除
-    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-    showCookies();
+// Cookieを削除
+function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+}
+
+// Cookieを削除
+function deleteAllCookies() {
+    const cookies = document.cookie.split("; ");
+
+    for (const cookie of cookies) {
+        const equalIndex = cookie.indexOf("=");
+        const name = equalIndex > -1 ? cookie.substring(0, equalIndex) : cookie;
+        // 各Cookieを削除（path=/ を必ず指定）
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    }
 }

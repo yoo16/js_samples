@@ -1,42 +1,33 @@
-function save() {
-    setCookie("username", document.getElementById("name").value);
+// 初期表示
+showCookies();
 
-    showCookies();
-}
+// UI切り替え
+document.getElementById("mode").addEventListener("change", (e) => {
+    const mode = e.target.value;
+    document.getElementById("expiresField").classList.toggle("hidden", mode !== "expires");
+    document.getElementById("maxAgeField").classList.toggle("hidden", mode !== "max-age");
+});
 
-// Cookie から名前を読み込み
-function load() {
-    const username = getCookie("username");
-    if (username) {
-        document.getElementById("name").value = decodeURIComponent(username);
-    }
-
-    showCookies();
-}
-
-function remove() {
-    deleteCookie("username");
-    document.getElementById("name").value = "";
-
-    showCookies();
-}
-
-// Cookie 一覧を表示
+// Cookie一覧表示
 function showCookies() {
-    const el = document.getElementById("cookies");
-    if (!el) return;
-    el.textContent = document.cookie || "(なし)";
+    document.getElementById("cookies").textContent = document.cookie || "(なし)";
+    document.getElementById("account_name").value = getCookie("account_name");
 }
 
-// 初期化
-window.addEventListener("DOMContentLoaded", () => {
-    // ページ読み込み時に Cookie を読み込み
-    load();
+// 保存ボタン
+document.getElementById("saveBtn").addEventListener("click", () => {
+    const mode = document.getElementById("mode").value;
+    const expiresValue = document.getElementById("expires").value;
+    const maxAgeValue = document.getElementById("maxAge").value;
 
-    // ボタンにイベントリスナーを設定
-    document.getElementById("saveBtn")?.addEventListener("click", save);
-    document.getElementById("deleteBtn")?.addEventListener("click", remove);
-    document.getElementById("name")?.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") save();
-    });
+    const value = document.getElementById("account_name").value || "tokyo";
+    setCookie('account_name', value, mode, expiresValue, maxAgeValue);
+
+    showCookies();
+});
+
+// 削除ボタン
+document.getElementById("deleteBtn").addEventListener("click", () => {
+    deleteCookie("account_name");
+    showCookies();
 });
