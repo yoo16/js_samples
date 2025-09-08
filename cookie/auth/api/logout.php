@@ -1,14 +1,6 @@
 <?php
-session_name('sid');
-session_set_cookie_params([
-    'lifetime' => 3600,    // 有効期限は1時間（実際はこの値は無視される）
-    'path'     => '/',
-    'secure'   => false,   // 本番は true（HTTPSのみ送信）
-    'httponly' => true,    // JSからアクセス不可
-    'samesite' => 'Lax',
-]);
-
-session_start();
+// セッションCookie設定
+require 'session_init.php';
 
 header('Content-Type: application/json; charset=utf-8');
 

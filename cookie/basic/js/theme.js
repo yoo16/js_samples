@@ -1,43 +1,47 @@
-const KEY = "theme";
+const THEME_KEY = "theme";
 const label = document.getElementById("themeLabel");
 const icon = document.getElementById("themeIcon");
 
 function applyTheme(theme) {
-    // <html>にクラス
+    // html要素
     const root = document.documentElement;
+    // html要素にクラスを付与/削除
     root.classList.toggle("dark", theme === "dark");
     if (label) label.textContent = theme === "dark" ? "ダーク" : "ライト";
     if (icon) icon.textContent = theme === "dark" ? "🌙" : "🌞";
+
+    // ボタンを更新
     document.getElementById("themeBtn")?.setAttribute("aria-pressed", String(theme === "dark"));
+    // Cookie一覧表示
+    document.getElementById("cookies").textContent = document.cookie || "(なし)";
 }
 
 function resolveInitialTheme() {
-    const saved = getCookie(KEY);
+    const saved = getCookie(THEME_KEY);
     if (saved === "light" || saved === "dark") return saved;
-    // Cookieが無ければOS設定を優先
+    // OSの設定に合わせる
     return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function toggleTheme() {
+    // 現在の状態を反転
     const next = document.documentElement.classList.contains("dark") ? "light" : "dark";
-    setCookie(KEY, next);
+    // Cookieに保存
+    setCookie(THEME_KEY, next);
+    // Themeを適用
     applyTheme(next);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    // 初期反映
     const initial = resolveInitialTheme();
-    // 初回アクセスならCookie作成（任意）
-    if (!getCookie(KEY)) setCookie(KEY, initial);
+    if (!getCookie(THEME_KEY)) setCookie(THEME_KEY, initial);
     applyTheme(initial);
 
-    // クリックで切替
     document.getElementById("themeBtn")?.addEventListener("click", toggleTheme);
 
-    // OSテーマが変わったとき：ユーザー選択（Cookie）が無ければ追従
     if (window.matchMedia) {
         matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-            if (!getCookie(KEY)) applyTheme(resolveInitialTheme());
+            if (!getCookie(THEME_KEY)) applyTheme(resolveInitialTheme());
         });
     }
 });

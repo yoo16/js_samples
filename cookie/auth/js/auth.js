@@ -1,12 +1,26 @@
 (() => {
+    let csrfToken = null;
     const $ = (sel) => document.querySelector(sel);
     const out = (v) => { $("#out").textContent = JSON.stringify(v, null, 2); };
 
-    // POST送信
+    initCsrf();
+
+    async function initCsrf() {
+        const res = await fetch("./api/csrf.php", {
+            // セッションCookie必須
+            credentials: "include"
+        });
+        const data = await res.json();
+        csrfToken = data.csrf_token;
+    }
+
     async function postJSON(url, body) {
         const res = await fetch(url, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json",
+                ...(csrfToken ? { "X-CSRF-Token": csrfToken } : {})
+            },
             credentials: "include",
             body: JSON.stringify(body),
         });
@@ -15,47 +29,43 @@
         return data;
     }
 
-    // GET送信
     async function getJSON(url) {
-        const res = await fetch(url, { credentials: "include" });
+        const res = await fetch(url, {
+            credentials: "include",
+            headers: csrfToken ? { "X-CSRF-Token": csrfToken } : {}
+        });
         const data = await res.json();
         return data;
     }
 
-    // クリックイベント
     window.addEventListener("DOMContentLoaded", () => {
         $("#login").addEventListener("click", async () => {
             const email = $("#email").value;
             const password = $("#password").value;
-            const data = await postJSON("./login.php", { email, password });
+            const data = await postJSON("./api/login.php", { email, password });
+            csrfToken = data.csrf_token || null;
             out(data);
         });
 
         $("#me").addEventListener("click", async () => {
-            const data = await getJSON("./me.php");
+            const data = await getJSON("./api/me.php");
             out(data);
         });
 
         $("#logout").addEventListener("click", async () => {
-            const data = await postJSON("./logout.php", {});
+            const data = await postJSON("./api/logout.php", {});
             out(data);
         });
 
-        // JSからCookieを盗む（HttpOnly=false の場合可能）
+        // XSS攻撃の例
         $("#steal").addEventListener("click", () => {
-            // Cookieが丸見え
-            const cookies = document.cookie; 
-            out({ stolen_cookie: cookies });
-            alert("盗まれたCookie: " + cookies);
+            out({ stolen_cookie: document.cookie });
+            alert(document.cookie);
         });
 
-        // JSからCookieを書き換える
         $("#rewrite").addEventListener("click", () => {
-            // 攻撃者がセッションIDを強制上書き
-            document.cookie = "account_name=evil_hacker; path=/";
-            document.cookie = "sid=xxxxxxxxx; path=/";
-            out({ message: "Cookieを書き換えました", new_cookie: document.cookie });
+            document.cookie = "sid=xxxxxx; path=/";
+            out({ new_cookie: document.cookie });
         });
-
     });
 })();
