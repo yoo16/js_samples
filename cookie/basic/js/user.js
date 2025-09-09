@@ -45,3 +45,14 @@ document.getElementById("deleteBtn").addEventListener("click", () => {
     // 表示更新
     showCookies();
 });
+
+// 全削除
+document.getElementById("deleteAllBtn").addEventListener("click", () => {
+    if (!confirm("すべてのCookieを削除しますか？")) {
+        return;
+    }
+    // Cookie削除
+    deleteAllCookies();
+    // 表示更新
+    showCookies();
+});

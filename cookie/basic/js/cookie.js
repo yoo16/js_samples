@@ -1,16 +1,16 @@
 // Cookieを保存
-function setCookie(name, value, mode, expiresValue, maxAgeValue) {
+function setCookie(key, value, mode, expires, maxAge) {
     // 基本情報の設定
-    let cookieStr = `${name}=${encodeURIComponent(value)}; path=/; SameSite=Lax`;
+    let cookieStr = `${key}=${value}; path=/; SameSite=Lax`;
 
     // 有効期限の設定
-    if (mode === "expires" && expiresValue) {
-        const date = new Date(expiresValue);
+    if (mode === "expires" && expires) {
+        const date = new Date(expires);
         cookieStr += `; expires=${date.toUTCString()}`;
     }
     // max-ageの設定
-    if (mode === "max-age" && maxAgeValue) {
-        cookieStr += `; max-age=${maxAgeValue}`;
+    if (mode === "max-age" && maxAge) {
+        cookieStr += `; max-age=${maxAge}`;
     }
 
     // Cookieの設定
@@ -18,13 +18,13 @@ function setCookie(name, value, mode, expiresValue, maxAgeValue) {
 }
 
 // Cookieを取得
-function getCookie(name) {
+function getCookie(key) {
     // Cookie全体を分割して検索
     const cookies = document.cookie.split("; ");
     for (const cookie of cookies) {
         // "name=value" の形式に分割
-        const [key, value] = cookie.split("=");
-        if (key === name) {
+        const [_key, value] = cookie.split("=");
+        if (_key === key) {
             // 見つかった場合はデコードして返す
             return decodeURIComponent(value);
         }
@@ -33,9 +33,9 @@ function getCookie(name) {
 }
 
 // Cookieを削除
-function deleteCookie(name) {
+function deleteCookie(key) {
     // 有効期限を過去に設定して削除（path=/ を必ず指定）
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
 }
 
 // Cookieを削除
@@ -47,8 +47,8 @@ function deleteAllCookies() {
     for (const cookie of cookies) {
         const equalIndex = cookie.indexOf("=");
         // Cookie名を取得
-        const name = equalIndex > -1 ? cookie.substring(0, equalIndex) : cookie;
+        const key = equalIndex > -1 ? cookie.substring(0, equalIndex) : cookie;
         // 各Cookieを削除
-        deleteCookie(name);
+        deleteCookie(key);
     }
 }
